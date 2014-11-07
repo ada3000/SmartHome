@@ -1,0 +1,326 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Stg.MongoDB.Cls</name>
+    </assembly>
+    <members>
+        <member name="T:iTeco.Lib.Stg.MongoDB.BsonHelper">
+            <summary>
+            Полезные методы/Расширения для работы с BSon
+            </summary>
+        </member>
+        <member name="M:iTeco.Lib.Stg.MongoDB.BsonHelper.ToBsonValue(System.DateTime)">
+            <summary>
+            Преобразование к типу Bson
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:iTeco.Lib.Stg.MongoDB.BsonHelper.ToBsonValue(System.String,System.String)">
+            <summary>
+            Преобразование к типу Bson
+            </summary>
+            <param name="value"></param>
+            <param name="def"></param>
+            <returns></returns>
+        </member>
+        <member name="M:iTeco.Lib.Stg.MongoDB.BsonHelper.ToBsonValue(System.Int32)">
+            <summary>
+            Преобразование к типу Bson
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:iTeco.Lib.Stg.MongoDB.BsonHelper.ToBsonValue(System.Int64)">
+            <summary>
+            Преобразование к типу Bson
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:iTeco.Lib.Stg.MongoDB.BsonHelper.ToBsonValue(System.Guid)">
+            <summary>
+            Преобразование к типу Bson
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:iTeco.Lib.Stg.MongoDB.BsonHelper.ToBsonValue(MongoDB.Bson.ObjectId)">
+            <summary>
+            Преобразование к типу Bson
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:iTeco.Lib.Stg.MongoDB.BsonHelper.ToBsonElement(MongoDB.Bson.BsonValue,System.String)">
+            <summary>
+            Преобразование значения к элементу документа
+            </summary>
+            <param name="value"></param>
+            <param name="name">название поля документа</param>
+            <returns></returns>
+        </member>
+        <member name="M:iTeco.Lib.Stg.MongoDB.BsonHelper.ToBsonElement(System.String,System.String,System.String)">
+            <summary>
+            Создание элемента документа
+            </summary>
+            <param name="value"></param>
+            <param name="elementName"></param>
+            <param name="defValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:iTeco.Lib.Stg.MongoDB.BsonHelper.ToBsonElement(System.Int32,System.String)">
+            <summary>
+            Создание элемента документа
+            </summary>
+            <param name="value"></param>
+            <param name="elementName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:iTeco.Lib.Stg.MongoDB.BsonHelper.ToBsonElement(System.Int64,System.String)">
+            <summary>
+            Создание элемента документа
+            </summary>
+            <param name="value"></param>
+            <param name="elementName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:iTeco.Lib.Stg.MongoDB.BsonHelper.ToBsonElement(System.Guid,System.String)">
+            <summary>
+            Создание элемента документа
+            </summary>
+            <param name="value"></param>
+            <param name="elementName"></param>
+            <returns></returns>
+        </member>
+        <member name="T:iTeco.Lib.Stg.MongoDB.IDocumentStorageImpl`2">
+            <summary>
+            Хранилище на монго
+            </summary>
+            <typeparam name="DataType">Тип данных для хранилища</typeparam>
+            <typeparam name="IdentType">Тип идентификатора для хранилища</typeparam>
+        </member>
+        <member name="T:iTeco.Lib.Stg.MongoDB.IDocumentStorage`2">
+            <summary>
+            Интерфейс хранилища объекта
+            </summary>
+            <typeparam name="DataType">Тип для данных</typeparam>
+            <typeparam name="IdentType">Тип для идентификатора</typeparam>
+        </member>
+        <member name="M:iTeco.Lib.Stg.MongoDB.IDocumentStorage`2.Apply(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Сохранить объект
+            </summary>
+            <param name="items">Объекты</param>
+            <returns></returns>
+        </member>
+        <member name="M:iTeco.Lib.Stg.MongoDB.IDocumentStorage`2.Delete(System.Collections.Generic.IEnumerable{`1})">
+            <summary>
+            Удаление объектов
+            </summary>
+            <param name="items">Объекты</param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.MongoDB.IDocumentStorage`2.Get(System.Collections.Generic.IEnumerable{`1})">
+            <summary>
+            Чтение объектов
+            </summary>
+            <param name="items">Идентификаторы объектов</param>
+            <returns></returns>
+        </member>
+        <member name="M:iTeco.Lib.Stg.MongoDB.IDocumentStorage`2.Filter(System.Collections.Generic.IEnumerable{iTeco.Lib.Stg.MongoDB.IDocumentStorageImpl{`0,`1}.FilterItem})">
+            <summary>
+            Фильтр по объектам в БД
+            </summary>
+            <param name="fields">набор полей для фильтра по принципу "И"</param>
+            <returns></returns>
+        </member>
+        <member name="F:iTeco.Lib.Stg.MongoDB.IDocumentStorageImpl`2._connection">
+            <summary>
+            Параметры подключения к БД
+            </summary>
+        </member>
+        <member name="F:iTeco.Lib.Stg.MongoDB.IDocumentStorageImpl`2._server">
+            <summary>
+            Сервер mongo
+            </summary>
+        </member>
+        <member name="F:iTeco.Lib.Stg.MongoDB.IDocumentStorageImpl`2._db">
+            <summary>
+            БД Mongo
+            </summary>
+        </member>
+        <member name="F:iTeco.Lib.Stg.MongoDB.IDocumentStorageImpl`2._lockApply">
+            <summary>
+            Флаг блокировки обновления
+            </summary>
+        </member>
+        <member name="F:iTeco.Lib.Stg.MongoDB.IDocumentStorageImpl`2._config">
+            <summary>
+            Параметры работы сервера
+            </summary>
+        </member>
+        <member name="F:iTeco.Lib.Stg.MongoDB.IDocumentStorageImpl`2._defaultSafeMode">
+            <summary>
+            Режим сохранения поумолчанию
+            </summary>
+        </member>
+        <member name="M:iTeco.Lib.Stg.MongoDB.IDocumentStorageImpl`2.#ctor(iTeco.Lib.Stg.MongoDB.IDocumentStorageImpl{`0,`1}.Config)">
+            <summary>
+            Инициализация параметров
+            </summary>
+            <param name="config"></param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.MongoDB.IDocumentStorageImpl`2.Init">
+            <summary>
+            Инициализация параметров и запуск WCF сервера
+            </summary>
+        </member>
+        <member name="P:iTeco.Lib.Stg.MongoDB.IDocumentStorageImpl`2.DefaultSafeMode">
+            <summary>
+            Режим сохранения поумолчанию
+            </summary>
+        </member>
+        <member name="P:iTeco.Lib.Stg.MongoDB.IDocumentStorageImpl`2.ErrorPrefix">
+            <summary>
+            Префикс ошибок
+            </summary>
+        </member>
+        <member name="T:iTeco.Lib.Stg.MongoDB.IDocumentStorageImpl`2.FilterType">
+            <summary>
+            Тип фильтра
+            </summary>
+        </member>
+        <member name="F:iTeco.Lib.Stg.MongoDB.IDocumentStorageImpl`2.FilterType.NotEqual">
+            <summary>
+            Поле не равно
+            </summary>
+        </member>
+        <member name="F:iTeco.Lib.Stg.MongoDB.IDocumentStorageImpl`2.FilterType.In">
+            <summary>
+            Содержится в списке
+            </summary>
+        </member>
+        <member name="F:iTeco.Lib.Stg.MongoDB.IDocumentStorageImpl`2.FilterType.NotIn">
+            <summary>
+            Не содержится в списке
+            </summary>
+        </member>
+        <member name="F:iTeco.Lib.Stg.MongoDB.IDocumentStorageImpl`2.FilterType.Equal">
+            <summary>
+            Равно
+            </summary>
+        </member>
+        <member name="F:iTeco.Lib.Stg.MongoDB.IDocumentStorageImpl`2.FilterType.All">
+            <summary>
+            Все из списка
+            </summary>
+        </member>
+        <member name="F:iTeco.Lib.Stg.MongoDB.IDocumentStorageImpl`2.FilterType.Exists">
+            <summary>
+            Существует поле, значения: true, false
+            </summary>
+        </member>
+        <member name="F:iTeco.Lib.Stg.MongoDB.IDocumentStorageImpl`2.FilterType.Greater">
+            <summary>
+            Больше
+            </summary>
+        </member>
+        <member name="F:iTeco.Lib.Stg.MongoDB.IDocumentStorageImpl`2.FilterType.Less">
+            <summary>
+            Меньше
+            </summary>
+        </member>
+        <member name="F:iTeco.Lib.Stg.MongoDB.IDocumentStorageImpl`2.FilterType.GreaterOrEqual">
+            <summary>
+            Больше или равно
+            </summary>
+        </member>
+        <member name="F:iTeco.Lib.Stg.MongoDB.IDocumentStorageImpl`2.FilterType.LessOrEqual">
+            <summary>
+            Меньше или равно
+            </summary>
+        </member>
+        <member name="T:iTeco.Lib.Stg.MongoDB.IDocumentStorageImpl`2.FilterItem">
+            <summary>
+            Класс фильтра
+            </summary>
+        </member>
+        <member name="M:iTeco.Lib.Stg.MongoDB.IDocumentStorageImpl`2.FilterItem.#ctor">
+            <summary>
+            Инициализация
+            </summary>
+        </member>
+        <member name="P:iTeco.Lib.Stg.MongoDB.IDocumentStorageImpl`2.FilterItem.Value">
+            <summary>
+            Значение фильтра
+            </summary>
+        </member>
+        <member name="P:iTeco.Lib.Stg.MongoDB.IDocumentStorageImpl`2.FilterItem.FilterType">
+            <summary>
+            Способ сравнения значения фильтра.
+            Поумолчанию: Equal
+            </summary>
+        </member>
+        <member name="P:iTeco.Lib.Stg.MongoDB.IDocumentStorageImpl`2.FilterItem.Name">
+            <summary>
+            Название поля
+            </summary>
+        </member>
+        <member name="T:iTeco.Lib.Stg.MongoDB.IDocumentStorageImpl`2.Config">
+            <summary>
+            Параметры сервера MongoDB
+            </summary>
+        </member>
+        <member name="P:iTeco.Lib.Stg.MongoDB.IDocumentStorageImpl`2.Config.ConnectionStr">
+            <summary>
+            Строка подключения с серверу Mongo
+            </summary>
+        </member>
+        <member name="P:iTeco.Lib.Stg.MongoDB.IDocumentStorageImpl`2.Config.CollectionName">
+            <summary>
+            Название коллекции для хранения данных
+            </summary>
+        </member>
+        <member name="P:iTeco.Lib.Stg.MongoDB.IDocumentStorageImpl`2.Config.SafeMode">
+            <summary>
+            Безопасный режим
+            </summary>
+        </member>
+        <member name="P:iTeco.Lib.Stg.MongoDB.IDocumentStorageImpl`2.Config.IdentFieldName">
+            <summary>
+            Название поля идентификатора
+            </summary>
+        </member>
+        <member name="T:iTeco.Lib.Stg.MongoDB.MongoDBHelper">
+            <summary>
+            Утилиты для работы с БД
+            </summary>
+        </member>
+        <member name="M:iTeco.Lib.Stg.MongoDB.MongoDBHelper.ThrowIfError(MongoDB.Driver.GetLastErrorResult,System.String)">
+            <summary>
+            Ообщение при ошибке
+            </summary>
+            <param name="result"></param>
+            <param name="prefix"></param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.MongoDB.MongoDBHelper.Apply``1(MongoDB.Driver.MongoCollection,System.Collections.Generic.IEnumerable{``0},MongoDB.Driver.WriteConcern,System.String)">
+            <summary>
+            Сохранение списка документов
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="collection"></param>
+            <param name="safeMode">режим сохранения</param>
+            <param name="errorPrefix">префикс ошибки</param>
+            <param name="items">Элементы для сохранения</param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.MongoDB.MongoDBHelper.ToQuery(System.Collections.Generic.IEnumerable{MongoDB.Bson.BsonValue},System.String,System.String)">
+            <summary>
+            Преобразование к запросу вида {FieldName{$in:[...]}}
+            </summary>
+            <param name="items"></param>
+            <param name="fieldName">название поля для перечисления</param>
+            <param name="specialField">название специализированного поля. Поумолчанию $in</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,893 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Stg.Cls</name>
+    </assembly>
+    <members>
+        <member name="T:iTeco.Lib.Stg.IPersistObjectImpl">
+            <summary>
+            Стандартная реализация интерфейса объекта-состояния
+            </summary>
+        </member>
+        <member name="T:iTeco.Lib.Stg.IPersistObject">
+            <summary>
+            Общий интерфейс объектов состояний
+            </summary>
+        </member>
+        <member name="M:iTeco.Lib.Stg.IPersistObject.QueryFilter(iTeco.Lib.Stg.StorageMode)">
+            <summary>
+            Получить набор параметров фильтра для хранилища состояния
+            </summary>
+            <param name="mode">Режим открытия хранилища</param>
+            <returns>Набор параметров фильтра</returns>
+        </member>
+        <member name="M:iTeco.Lib.Stg.IPersistObject.InitNew(iTeco.Lib.Stg.StorageBase)">
+            <summary>
+            Установить состояние из переданного хранилища
+            </summary>
+            <param name="stg">Раздел хранилища</param>
+            <returns>true - состояние получено из хранилища,
+            false - из хранилища не получено состояния</returns>
+        </member>
+        <member name="M:iTeco.Lib.Stg.IPersistObject.Load(iTeco.Lib.Stg.StorageBase)">
+            <summary>
+            Выполнить загрузку состояния из раздела хранилища
+            Метод подразумевает открытие объектом своего раздела хранилища относительно переданного
+            </summary>
+            <param name="stg">Раздел хранилища</param>
+            <returns>true - состояние получено из хранилища,
+            false - из хранилища не получено состояния</returns>
+        </member>
+        <member name="M:iTeco.Lib.Stg.IPersistObject.LoadFrom(iTeco.Lib.Stg.StorageBase,System.String)">
+            <summary>
+            Выполнить загрузку состояния из раздела хранилища
+            Метод подразумевает открытие объектом указанного раздела хранилища относительно переданного
+            </summary>
+            <param name="stg">Раздел хранилища</param>
+            <param name="name">Название раздела хранилища</param>
+            <returns>true - состояние получено из хранилища,
+            false - из хранилища не получено состояния</returns>
+        </member>
+        <member name="M:iTeco.Lib.Stg.IPersistObject.ApplyTo(iTeco.Lib.Stg.StorageBase)">
+            <summary>
+            Сохранить состояние в переданное хранилище
+            </summary>
+            <param name="stg">Раздел хранилища</param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.IPersistObject.Save(iTeco.Lib.Stg.StorageBase)">
+            <summary>
+            Выполнить сохранение состояния в раздел хранилища
+            Метод подразумевает открытие объектом своего раздела хранилища относительно переданного
+            </summary>
+            <param name="stg">Раздел хранилища</param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.IPersistObject.SaveAs(iTeco.Lib.Stg.StorageBase,System.String)">
+            <summary>
+            Выполнить сохранение состояния в раздел хранилища
+            Метод подразумевает открытие объектом указанного раздела хранилища относительно переданного
+            </summary>
+            <param name="stg">Раздел хранилища</param>
+            <param name="name">Название раздела хранилища</param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.IPersistObject.Destroy(iTeco.Lib.Stg.StorageBase)">
+            <summary>
+            Выполнить удаление состояния из раздела хранилища
+            Метод подразумевает открытие объектом своего раздела хранилища относительно переданного
+            </summary>
+            <param name="stg">Раздел хранилища</param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.IPersistObject.DestroyTo(iTeco.Lib.Stg.StorageBase,System.String)">
+            <summary>
+            Выполнить удаление состояния из раздела хранилища
+            Метод подразумевает открытие объектом указанного раздела хранилища относительно переданного
+            </summary>
+            <param name="stg">Раздел хранилища</param>
+            <param name="name">Название раздела хранилища</param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.IPersistObjectImpl.#ctor">
+            <summary>
+            Конструктор по умолчанию
+            </summary>
+        </member>
+        <member name="M:iTeco.Lib.Stg.IPersistObjectImpl.#ctor(System.String)">
+            <summary>
+            Конструктор с предустановленным названием раздела хранилища
+            </summary>
+            <param name="name">Название раздела хранилища</param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.IPersistObjectImpl.OnLoadBegin(iTeco.Lib.Stg.StorageBase)">
+            <summary>
+            Вызывается перед операцией загрузки из хранилища
+            </summary>
+            <param name="stg">Раздел хранилища</param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.IPersistObjectImpl.OnLoadEnd(iTeco.Lib.Stg.StorageBase)">
+            <summary>
+            Вызывается после операции загрузки из хранилища
+            </summary>
+            <param name="stg">Раздел хранилища</param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.IPersistObjectImpl.OnSaveBegin(iTeco.Lib.Stg.StorageBase)">
+            <summary>
+            Вызывается перед операцией сохранения в хранилище
+            </summary>
+            <param name="stg">Раздел хранилища</param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.IPersistObjectImpl.OnSaveEnd(iTeco.Lib.Stg.StorageBase)">
+            <summary>
+            Вызывается после операции сохранения в хранилище
+            </summary>
+            <param name="stg">Раздел хранилища</param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.IPersistObjectImpl.OnDestroyBegin(iTeco.Lib.Stg.StorageBase)">
+            <summary>
+            Вызывается перед операцией удаления из хранилища
+            </summary>
+            <param name="stg">Раздел хранилища</param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.IPersistObjectImpl.OnDestroyEnd(iTeco.Lib.Stg.StorageBase)">
+            <summary>
+            Вызывается после операции удаления из хранилища
+            </summary>
+            <param name="stg">Раздел хранилища</param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.IPersistObjectImpl.OnClear">
+            <summary>
+            Вызывается, когда требуется очистка состояния
+            </summary>
+        </member>
+        <member name="M:iTeco.Lib.Stg.IPersistObjectImpl.QueryFilter(iTeco.Lib.Stg.StorageMode)">
+            <summary>
+            Получить набор параметров фильтра для хранилища состояния
+            </summary>
+            <param name="mode">Режим открытия хранилища</param>
+            <returns>Набор параметров фильтра</returns>
+        </member>
+        <member name="M:iTeco.Lib.Stg.IPersistObjectImpl.InitNew(iTeco.Lib.Stg.StorageBase)">
+            <summary>
+            Установить состояние из переданного хранилища
+            </summary>
+            <param name="stg">Раздел хранилища</param>
+            <returns>true - состояние получено из хранилища,
+            false - из хранилища не получено состояния</returns>
+        </member>
+        <member name="M:iTeco.Lib.Stg.IPersistObjectImpl.Load(iTeco.Lib.Stg.StorageBase)">
+            <summary>
+            Выполнить загрузку состояния из раздела хранилища
+            Метод подразумевает открытие объектом своего раздела хранилища относительно переданного
+            </summary>
+            <param name="stg">Раздел хранилища</param>
+            <returns>true - состояние получено из хранилища,
+            false - из хранилища не получено состояния</returns>
+        </member>
+        <member name="M:iTeco.Lib.Stg.IPersistObjectImpl.LoadFrom(iTeco.Lib.Stg.StorageBase,System.String)">
+            <summary>
+            Выполнить загрузку состояния из раздела хранилища
+            Метод подразумевает открытие объектом указанного раздела хранилища относительно переданного
+            </summary>
+            <param name="stg">Раздел хранилища</param>
+            <param name="name">Название раздела хранилища</param>
+            <returns>true - состояние получено из хранилища,
+            false - из хранилища не получено состояния</returns>
+        </member>
+        <member name="M:iTeco.Lib.Stg.IPersistObjectImpl.ApplyTo(iTeco.Lib.Stg.StorageBase)">
+            <summary>
+            Сохранить состояние в переданное хранилище
+            </summary>
+            <param name="stg">Раздел хранилища</param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.IPersistObjectImpl.Save(iTeco.Lib.Stg.StorageBase)">
+            <summary>
+            Выполнить сохранение состояния в раздел хранилища
+            Метод подразумевает открытие объектом своего раздела хранилища относительно переданного
+            </summary>
+            <param name="stg">Раздел хранилища</param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.IPersistObjectImpl.SaveAs(iTeco.Lib.Stg.StorageBase,System.String)">
+            <summary>
+            Выполнить сохранение состояния в раздел хранилища
+            Метод подразумевает открытие объектом указанного раздела хранилища относительно переданного
+            </summary>
+            <param name="stg">Раздел хранилища</param>
+            <param name="name">Название раздела хранилища</param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.IPersistObjectImpl.Destroy(iTeco.Lib.Stg.StorageBase)">
+            <summary>
+            Выполнить удаление состояния из раздела хранилища
+            Метод подразумевает открытие объектом своего раздела хранилища относительно переданного
+            </summary>
+            <param name="stg">Раздел хранилища</param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.IPersistObjectImpl.DestroyTo(iTeco.Lib.Stg.StorageBase,System.String)">
+            <summary>
+            Выполнить удаление состояния из раздела хранилища
+            Метод подразумевает открытие объектом указанного раздела хранилища относительно переданного
+            </summary>
+            <param name="stg">Раздел хранилища</param>
+            <param name="name">Название раздела хранилища</param>
+        </member>
+        <member name="P:iTeco.Lib.Stg.IPersistObjectImpl.StorageName">
+            <summary>
+            Название раздела хранилища
+            </summary>
+        </member>
+        <member name="T:iTeco.Lib.Stg.PersistObject">
+            <summary>
+            Класс реализации стандартного объекта-состояния с представлением свойств
+            именованным списком (без типизации)
+            </summary>
+        </member>
+        <member name="M:iTeco.Lib.Stg.PersistObject.#ctor">
+            <summary>
+            Конструктор по умолчанию
+            </summary>
+        </member>
+        <member name="M:iTeco.Lib.Stg.PersistObject.#ctor(iTeco.Lib.Base.PropContainer)">
+            <summary>
+            Конструктор с инициализацией списка именованных свойств
+            </summary>
+            <param name="props">Устанавливаемый список свойств</param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.PersistObject.#ctor(System.String)">
+            <summary>
+            Конструктор с предустановленным названием раздела хранилища
+            </summary>
+            <param name="name">Название раздела хранилища</param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.PersistObject.#ctor(System.String,iTeco.Lib.Base.PropContainer)">
+            <summary>
+            Конструктор с предустановленным названием раздела хранилища и
+            инициализацией списка именованных свойств
+            </summary>
+            <param name="name">Название раздела хранилища</param>
+            <param name="props">Устанавливаемый список свойств</param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.PersistObject.OnLoadBegin(iTeco.Lib.Stg.StorageBase)">
+            <summary>
+            Вызывается перед операцией загрузки из хранилища
+            </summary>
+            <param name="stg">Раздел хранилища</param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.PersistObject.OnSaveEnd(iTeco.Lib.Stg.StorageBase)">
+            <summary>
+            Вызывается после операции сохранения в хранилище
+            </summary>
+            <param name="stg">Раздел хранилища</param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.PersistObject.OnDestroyEnd(iTeco.Lib.Stg.StorageBase)">
+            <summary>
+            Вызывается после операции удаления из хранилища
+            </summary>
+            <param name="stg">Раздел хранилища</param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.PersistObject.OnClear">
+            <summary>
+            Вызывается, когда требуется очистка состояния
+            </summary>
+        </member>
+        <member name="M:iTeco.Lib.Stg.PersistObject.QueryFilter(iTeco.Lib.Stg.StorageMode)">
+            <summary>
+            Получить набор параметров фильтра для хранилища состояния
+            </summary>
+            <param name="mode">Режим открытия хранилища</param>
+            <returns>Набор параметров фильтра</returns>
+        </member>
+        <member name="M:iTeco.Lib.Stg.PersistObject.InitNew(iTeco.Lib.Stg.StorageBase)">
+            <summary>
+            Установить состояние из переданного хранилища
+            </summary>
+            <param name="stg">Раздел хранилища</param>
+            <returns>true - состояние получено из хранилища,
+            false - из хранилища не получено состояния</returns>
+        </member>
+        <member name="M:iTeco.Lib.Stg.PersistObject.ApplyTo(iTeco.Lib.Stg.StorageBase)">
+            <summary>
+            Сохранить состояние в переданное хранилище
+            </summary>
+            <param name="stg">Раздел хранилища</param>
+        </member>
+        <member name="P:iTeco.Lib.Stg.PersistObject.Props">
+            <summary>
+            Список именованных свойств
+            </summary>
+        </member>
+        <member name="T:iTeco.Lib.Stg.PersistObjectList`1">
+            <summary>
+            Template реализации интерфейса IPersistObject для списка объектов-состояний
+            </summary>
+            <typeparam name="T">Класс объекта-состояния поддерживающий IPersistObject</typeparam>
+        </member>
+        <member name="M:iTeco.Lib.Stg.PersistObjectList`1.#ctor">
+            <summary>
+            Конструктор списка объектов-состояний
+            </summary>
+        </member>
+        <member name="M:iTeco.Lib.Stg.PersistObjectList`1.#ctor(System.Int32)">
+            <summary>
+            Конструктор списка объектов-состояний с инициализацией зарезервированного размера списка
+            </summary>
+            <param name="capacity">Кол-во элементов списка зарезервированных при создании</param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.PersistObjectList`1.#ctor(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Конструктор списка объектов-состояний создающий копию коллекции элементов
+            </summary>
+            <param name="collection">Копируемая коллекция</param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.PersistObjectList`1.#ctor(System.String)">
+            <summary>
+            Конструктор списка объектов-состояний с предустановленным названием раздела хранилища
+            </summary>
+            <param name="name">Название раздела хранилища</param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.PersistObjectList`1.#ctor(System.String,System.Int32)">
+            <summary>
+            Конструктор списка объектов-состояний с предустановленным названием раздела хранилища и
+            инициализацией зарезервированного размера списка
+            </summary>
+            <param name="name">Название раздела хранилища</param>
+            <param name="capacity">Кол-во элементов списка зарезервированных при создании</param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.PersistObjectList`1.#ctor(System.String,System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Конструктор списка объектов-состояний с предустановленным названием раздела хранилища,
+            создающий копию коллекции элементов
+            </summary>
+            <param name="name">Название раздела хранилища</param>
+            <param name="collection">Копируемая коллекция</param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.PersistObjectList`1.CreateItem">
+            <summary>
+            Создать элемент списка
+            </summary>
+            <returns>Созданый объект</returns>
+        </member>
+        <member name="M:iTeco.Lib.Stg.PersistObjectList`1.OnLoadBegin(iTeco.Lib.Stg.StorageBase)">
+            <summary>
+            Вызывается перед операцией загрузки из хранилища
+            </summary>
+            <param name="stg">Раздел хранилища</param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.PersistObjectList`1.OnLoadEnd(iTeco.Lib.Stg.StorageBase)">
+            <summary>
+            Вызывается после операции загрузки из хранилища
+            </summary>
+            <param name="stg">Раздел хранилища</param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.PersistObjectList`1.OnSaveBegin(iTeco.Lib.Stg.StorageBase)">
+            <summary>
+            Вызывается перед операцией сохранения в хранилище
+            </summary>
+            <param name="stg">Раздел хранилища</param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.PersistObjectList`1.OnSaveEnd(iTeco.Lib.Stg.StorageBase)">
+            <summary>
+            Вызывается после операции сохранения в хранилище
+            </summary>
+            <param name="stg">Раздел хранилища</param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.PersistObjectList`1.OnDestroyBegin(iTeco.Lib.Stg.StorageBase)">
+            <summary>
+            Вызывается перед операцией удаления из хранилища
+            </summary>
+            <param name="stg">Раздел хранилища</param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.PersistObjectList`1.OnDestroyEnd(iTeco.Lib.Stg.StorageBase)">
+            <summary>
+            Вызывается после операции удаления из хранилища
+            </summary>
+            <param name="stg">Раздел хранилища</param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.PersistObjectList`1.OnClear">
+            <summary>
+            Вызывается, когда требуется очистка состояния
+            </summary>
+        </member>
+        <member name="M:iTeco.Lib.Stg.PersistObjectList`1.QueryFilter(iTeco.Lib.Stg.StorageMode)">
+            <summary>
+            Получить набор параметров фильтра для хранилища состояния
+            </summary>
+            <param name="mode">Режим открытия хранилища</param>
+            <returns>Набор параметров фильтра</returns>
+        </member>
+        <member name="M:iTeco.Lib.Stg.PersistObjectList`1.InitNew(iTeco.Lib.Stg.StorageBase)">
+            <summary>
+            Установить состояние из переданного хранилища
+            </summary>
+            <param name="stg">Раздел хранилища</param>
+            <returns>true - состояние получено из хранилища,
+            false - из хранилища не получено состояния</returns>
+        </member>
+        <member name="M:iTeco.Lib.Stg.PersistObjectList`1.Load(iTeco.Lib.Stg.StorageBase)">
+            <summary>
+            Выполнить загрузку состояния из раздела хранилища
+            Метод подразумевает открытие объектом своего раздела хранилища относительно переданного
+            </summary>
+            <param name="stg">Раздел хранилища</param>
+            <returns>true - состояние получено из хранилища,
+            false - из хранилища не получено состояния</returns>
+        </member>
+        <member name="M:iTeco.Lib.Stg.PersistObjectList`1.LoadFrom(iTeco.Lib.Stg.StorageBase,System.String)">
+            <summary>
+            Выполнить загрузку состояния из раздела хранилища
+            Метод подразумевает открытие объектом указанного раздела хранилища относительно переданного
+            </summary>
+            <param name="stg">Раздел хранилища</param>
+            <param name="name">Название раздела хранилища</param>
+            <returns>true - состояние получено из хранилища,
+            false - из хранилища не получено состояния</returns>
+        </member>
+        <member name="M:iTeco.Lib.Stg.PersistObjectList`1.ApplyTo(iTeco.Lib.Stg.StorageBase)">
+            <summary>
+            Сохранить состояние в переданное хранилище
+            </summary>
+            <param name="stg">Раздел хранилища</param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.PersistObjectList`1.Save(iTeco.Lib.Stg.StorageBase)">
+            <summary>
+            Выполнить сохранение состояния в раздел хранилища
+            Метод подразумевает открытие объектом своего раздела хранилища относительно переданного
+            </summary>
+            <param name="stg">Раздел хранилища</param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.PersistObjectList`1.SaveAs(iTeco.Lib.Stg.StorageBase,System.String)">
+            <summary>
+            Выполнить сохранение состояния в раздел хранилища
+            Метод подразумевает открытие объектом указанного раздела хранилища относительно переданного
+            </summary>
+            <param name="stg">Раздел хранилища</param>
+            <param name="name">Название раздела хранилища</param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.PersistObjectList`1.Destroy(iTeco.Lib.Stg.StorageBase)">
+            <summary>
+            Выполнить удаление состояния из раздела хранилища
+            Метод подразумевает открытие объектом своего раздела хранилища относительно переданного
+            </summary>
+            <param name="stg">Раздел хранилища</param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.PersistObjectList`1.DestroyTo(iTeco.Lib.Stg.StorageBase,System.String)">
+            <summary>
+            Выполнить удаление состояния из раздела хранилища
+            Метод подразумевает открытие объектом указанного раздела хранилища относительно переданного
+            </summary>
+            <param name="stg">Раздел хранилища</param>
+            <param name="name">Название раздела хранилища</param>
+        </member>
+        <member name="P:iTeco.Lib.Stg.PersistObjectList`1.StorageName">
+            <summary>
+            Название раздела хранилища
+            </summary>
+        </member>
+        <member name="T:iTeco.Lib.Stg.StorageFactory">
+            <summary>
+            Фабрика объектов хранилищ
+            </summary>
+        </member>
+        <member name="M:iTeco.Lib.Stg.StorageFactory.#ctor(System.Xml.XmlNode)">
+            <summary>
+            Конструктор фабрики хранилища
+            </summary>
+            <param name="cfg">XML-настройки</param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.StorageFactory.GetRootStorage">
+            <summary>
+            Получить корневой раздел хранилища
+            </summary>
+            <returns>Корневой раздел</returns>
+        </member>
+        <member name="M:iTeco.Lib.Stg.StorageFactory.Create(System.String,iTeco.Lib.Stg.StorageMode,iTeco.Lib.Base.PropContainer,iTeco.Lib.Stg.StorageFactory)">
+            <summary>
+            Создать объект раздела хранилища
+            </summary>
+            <param name="name">Название раздела в схеме</param>
+            <param name="mode">Режим открытия</param>
+            <param name="filter">Набор параметров фильтра создаваемого экземпляра</param>
+            <param name="factory">Фабрика, к которой обращаться для создания подразделов,
+            если null - обращение будет сделано к текущей фабрике</param>
+            <returns>Раздел хранилища</returns>
+        </member>
+        <member name="M:iTeco.Lib.Stg.StorageFactory.MakeObjectKey(System.String,System.String)">
+            <summary>
+            Сделать идентифицирующий ключ из названий сборки и класса объекта
+            </summary>
+            <param name="nameAssembly">Название сборки</param>
+            <param name="nameClass">Название класса</param>
+            <returns>Идентифицирующий ключ</returns>
+        </member>
+        <member name="P:iTeco.Lib.Stg.StorageFactory.Name">
+            <summary>
+            Название хранилища
+            </summary>
+        </member>
+        <member name="P:iTeco.Lib.Stg.StorageFactory.Desc">
+            <summary>
+            Описание хранилища
+            </summary>
+        </member>
+        <member name="P:iTeco.Lib.Stg.StorageFactory.Initializes">
+            <summary>
+            Список настроек общей инициализации объектов хранилищ
+            </summary>
+        </member>
+        <member name="P:iTeco.Lib.Stg.StorageFactory.Scheme">
+            <summary>
+            Схема разделов хранилища
+            </summary>
+        </member>
+        <member name="P:iTeco.Lib.Stg.StorageFactory.Props">
+            <summary>
+            Параметры передаваемые во все создаваемые хранилища
+            </summary>
+        </member>
+        <member name="T:iTeco.Lib.Stg.StorageFactory.Config">
+            <summary>
+            Настройки фабрики хранилищ
+            </summary>
+        </member>
+        <member name="M:iTeco.Lib.Stg.StorageFactory.Config.#ctor(System.Xml.XmlNode)">
+            <summary>
+            Конструктор настроек фабрики
+            </summary>
+            <param name="cfg">XML-настройки</param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.StorageFactory.Config.Create(System.Xml.XmlNode)">
+            <summary>
+            Создать объектное представление настроек фабрики из XML
+            </summary>
+            <param name="cfg">XML-настройки</param>
+            <returns>Объект настроек</returns>
+        </member>
+        <member name="M:iTeco.Lib.Stg.StorageFactory.Config.CreateInitializes(System.Xml.XmlNode)">
+            <summary>
+            Создать объект списка настроек общей инициализации объектов хранилищ
+            </summary>
+            <param name="cfg">Внешние XML-настройки</param>
+            <returns>Список настроек</returns>
+        </member>
+        <member name="M:iTeco.Lib.Stg.StorageFactory.Config.CreateScheme(System.Xml.XmlNode)">
+            <summary>
+            Создать объект схемы разделов хранилища
+            </summary>
+            <param name="cfg">Внешние XML-настройки</param>
+            <returns>Схема резделов хранилища</returns>
+        </member>
+        <member name="P:iTeco.Lib.Stg.StorageFactory.Config.Name">
+            <summary>
+            Название хранилища
+            </summary>
+        </member>
+        <member name="P:iTeco.Lib.Stg.StorageFactory.Config.Desc">
+            <summary>
+            Описание хранилища
+            </summary>
+        </member>
+        <member name="P:iTeco.Lib.Stg.StorageFactory.Config.Initializes">
+            <summary>
+            Список настроек общей инициализации объектов хранилищ
+            </summary>
+        </member>
+        <member name="P:iTeco.Lib.Stg.StorageFactory.Config.Scheme">
+            <summary>
+            Схема разделов хранилища
+            </summary>
+        </member>
+        <member name="T:iTeco.Lib.Stg.StorageFactory.Config.Storage">
+            <summary>
+            Настройки раздела хранилища
+            </summary>
+        </member>
+        <member name="M:iTeco.Lib.Stg.StorageFactory.Config.Storage.#ctor(System.Xml.XmlNode)">
+            <summary>
+            Конструктор настроек раздела хранилища
+            </summary>
+            <param name="cfg">XML-настройки</param>
+        </member>
+        <member name="P:iTeco.Lib.Stg.StorageFactory.Config.Storage.Name">
+            <summary>
+            Название раздела хранилища
+            </summary>
+        </member>
+        <member name="P:iTeco.Lib.Stg.StorageFactory.Config.Storage.Operations">
+            <summary>
+            Набор настроек операций
+            </summary>
+        </member>
+        <member name="T:iTeco.Lib.Stg.StorageFactory.Config.Storage.Operation">
+            <summary>
+            Настройки операции над разделом хранилища
+            </summary>
+        </member>
+        <member name="M:iTeco.Lib.Stg.StorageFactory.Config.Storage.Operation.#ctor(System.Xml.XmlNode)">
+            <summary>
+            Конструктор настроек операции над разделом хранилища
+            </summary>
+            <param name="cfg">XML-настройки</param>
+        </member>
+        <member name="P:iTeco.Lib.Stg.StorageFactory.Config.Storage.Operation.Mode">
+            <summary>
+            Название режима
+            </summary>
+        </member>
+        <member name="P:iTeco.Lib.Stg.StorageFactory.Config.Storage.Operation.Assembly">
+            <summary>
+            Название сборки реализации объекта хранилища
+            </summary>
+        </member>
+        <member name="P:iTeco.Lib.Stg.StorageFactory.Config.Storage.Operation.Class">
+            <summary>
+            Название класса реализации объекта хранилища
+            </summary>
+        </member>
+        <member name="P:iTeco.Lib.Stg.StorageFactory.Config.Storage.Operation.Cfg">
+            <summary>
+            Настройки объекта раздела хранилища
+            </summary>
+        </member>
+        <member name="T:iTeco.Lib.Stg.StorageFactory.RootStorage">
+            <summary>
+            Класс корневого раздела хранилища
+            </summary>
+        </member>
+        <member name="T:iTeco.Lib.Stg.StorageBase">
+            <summary>
+            Базовый класс всех хранилищ
+            </summary>
+        </member>
+        <member name="M:iTeco.Lib.Stg.StorageBase.#ctor">
+            <summary>
+            Конструктор объекта хранилища
+            </summary>
+        </member>
+        <member name="M:iTeco.Lib.Stg.StorageBase.#ctor(iTeco.Lib.Base.PropContainer,iTeco.Lib.Stg.StorageFactory,iTeco.Lib.Stg.StorageMode)">
+            <summary>
+            Конструктор объекта хранилища, устанавливающий все свойства объекта при создании
+            </summary>
+            <param name="props">Список свойств</param>
+            <param name="factory">Фабрика, к которой обращаться для создания подразделов</param>
+            <param name="mode">Режим открытия</param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.StorageBase.Open(iTeco.Lib.Stg.StorageMode,System.Xml.XmlNode,System.Xml.XmlNode,iTeco.Lib.Base.PropContainer,iTeco.Lib.Stg.StorageFactory)">
+            <summary>
+            Открыть раздел хранилища
+            </summary>
+            <remarks>
+            Метод предназначен для внутреннего использования фабриками или другими разделами хранилища
+            при реализации метода Create, объект создающий хранилище для чтения/сохранения состояния
+            не должен его вызывать
+            </remarks>
+            <param name="mode">Режим открытия</param>
+            <param name="scheme">Настройки данного раздела хранилища заданные в схеме</param>
+            <param name="init">Параметры инициализации из фабрики</param>
+            <param name="filter">Набор параметров фильтра открываемого экземпляра</param>
+            <param name="factory">Фабрика, к которой обращаться для создания подразделов</param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.StorageBase.Close">
+            <summary>
+            Закрыть раздел хранилища
+            </summary>
+        </member>
+        <member name="M:iTeco.Lib.Stg.StorageBase.Execute">
+            <summary>
+            Выполнить операцию над хранилищем
+            </summary>
+            <returns>false - точно известно, что никаких данных не получено из хранилища, иначе - true</returns>
+        </member>
+        <member name="M:iTeco.Lib.Stg.StorageBase.NextRecord">
+            <summary>
+            Получить следующую строку при выборе списка из хранилища
+            </summary>
+            <returns>Следующая строка или null</returns>
+        </member>
+        <member name="M:iTeco.Lib.Stg.StorageBase.NextRecordset">
+            <summary>
+            Перейти к следующему набору строк, при получении списка из хранилища
+            </summary>
+            <remarks>
+            Применимо в случае объектов доступа к хранилищам,
+            реализующим концепцию возврата множественных наборов данных
+            </remarks>
+            <returns>true - получилось перейти на следующий набор, false - нет следующего набора</returns>
+        </member>
+        <member name="M:iTeco.Lib.Stg.StorageBase.Create(System.String,iTeco.Lib.Stg.StorageMode,iTeco.Lib.Base.PropContainer)">
+            <summary>
+            Создать подраздел хранилища
+            </summary>
+            <remarks>
+            Для реализаций хранилищ не поддерживающих иерархической организации данных (типа БД)
+            этот вызов эквивалентен вызову Create у фабрики
+            </remarks>
+            <param name="name">Название раздела в схеме</param>
+            <param name="mode">Режим открытия</param>
+            <param name="filter">Набор параметров фильтра создаваемого экземпляра</param>
+            <returns>Раздел хранилища</returns>
+        </member>
+        <member name="M:iTeco.Lib.Stg.StorageBase.DisposeManaged">
+            <summary>
+            Освободить управляемые ресурсы
+            </summary>
+        </member>
+        <member name="P:iTeco.Lib.Stg.StorageBase.Mode">
+            <summary>
+            Режим, в котором был открыт раздел хранилища
+            </summary>
+        </member>
+        <member name="P:iTeco.Lib.Stg.StorageBase.Factory">
+            <summary>
+            Фабрика, к которой обращаться для создания подразделов
+            </summary>
+        </member>
+        <member name="P:iTeco.Lib.Stg.StorageBase.Props">
+            <summary>
+            Свойства раздела хранилища
+            </summary>
+        </member>
+        <member name="T:iTeco.Lib.Stg.StorageHelper">
+            <summary>
+            Вспомогательные методы для работы с объектами хранилищ
+            </summary>
+        </member>
+        <member name="M:iTeco.Lib.Stg.StorageHelper.ToStorageMode(System.String,System.Boolean)">
+            <summary>
+            Преобразовать строковое представление названия или численного значения в элемент перечисления StorageMode
+            </summary>
+            <param name="mode">Строка содержащая название или численное значение</param>
+            <param name="ignoreCase">Флаг игнорирования регистра строки</param>
+            <returns>Элемент перечисления StorageMode</returns>
+        </member>
+        <member name="M:iTeco.Lib.Stg.StorageHelper.IsStorageMode(System.Int32)">
+            <summary>
+            Проверить принадлежность целочисленного значения перечислению StorageMode
+            </summary>
+            <param name="mode">Целочисленное значение для проверки</param>
+            <returns>true - значение соответствует одному из StorageMode, иначе - false</returns>
+        </member>
+        <member name="M:iTeco.Lib.Stg.StorageHelper.IsStorageMode(System.String,System.Boolean)">
+            <summary>
+            Проверить принадлежность строкового значения перечислению StorageMode
+            </summary>
+            <param name="mode">Строковое значение для проверки</param>
+            <param name="ignoreCase">Флаг игнорирования регистра строки</param>
+            <returns>true - значение соответствует одному из StorageMode, иначе - false</returns>
+        </member>
+        <member name="M:iTeco.Lib.Stg.StorageHelper.InitNew(iTeco.Lib.Stg.StorageBase,iTeco.Lib.Stg.IPersistObject)">
+            <summary>
+            Установить состояние объекта из переданного хранилища
+            </summary>
+            <param name="stg">Раздел хранилища</param>
+            <param name="obj">Объект состояния</param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.StorageHelper.Load(iTeco.Lib.Stg.StorageBase,iTeco.Lib.Stg.IPersistObject)">
+            <summary>
+            Выполнить загрузку состояния объекта из раздела хранилища
+            Метод подразумевает открытие объектом своего раздела хранилища относительно переданного
+            </summary>
+            <param name="stg">Раздел хранилища</param>
+            <param name="obj">Объект состояния</param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.StorageHelper.LoadFrom(iTeco.Lib.Stg.StorageBase,iTeco.Lib.Stg.IPersistObject,System.String)">
+            <summary>
+            Выполнить загрузку состояния объекта из раздела хранилища
+            Метод подразумевает открытие объектом указанного раздела хранилища относительно переданного
+            </summary>
+            <param name="stg">Раздел хранилища</param>
+            <param name="obj">Объект состояния</param>
+            <param name="name">Название раздела хранилища</param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.StorageHelper.ApplyTo(iTeco.Lib.Stg.StorageBase,iTeco.Lib.Stg.IPersistObject)">
+            <summary>
+            Сохранить состояние объекта в переданное хранилище
+            </summary>
+            <param name="stg">Раздел хранилища</param>
+            <param name="obj">Объект состояния</param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.StorageHelper.Save(iTeco.Lib.Stg.StorageBase,iTeco.Lib.Stg.IPersistObject)">
+            <summary>
+            Выполнить сохранение состояния объекта в раздел хранилища
+            Метод подразумевает открытие объектом своего раздела хранилища относительно переданного
+            </summary>
+            <param name="stg">Раздел хранилища</param>
+            <param name="obj">Объект состояния</param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.StorageHelper.SaveAs(iTeco.Lib.Stg.StorageBase,iTeco.Lib.Stg.IPersistObject,System.String)">
+            <summary>
+            Выполнить сохранение состояния объекта в раздел хранилища
+            Метод подразумевает открытие объектом указанного раздела хранилища относительно переданного
+            </summary>
+            <param name="stg">Раздел хранилища</param>
+            <param name="obj">Объект состояния</param>
+            <param name="name">Название раздела хранилища</param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.StorageHelper.Destroy(iTeco.Lib.Stg.StorageBase,iTeco.Lib.Stg.IPersistObject)">
+            <summary>
+            Выполнить удаление состояния объекта из раздела хранилища
+            Метод подразумевает открытие объектом своего раздела хранилища относительно переданного
+            </summary>
+            <param name="stg">Раздел хранилища</param>
+            <param name="obj">Объект состояния</param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.StorageHelper.DestroyTo(iTeco.Lib.Stg.StorageBase,iTeco.Lib.Stg.IPersistObject,System.String)">
+            <summary>
+            Выполнить удаление состояния объекта из раздела хранилища
+            Метод подразумевает открытие объектом указанного раздела хранилища относительно переданного
+            </summary>
+            <param name="stg">Раздел хранилища</param>
+            <param name="obj">Объект состояния</param>
+            <param name="name">Название раздела хранилища</param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.StorageHelper.LoadAsPropContainerList(iTeco.Lib.Stg.StorageBase)">
+            <summary>
+            Загрузить данные из раздела хранилища в список контейнеров именованных свойств
+            </summary>
+            <param name="stg">Раздел хранилища</param>
+            <returns>Список контейнеров именованных свойств</returns>
+        </member>
+        <member name="T:iTeco.Lib.Stg.StorageException">
+            <summary>
+            Класс исключений хранилища
+            </summary>
+        </member>
+        <member name="M:iTeco.Lib.Stg.StorageException.#ctor(System.String)">
+            <summary>
+            Создать исключение с указанным текстом сообщения
+            </summary>
+            <param name="msg">Текст сообщения</param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.StorageException.#ctor(System.String,System.Exception)">
+            <summary>
+            Создать исключение с указанным текстом сообщения и произошедшей ранее ошибке
+            </summary>
+            <param name="msg">Текст сообщения</param>
+            <param name="inner">Произошедшая ранее ошибка вызвавшая эту</param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.StorageException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Создать исключение с сериализованными данными
+            </summary>
+            <param name="info">Информация о произошедшем исключении</param>
+            <param name="stream">Поясняющее ошибку сообщение</param>
+        </member>
+        <member name="T:iTeco.Lib.Stg.StorageRecord">
+            <summary>
+            "Стандартная" реализация объекта-набора данных (записи),
+            возвращаемых методом StorageBase.NextRecord
+            </summary>
+        </member>
+        <member name="M:iTeco.Lib.Stg.StorageRecord.#ctor">
+            <summary>
+            Конструктор объекта-записи
+            </summary>
+        </member>
+        <member name="M:iTeco.Lib.Stg.StorageRecord.#ctor(iTeco.Lib.Base.PropContainer,iTeco.Lib.Stg.StorageFactory)">
+            <summary>
+            Конструктор объекта-записи с полной инициализацией
+            </summary>
+            <param name="props">Список свойств</param>
+            <param name="factory">Фабрика, к которой обращаться для создания подразделов</param>
+        </member>
+        <member name="T:iTeco.Lib.Stg.StorageMode">
+            <summary>
+            Режимы открытия хранилища
+            </summary>
+        </member>
+        <member name="F:iTeco.Lib.Stg.StorageMode.read">
+            <summary>
+            Режим чтения
+            </summary>
+        </member>
+        <member name="F:iTeco.Lib.Stg.StorageMode.write">
+            <summary>
+            Режим записи
+            </summary>
+        </member>
+        <member name="F:iTeco.Lib.Stg.StorageMode.delete">
+            <summary>
+            Режим удаления
+            </summary>
+        </member>
+        <member name="F:iTeco.Lib.Stg.StorageMode.def">
+            <summary>
+            Режим по умолчанию (чтение)
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,235 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Stg.MSSQL.Cls</name>
+    </assembly>
+    <members>
+        <member name="T:iTeco.Lib.Stg.MSSQL.Config">
+            <summary>
+            Контейнер настроек
+            </summary>
+        </member>
+        <member name="M:iTeco.Lib.Stg.MSSQL.Config.ToConnection(System.Xml.XmlNode)">
+            <summary>
+            Получить объект соединения для указанных настроек
+            </summary>
+            <param name="cfg">Настройки</param>
+            <returns>Объект соединения</returns>
+        </member>
+        <member name="M:iTeco.Lib.Stg.MSSQL.Config.ToCommand(System.Xml.XmlNode)">
+            <summary>
+            Получить объект команды для указанных настроек
+            </summary>
+            <param name="cfg">Настройки</param>
+            <returns>Команда</returns>
+        </member>
+        <member name="T:iTeco.Lib.Stg.MSSQL.Config.Connection">
+            <summary>
+            Настройки соединения
+            </summary>
+        </member>
+        <member name="F:iTeco.Lib.Stg.MSSQL.Config.Connection.CryptedPrefix">
+            <summary>
+            Префикс сигнализирующий о том, что значение зашифровано
+            </summary>
+        </member>
+        <member name="F:iTeco.Lib.Stg.MSSQL.Config.Connection._connections">
+            <summary>
+            Пул подготовленных конструкторов для создания объекта соединения
+            В пуле уникальность определяется по хеш-коду XML-настроек
+            </summary>
+        </member>
+        <member name="M:iTeco.Lib.Stg.MSSQL.Config.Connection.GetConnection(System.Xml.XmlNode)">
+            <summary>
+            Получить объект соединения для указанных настроек
+            </summary>
+            <param name="cfg">Настройки</param>
+            <returns>Объект соединения</returns>
+        </member>
+        <member name="M:iTeco.Lib.Stg.MSSQL.Config.Connection.CreateStringBuilder(System.Xml.XmlNode)">
+            <summary>
+            Создать конструктор соединения из XML-настроек
+            </summary>
+            <param name="cfg">Настройки</param>
+            <returns>Конструктор соединения</returns>
+        </member>
+        <member name="T:iTeco.Lib.Stg.MSSQL.Config.Command">
+            <summary>
+            Настройки команды
+            </summary>
+        </member>
+        <member name="F:iTeco.Lib.Stg.MSSQL.Config.Command.NodeProcedure">
+            <summary>
+            Узел настроек процедуры
+            </summary>
+        </member>
+        <member name="F:iTeco.Lib.Stg.MSSQL.Config.Command.NodeParams">
+            <summary>
+            Узел списка параметров
+            </summary>
+        </member>
+        <member name="F:iTeco.Lib.Stg.MSSQL.Config.Command.NodeParam">
+            <summary>
+            Узел описаний параметра
+            </summary>
+        </member>
+        <member name="F:iTeco.Lib.Stg.MSSQL.Config.Command._commands">
+            <summary>
+            Пул подготовленных команд, уже создававшихся по настройкам
+            В пуле уникальность определяется по хеш-коду XML-настроек
+            </summary>
+        </member>
+        <member name="M:iTeco.Lib.Stg.MSSQL.Config.Command.GetCommand(System.Xml.XmlNode)">
+            <summary>
+            Получить объект команды для указанных настроек
+            </summary>
+            <param name="cfg">Настройки</param>
+            <returns>Команда</returns>
+        </member>
+        <member name="M:iTeco.Lib.Stg.MSSQL.Config.Command.CreateCommand(System.Xml.XmlNode)">
+            <summary>
+            Создать команду из XML-настроек
+            </summary>
+            <param name="cfg">Настройки</param>
+            <returns>Команда</returns>
+        </member>
+        <member name="T:iTeco.Lib.Stg.MSSQL.Helper">
+            <summary>
+            Вспомогательные методы для работы с объектами MSSQL
+            </summary>
+        </member>
+        <member name="M:iTeco.Lib.Stg.MSSQL.Helper.ToSqlDbType(System.String,System.Boolean)">
+            <summary>
+            Преобразовать строковое представление названия или численного значения в элемент перечисления SqlDbType
+            </summary>
+            <param name="type">Строка содержащая название или численное значение</param>
+            <param name="ignoreCase">Флаг игнорирования регистра строки</param>
+            <returns>Элемент перечисления SqlDbType</returns>
+        </member>
+        <member name="M:iTeco.Lib.Stg.MSSQL.Helper.IsSqlDbType(System.Int32)">
+            <summary>
+            Проверить принадлежность целочисленного значения перечислению SqlDbType
+            </summary>
+            <param name="type">Целочисленное значение для проверки</param>
+            <returns>true - значение соответствует одному из SqlDbType, иначе - false</returns>
+        </member>
+        <member name="M:iTeco.Lib.Stg.MSSQL.Helper.IsSqlDbType(System.String,System.Boolean)">
+            <summary>
+            Проверить принадлежность строкового значения перечислению SqlDbType
+            Регистр не учитывается
+            </summary>
+            <param name="type">Строковое значение для проверки</param>
+            <param name="ignoreCase">Флаг игнорирования регистра строки</param>
+            <returns>true - значение соответствует одному из SqlDbType, иначе - false</returns>
+        </member>
+        <member name="M:iTeco.Lib.Stg.MSSQL.Helper.IsString(System.Data.SqlDbType)">
+            <summary>
+            Проверить, что тип - строковое значение
+            </summary>
+            <param name="type">Элемент параечисления SqlDbType</param>
+            <returns>true - строка, false - не строка</returns>
+        </member>
+        <member name="M:iTeco.Lib.Stg.MSSQL.Helper.ToParameterDirection(System.String,System.Boolean)">
+            <summary>
+            Преобразовать строковое представление названия или численного значения в элемент перечисления ParameterDirection
+            </summary>
+            <param name="dir">Строка содержащая название или численное значение</param>
+            <param name="ignoreCase">Флаг игнорирования регистра строки</param>
+            <returns>Элемент перечисления ParameterDirection</returns>
+        </member>
+        <member name="M:iTeco.Lib.Stg.MSSQL.Helper.IsParameterDirection(System.Int32)">
+            <summary>
+            Проверить принадлежность целочисленного значения перечислению ParameterDirection
+            </summary>
+            <param name="dir">Целочисленное значение для проверки</param>
+            <returns>true - значение соответствует одному из ParameterDirection, иначе - false</returns>
+        </member>
+        <member name="M:iTeco.Lib.Stg.MSSQL.Helper.IsParameterDirection(System.String,System.Boolean)">
+            <summary>
+            Проверить принадлежность строкового значения перечислению ParameterDirection
+            </summary>
+            <param name="dir">Строковое значение для проверки</param>
+            <param name="ignoreCase">Флаг игнорирования регистра строки</param>
+            <returns>true - значение соответствует одному из ParameterDirection, иначе - false</returns>
+        </member>
+        <member name="M:iTeco.Lib.Stg.MSSQL.Helper.ToDictionary(System.Data.SqlClient.SqlDataReader)">
+            <summary>
+            Представить набор полей со значениями SqlDataReader-а в виде Dictionary
+            </summary>
+            <param name="reader">Исходный SqlDataReader</param>
+            <returns>Полученный Dictionary</returns>
+        </member>
+        <member name="T:iTeco.Lib.Stg.MSSQL.StorageProcedure">
+            <summary>
+            Реализация объекта хранилища использующего процедуры MSSQL-сервера
+            </summary>
+        </member>
+        <member name="F:iTeco.Lib.Stg.MSSQL.StorageProcedure.NodeConnect">
+            <summary>
+            Узел настроек соединения
+            </summary>
+        </member>
+        <member name="F:iTeco.Lib.Stg.MSSQL.StorageProcedure.NodeProcedure">
+            <summary>
+            Узел настроек процедуры
+            </summary>
+        </member>
+        <member name="F:iTeco.Lib.Stg.MSSQL.StorageProcedure._connection">
+            <summary>
+            Соединение с БД
+            </summary>
+        </member>
+        <member name="F:iTeco.Lib.Stg.MSSQL.StorageProcedure._command">
+            <summary>
+            Выполняемая команда
+            </summary>
+        </member>
+        <member name="F:iTeco.Lib.Stg.MSSQL.StorageProcedure._recordset">
+            <summary>
+            Получаемая после выполнения выборка
+            </summary>
+        </member>
+        <member name="M:iTeco.Lib.Stg.MSSQL.StorageProcedure.Open(iTeco.Lib.Stg.StorageMode,System.Xml.XmlNode,System.Xml.XmlNode,iTeco.Lib.Base.PropContainer,iTeco.Lib.Stg.StorageFactory)">
+            <summary>
+            Открыть раздел хранилища
+            </summary>
+            <remarks>
+            Метод предназначен для внутреннего использования фабриками или другими разделами хранилища
+            при реализации метода Create, объект создающий хранилище для чтения/сохранения состояния
+            не должен его вызывать
+            </remarks>
+            <param name="mode">Режим открытия</param>
+            <param name="scheme">Настройки данного раздела хранилища заданные в схеме</param>
+            <param name="init">Параметры инициализации из фабрики</param>
+            <param name="filter">Набор параметров фильтра открываемого экземпляра</param>
+            <param name="factory">Фабрика, к которой обращаться для создания подразделов</param>
+        </member>
+        <member name="M:iTeco.Lib.Stg.MSSQL.StorageProcedure.Close">
+            <summary>
+            Закрыть раздел хранилища
+            </summary>
+        </member>
+        <member name="M:iTeco.Lib.Stg.MSSQL.StorageProcedure.Execute">
+            <summary>
+            Выполнить операцию над хранилищем
+            </summary>
+            <returns>false - точно известно, что никаких данных не получено из хранилища, иначе - true</returns>
+        </member>
+        <member name="M:iTeco.Lib.Stg.MSSQL.StorageProcedure.NextRecord">
+            <summary>
+            Получить следующую строку при выборе списка из хранилища
+            </summary>
+            <returns>Следующая строка или null</returns>
+        </member>
+        <member name="M:iTeco.Lib.Stg.MSSQL.StorageProcedure.NextRecordset">
+            <summary>
+            Перейти к следующему набору строк, при получении списка из хранилища
+            </summary>
+            <remarks>
+            Применимо в случае объектов доступа к хранилищам,
+            реализующим концепцию возврата множественных наборов данных
+            </remarks>
+            <returns>true - получилось перейти на следующий набор, false - нет следующего набора</returns>
+        </member>
+    </members>
+</doc>

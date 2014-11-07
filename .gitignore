@@ -1,0 +1,13 @@
+SH.Biz/bin/*
+SH.BO/bin/*
+SH.Data/bin/*
+SH.Service.Test/bin/*
+SH.Tester/bin/*
+SH.Web/bin/*
+
+SH.Biz/obj/*
+SH.BO/obj/*
+SH.Data/obj/*
+SH.Service.Test/obj/*
+SH.Tester/obj/*
+SH.Web/obj/*
