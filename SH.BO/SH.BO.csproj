@@ -7,8 +7,8 @@
     <ProjectGuid>{671C7329-9A31-48E1-A7FE-FE73534F022B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SM.BO</RootNamespace>
-    <AssemblyName>SM.BO</AssemblyName>
+    <RootNamespace>SH.BO</RootNamespace>
+    <AssemblyName>SH.BO</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -39,7 +39,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ISensorValueSource.cs" />
+    <Compile Include="SensorValueScale.cs" />
+    <Compile Include="SensorValue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SensorValueType.cs" />
     <Compile Include="ThermSensor.cs" />
     <Compile Include="ThermStamp.cs" />
   </ItemGroup>

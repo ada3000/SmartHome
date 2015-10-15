@@ -12,7 +12,7 @@ using iTeco.Lib.Base;
 using iTeco.Lib.Srv;
 
 
-namespace SH.Biz
+namespace SH.Utils
 {
     /// <summary>
     /// Загрузка данных

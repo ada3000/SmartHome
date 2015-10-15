@@ -6,9 +6,11 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
+using SH.BO;
+
 namespace SH.TelemetrySource
 {
-	public class CPUUsage
+	public class CPUUsage : ISensorValueSource
 	{
 		private PerformanceCounter cpuCounter = null;
 
@@ -72,6 +74,59 @@ namespace SH.TelemetrySource
 			{
 				return CalcMiddle(300);
 			}
+		}
+
+		public IEnumerable<SensorValue> Collect()
+		{
+			SensorValue result = new SensorValue
+					{
+						Date = DateTime.UtcNow,
+						Children = new List<SensorValue>(),
+						Name = "CPU Info",
+						Type = SensorValueType.CPU,
+						SubType = "CpuCores",
+						Value = System.Environment.ProcessorCount,
+						ValueScale = SensorValueScale.Unknown,
+					};
+
+			result.Children.Add(new SensorValue
+			{
+				Date = DateTime.UtcNow,
+				Name = "CPU Usage",
+				Type = SensorValueType.CPU,
+				SubType = "Current",
+				Value = Current,
+				ValueMin = 0,
+				ValueMax = 100,
+				ValueScale = SensorValueScale.Persent
+			});
+
+			result.Children.Add(new SensorValue
+			{
+				Date = DateTime.UtcNow,
+				Name = "CPU Usage",
+				Type = SensorValueType.CPU,
+				SubType = "Average1Min",
+				Value = Average1Min,
+				ValueMin = 0,
+				ValueMax = 100,
+				ValueScale = SensorValueScale.Persent
+			});
+
+			result.Children.Add(new SensorValue
+			{
+				Date = DateTime.UtcNow,
+				Name = "CPU Usage",
+				Type = SensorValueType.CPU,
+				SubType = "Average5Min",
+				Value = Average5Min,
+				ValueMin = 0,
+				ValueMax = 100,
+				WarningValueMin = 50,
+				ValueScale = SensorValueScale.Persent
+			});
+
+			return new[] { result };
 		}
 	}
 }

@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\Libs\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -48,9 +51,21 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SH.Biz\SH.Biz.csproj">
+      <Project>{7b27af6c-8728-4f9d-aca7-83e39015cb95}</Project>
+      <Name>SH.Biz</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SH.BO\SH.BO.csproj">
+      <Project>{671c7329-9a31-48e1-a7fe-fe73534f022b}</Project>
+      <Name>SH.BO</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SH.TelemetrySource\SH.TelemetrySource.csproj">
       <Project>{29239637-7d57-40ca-aae1-3254aeaadd66}</Project>
       <Name>SH.TelemetrySource</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SH.Utils\SH.Utils.csproj">
+      <Project>{adb4e9db-9946-4079-87d4-68613432dfce}</Project>
+      <Name>SH.Utils</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

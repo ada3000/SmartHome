@@ -30,7 +30,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Base.Cls">
+      <HintPath>..\Libs\Base.Cls.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\Libs\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Srv.Cls">
+      <HintPath>..\Libs\Srv.Cls.dll</HintPath>
+    </Reference>
+    <Reference Include="Srv.WebService.Cls">
+      <HintPath>..\Libs\Srv.WebService.Cls.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Management" />
@@ -43,9 +55,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MachineInfo.cs" />
+    <Compile Include="DiskUsage.cs" />
     <Compile Include="MemUsage.cs" />
     <Compile Include="CPUUsage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SH.BO\SH.BO.csproj">
+      <Project>{671c7329-9a31-48e1-a7fe-fe73534f022b}</Project>
+      <Name>SH.BO</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

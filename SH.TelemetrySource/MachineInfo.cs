@@ -6,10 +6,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Management;
 
+using SH.BO;
+
 namespace SH.TelemetrySource
 {
-	public class MachineInfo
+	public class MachineInfo: ISensorValueSource
 	{
+		//private static PerformanceCounter _uptime = new PerformanceCounter("System", "System Up Time");
 		public MachineInfo()
 		{
 			SelectQuery query = new SelectQuery(@"Select * from Win32_ComputerSystem");
@@ -46,5 +49,97 @@ namespace SH.TelemetrySource
 		public string Caption { get; private set; }
 		public string SystemManufacturer { get; private set; }
 		public string SystemModel { get; private set; }
+		public long UpTimeSec
+		{
+			get
+			{
+				var ticks = Stopwatch.GetTimestamp();
+				var uptime = ((double)ticks) / Stopwatch.Frequency;
+				return (long)uptime;
+				//return (long)_uptime.NextValue();
+			}
+		}
+
+		public IEnumerable<SensorValue> Collect()
+		{
+			List<SensorValue> result = new List<SensorValue>();
+
+			result.Add(new SensorValue
+			{
+				Date = DateTime.UtcNow,
+				Type = SensorValueType.Info,
+				Name = "CurrentTimeZone",
+				SubType = "CurrentTimeZone",
+				ValueScale = SensorValueScale.Minute,
+				Value = CurrentTimeZone
+			});
+
+			result.Add(new SensorValue
+			{
+				Date = DateTime.UtcNow,
+				Type = SensorValueType.Info,
+				Name = "TotalPhysicalMemory",
+				SubType = "TotalPhysicalMemory",
+				ValueScale = SensorValueScale.Byte,
+				Value = TotalPhysicalMemory
+			});
+
+			result.Add(new SensorValue
+			{
+				Date = DateTime.UtcNow,
+				Type = SensorValueType.Info,
+				Name = "PrimaryOwnerName",
+				SubType = "PrimaryOwnerName",
+				ValueStr = PrimaryOwnerName
+			});
+
+			result.Add(new SensorValue
+			{
+				Date = DateTime.UtcNow,
+				Type = SensorValueType.Info,
+				Name = "DNSHostName",
+				SubType = "DNSHostName",
+				ValueStr = DNSHostName
+			});
+
+			result.Add(new SensorValue
+			{
+				Date = DateTime.UtcNow,
+				Type = SensorValueType.Info,
+				Name = "Caption",
+				SubType = "Caption",
+				ValueStr = Caption
+			});
+
+			result.Add(new SensorValue
+			{
+				Date = DateTime.UtcNow,
+				Type = SensorValueType.Info,
+				Name = "SystemManufacturer",
+				SubType = "SystemManufacturer",
+				ValueStr = SystemManufacturer
+			});
+
+			result.Add(new SensorValue
+			{
+				Date = DateTime.UtcNow,
+				Type = SensorValueType.Info,
+				Name = "SystemModel",
+				SubType = "SystemModel",
+				ValueStr = SystemModel
+			});
+
+			result.Add(new SensorValue
+			{
+				Date = DateTime.UtcNow,
+				Type = SensorValueType.Info,
+				Name = "UpTime",
+				SubType = "UpTime",
+				ValueScale = SensorValueScale.Second,
+				Value = UpTimeSec
+			});
+
+			return result;
+		}
 	}
 }

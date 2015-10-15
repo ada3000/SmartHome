@@ -6,6 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using SH.TelemetrySource;
+using Newtonsoft.Json;
+using SH.BO;
 
 namespace SH.Tester
 {
@@ -28,6 +30,7 @@ namespace SH.Tester
 		static CPUUsage _cpu = new CPUUsage();
 		static MemUsage _mem = new MemUsage();
 		static MachineInfo _machineInfo = new MachineInfo();
+		static DiskUsage _disk = new DiskUsage();
 
 		static void Main(string[] args)
 		{
@@ -37,14 +40,25 @@ namespace SH.Tester
 			Console.WriteLine(_machineInfo.TotalPhysicalMemory);
 			Console.WriteLine(_machineInfo.CurrentTimeZone);
 
-			Console.ReadKey();
-			while (true)
-			{
-				//Console.WriteLine(_cpu.Current + "% " + _mem.AvaibleMB + "MB " + (_mem.TotalMB - _mem.AvaibleMB) + "MB " + _mem.TotalMB + "MB");
-				//Console.WriteLine(_cpu.Current + "% Ave1Min=" + _cpu.Average1Min + "% Ave5Min=" + _cpu.Average5Min + "% ");
-				//Console.WriteLine(_cpu.Current + "% " + _mem.AvaibleMB + "MB " + (_mem.TotalMB-_mem.AvaibleMB) + "MB " + _mem.TotalMB + "MB");
-				Thread.Sleep(1000);
-			}
+			//while (true)
+			//{
+			//	//Console.WriteLine(_cpu.Current + "% " + _mem.AvaibleMB + "MB " + (_mem.TotalMB - _mem.AvaibleMB) + "MB " + _mem.TotalMB + "MB");
+			//	//Console.WriteLine(_cpu.Current + "% Ave1Min=" + _cpu.Average1Min + "% Ave5Min=" + _cpu.Average5Min + "% ");
+			//	//Console.WriteLine(_cpu.Current + "% " + _mem.AvaibleMB + "MB " + (_mem.TotalMB-_mem.AvaibleMB) + "MB " + _mem.TotalMB + "MB");
+			//	Thread.Sleep(1000);
+			//}
+
+			//var data = _disk.Collect().ToArray();
+			
+			//Thread.Sleep(10000);
+
+			//var data = _cpu.Collect().ToArray();
+			var data = _machineInfo.Collect().ToArray();
+
+
+			Console.WriteLine(JsonConvert.SerializeObject(data));
+
+			Console.ReadKey();		
 		}
 	}
 }

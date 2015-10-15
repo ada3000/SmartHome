@@ -67,7 +67,7 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\External\Json\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\Libs\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Srv.Cls">
       <HintPath>..\Libs\Srv.Cls.dll</HintPath>
@@ -77,7 +77,7 @@
     </Reference>
     <Reference Include="Srv.WebService.Cls, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Internal\Lib\Srv.WebService.Cls.dll</HintPath>
+      <HintPath>..\Libs\Srv.WebService.Cls.dll</HintPath>
     </Reference>
     <Reference Include="Stg.Cls, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

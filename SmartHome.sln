@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SH.Service.Test", "SH.Servi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SH.TelemetrySource", "SH.TelemetrySource\SH.TelemetrySource.csproj", "{29239637-7D57-40CA-AAE1-3254AEAADD66}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SH.Utils", "SH.Utils\SH.Utils.csproj", "{ADB4E9DB-9946-4079-87D4-68613432DFCE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -97,6 +99,16 @@ Global
 		{29239637-7D57-40CA-AAE1-3254AEAADD66}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{29239637-7D57-40CA-AAE1-3254AEAADD66}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{29239637-7D57-40CA-AAE1-3254AEAADD66}.Release|x86.ActiveCfg = Release|Any CPU
+		{ADB4E9DB-9946-4079-87D4-68613432DFCE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADB4E9DB-9946-4079-87D4-68613432DFCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADB4E9DB-9946-4079-87D4-68613432DFCE}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{ADB4E9DB-9946-4079-87D4-68613432DFCE}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{ADB4E9DB-9946-4079-87D4-68613432DFCE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{ADB4E9DB-9946-4079-87D4-68613432DFCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADB4E9DB-9946-4079-87D4-68613432DFCE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADB4E9DB-9946-4079-87D4-68613432DFCE}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{ADB4E9DB-9946-4079-87D4-68613432DFCE}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{ADB4E9DB-9946-4079-87D4-68613432DFCE}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
