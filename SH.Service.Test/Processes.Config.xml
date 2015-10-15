@@ -5,8 +5,10 @@
 		<max worker="500" io="500" />
 	</threads>
 	<processes checkRunSecs="10">
-		
-		<_fileReference file="Cfg.Therm.Process.xml" nodes_path="/configuration/processes/process"/>
+
+    
+    <_fileReference file="Cfg.TelemetryProvider.Process.xml" nodes_path="/configuration/processes/process"/>
+    <x_fileReference file="Cfg.Therm.Process.xml" nodes_path="/configuration/processes/process"/>
     
   </processes>
 </configuration>

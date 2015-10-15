@@ -66,12 +66,19 @@
       <Project>{f3ee2fbd-a5d8-45e5-8848-956a81e297c9}</Project>
       <Name>SH.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SH.TelemetrySource\SH.TelemetrySource.csproj">
+      <Project>{29239637-7d57-40ca-aae1-3254aeaadd66}</Project>
+      <Name>SH.TelemetrySource</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SH.Utils\SH.Utils.csproj">
       <Project>{adb4e9db-9946-4079-87d4-68613432dfce}</Project>
       <Name>SH.Utils</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Cfg.TelemetryProvider.Process.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Cfg.Therm.Process.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

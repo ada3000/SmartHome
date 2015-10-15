@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <threads>
+    <min worker="" io="" />
+    <max worker="" io="" />
+  </threads>
+  <processes checkRunSecs="10">
+    <process id="TelemetryProvider" name="TelemetryProvider" assembly="SH.Biz" class="SH.Biz.TelemetryProviderProcess">
+      <webServerPort>5478</webServerPort>
+    </process>
+  </processes>
+</configuration>

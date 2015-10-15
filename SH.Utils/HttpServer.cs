@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace SH.Utils
 {
-	public abstract class HttpServer
+	public class HttpServer
 	{
 
 		protected int Port;
@@ -71,6 +71,7 @@ namespace SH.Utils
 
 					processor.OnGetRequest += Processor_OnGetRequest;
 					processor.OnPostRequest += Processor_OnPostRequest;
+					processor.OnError += Processor_OnError;
 
 					Thread thread = new Thread(new ThreadStart(processor.process));
 					thread.IsBackground = true;
@@ -81,6 +82,12 @@ namespace SH.Utils
 					RaiseError(ex);
 				}
 			}
+		}
+
+		void Processor_OnError(object sender, ErrorEventArgs e)
+		{
+			var ev = OnError;
+			ev(this, e);
 		}
 
 		void Processor_OnPostRequest(object sender, HttpProcessorEventArgs e)

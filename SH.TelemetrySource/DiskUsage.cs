@@ -19,7 +19,7 @@ namespace SH.TelemetrySource
 			{
 					SensorValue drive = new SensorValue
 					{
-						Date = DateTime.UtcNow,
+						//Date = DateTime.UtcNow,
 						Children = new List<SensorValue>(),
 						Name = di.VolumeLabel + " (" + di.Name.Replace("\\","") + ")",
 						Description = "Disk persent usage",

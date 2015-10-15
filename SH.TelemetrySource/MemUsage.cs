@@ -42,7 +42,7 @@ namespace SH.TelemetrySource
 		{
 			SensorValue result = new SensorValue
 			{
-				Date = DateTime.UtcNow,
+				//Date = DateTime.UtcNow,
 				Children = new List<SensorValue>(),
 				Name = "Memory Usage %",
 				Type = SensorValueType.Memory,

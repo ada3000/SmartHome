@@ -42,7 +42,6 @@ namespace SH.BO
 		/// Шкала для значения: градусы, мегабайты/быйты
 		/// </summary>
 		public SensorValueScale ValueScale;
-		public DateTime Date;
 
 		public List<SensorValue> Children;
 	}

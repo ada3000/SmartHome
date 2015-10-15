@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ISensorValueSource.cs" />
+    <Compile Include="TelemetryResult.cs" />
     <Compile Include="SensorValueScale.cs" />
     <Compile Include="SensorValue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

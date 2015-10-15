@@ -27,6 +27,7 @@ namespace SH.Utils
 
 		public event EventHandler<HttpProcessorEventArgs> OnGetRequest = (o, ev) => { };
 		public event EventHandler<HttpProcessorEventArgs> OnPostRequest = (o, ev) => { };
+		public event EventHandler<ErrorEventArgs> OnError = (o, ev) => { };
 
 		public HttpProcessor(TcpClient s)
 		{
@@ -51,35 +52,39 @@ namespace SH.Utils
 		{
 			// we can't use a StreamReader for input, because it buffers up extra data on us inside it's
 			// "processed" view of the world, and we want the data raw after the headers
-			_inputStream = new BufferedStream(Socket.GetStream());
+			using (_inputStream = new BufferedStream(Socket.GetStream()))
+			{
+				using (OutputStream = new StreamWriter(new BufferedStream(Socket.GetStream())))
+				{
+					try
+					{
+						ParseRequest();
+						ReadHeaders();
 
-			// we probably shouldn't be using a streamwriter for all output from handlers either
-			OutputStream = new StreamWriter(new BufferedStream(Socket.GetStream()));
-			try
-			{
-				parseRequest();
-				ReadHeaders();
-				if (HttpMethod.Equals("GET"))
-				{
-					OnGetRequest(this, new HttpProcessorEventArgs(this));
-				}
-				else if (HttpMethod.Equals("POST"))
-				{
-					HandlePostRequest();					
+						if (HttpMethod.Equals("GET"))
+						{
+							OnGetRequest(this, new HttpProcessorEventArgs(this));
+						}
+						else if (HttpMethod.Equals("POST"))
+						{
+							HandlePostRequest();
+						}
+					}
+					catch (Exception e)
+					{
+						var badEx = new BadRequestException(HttpUrl, HttpMethod, e);
+						OnError(this, new ErrorEventArgs(badEx));
+
+						WriteFailure();
+					}
+
+					OutputStream.Flush();
+					Socket.Close();
 				}
 			}
-			catch (Exception e)
-			{
-				Console.WriteLine("Exception: " + e.ToString());
-				writeFailure();
-			}
-			OutputStream.Flush();
-			// bs.Flush(); // flush any remaining output
-			_inputStream = null; OutputStream = null; // bs = null;            
-			Socket.Close();
 		}
 
-		public void parseRequest()
+		public void ParseRequest()
 		{
 			string request = streamReadLine(_inputStream);
 			
@@ -133,52 +138,51 @@ namespace SH.Utils
 			// hand an input stream to the request processor. However, the input stream 
 			// we hand him needs to let him see the "end of the stream" at this content 
 			// length, because otherwise he won't know when he's seen it all! 
+				Console.WriteLine("get post data start");
+				int contentLen = 0;
 
-			Console.WriteLine("get post data start");
-			int contentLen = 0;
-
-			MemoryStream ms = new MemoryStream();
-			if (this.HttpHeaders.ContainsKey("Content-Length"))
-			{
-				contentLen = Convert.ToInt32(this.HttpHeaders["Content-Length"]);
-				if (contentLen > MAX_POST_SIZE)
+				MemoryStream ms = new MemoryStream();
+				if (this.HttpHeaders.ContainsKey("Content-Length"))
 				{
-					throw new Exception(
-						String.Format("POST Content-Length({0}) too big for this simple server",
-						  contentLen));
-				}
-				byte[] buf = new byte[BUF_SIZE];
-				int to_read = contentLen;
-				while (to_read > 0)
-				{
-					Console.WriteLine("starting Read, to_read={0}", to_read);
-
-					int numread = this._inputStream.Read(buf, 0, Math.Min(BUF_SIZE, to_read));
-					Console.WriteLine("read finished, numread={0}", numread);
-					if (numread == 0)
+					contentLen = Convert.ToInt32(this.HttpHeaders["Content-Length"]);
+					if (contentLen > MAX_POST_SIZE)
 					{
-						if (to_read == 0)
-						{
-							break;
-						}
-						else
-						{
-							throw new Exception("client disconnected during post");
-						}
+						throw new Exception(
+							String.Format("POST Content-Length({0}) too big for this simple server",
+							  contentLen));
 					}
-					to_read -= numread;
-					ms.Write(buf, 0, numread);
-				}
-				ms.Seek(0, SeekOrigin.Begin);
-			}
-			Console.WriteLine("get post data end");
+					byte[] buf = new byte[BUF_SIZE];
+					int to_read = contentLen;
+					while (to_read > 0)
+					{
+						Console.WriteLine("starting Read, to_read={0}", to_read);
 
-			using(ms)
-				using(StreamReader sr = new StreamReader(ms))
+						int numread = this._inputStream.Read(buf, 0, Math.Min(BUF_SIZE, to_read));
+						Console.WriteLine("read finished, numread={0}", numread);
+						if (numread == 0)
+						{
+							if (to_read == 0)
+							{
+								break;
+							}
+							else
+							{
+								throw new Exception("client disconnected during post");
+							}
+						}
+						to_read -= numread;
+						ms.Write(buf, 0, numread);
+					}
+					ms.Seek(0, SeekOrigin.Begin);
+				}
+				Console.WriteLine("get post data end");
+
+				using (ms)
+				using (StreamReader sr = new StreamReader(ms))
 					OnPostRequest(this, new HttpProcessorEventArgs(this, sr));
 		}
 
-		public void writeSuccess(string contentType = "text/html")
+		public void WriteSuccess(string content = null, string contentType = "text/html")
 		{
 			// this is the successful HTTP response line
 			OutputStream.WriteLine("HTTP/1.0 200 OK");
@@ -188,9 +192,12 @@ namespace SH.Utils
 			// ..add your own headers here if you like
 
 			OutputStream.WriteLine(""); // this terminates the HTTP headers.. everything after this is HTTP body..
+
+			if(!string.IsNullOrEmpty(content))
+				OutputStream.WriteLine(content);
 		}
 
-		public void writeFailure()
+		public void WriteFailure(string content=null)
 		{
 			// this is an http 404 failure response
 			OutputStream.WriteLine("HTTP/1.0 404 File not found");
@@ -199,6 +206,9 @@ namespace SH.Utils
 			// ..add your own headers here
 
 			OutputStream.WriteLine(""); // this terminates the HTTP headers.
+
+			if (!string.IsNullOrEmpty(content))
+				OutputStream.WriteLine(content);
 		}
 	}
 }

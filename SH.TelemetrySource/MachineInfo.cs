@@ -66,7 +66,7 @@ namespace SH.TelemetrySource
 
 			result.Add(new SensorValue
 			{
-				Date = DateTime.UtcNow,
+				//Date = DateTime.UtcNow,
 				Type = SensorValueType.Info,
 				Name = "CurrentTimeZone",
 				SubType = "CurrentTimeZone",
@@ -76,7 +76,7 @@ namespace SH.TelemetrySource
 
 			result.Add(new SensorValue
 			{
-				Date = DateTime.UtcNow,
+				//Date = DateTime.UtcNow,
 				Type = SensorValueType.Info,
 				Name = "TotalPhysicalMemory",
 				SubType = "TotalPhysicalMemory",
@@ -86,7 +86,7 @@ namespace SH.TelemetrySource
 
 			result.Add(new SensorValue
 			{
-				Date = DateTime.UtcNow,
+				//Date = DateTime.UtcNow,
 				Type = SensorValueType.Info,
 				Name = "PrimaryOwnerName",
 				SubType = "PrimaryOwnerName",
@@ -95,7 +95,7 @@ namespace SH.TelemetrySource
 
 			result.Add(new SensorValue
 			{
-				Date = DateTime.UtcNow,
+				//Date = DateTime.UtcNow,
 				Type = SensorValueType.Info,
 				Name = "DNSHostName",
 				SubType = "DNSHostName",
@@ -104,7 +104,7 @@ namespace SH.TelemetrySource
 
 			result.Add(new SensorValue
 			{
-				Date = DateTime.UtcNow,
+				//Date = DateTime.UtcNow,
 				Type = SensorValueType.Info,
 				Name = "Caption",
 				SubType = "Caption",
@@ -113,7 +113,7 @@ namespace SH.TelemetrySource
 
 			result.Add(new SensorValue
 			{
-				Date = DateTime.UtcNow,
+				//Date = DateTime.UtcNow,
 				Type = SensorValueType.Info,
 				Name = "SystemManufacturer",
 				SubType = "SystemManufacturer",
@@ -122,7 +122,7 @@ namespace SH.TelemetrySource
 
 			result.Add(new SensorValue
 			{
-				Date = DateTime.UtcNow,
+				//Date = DateTime.UtcNow,
 				Type = SensorValueType.Info,
 				Name = "SystemModel",
 				SubType = "SystemModel",
@@ -131,7 +131,7 @@ namespace SH.TelemetrySource
 
 			result.Add(new SensorValue
 			{
-				Date = DateTime.UtcNow,
+				//Date = DateTime.UtcNow,
 				Type = SensorValueType.Info,
 				Name = "UpTime",
 				SubType = "UpTime",

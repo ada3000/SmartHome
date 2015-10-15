@@ -80,7 +80,7 @@ namespace SH.TelemetrySource
 		{
 			SensorValue result = new SensorValue
 					{
-						Date = DateTime.UtcNow,
+						//Date = DateTime.UtcNow,
 						Children = new List<SensorValue>(),
 						Name = "CPU Info",
 						Type = SensorValueType.CPU,
@@ -91,7 +91,7 @@ namespace SH.TelemetrySource
 
 			result.Children.Add(new SensorValue
 			{
-				Date = DateTime.UtcNow,
+				//Date = DateTime.UtcNow,
 				Name = "CPU Usage",
 				Type = SensorValueType.CPU,
 				SubType = "Current",
@@ -103,7 +103,7 @@ namespace SH.TelemetrySource
 
 			result.Children.Add(new SensorValue
 			{
-				Date = DateTime.UtcNow,
+				//Date = DateTime.UtcNow,
 				Name = "CPU Usage",
 				Type = SensorValueType.CPU,
 				SubType = "Average1Min",
@@ -115,7 +115,7 @@ namespace SH.TelemetrySource
 
 			result.Children.Add(new SensorValue
 			{
-				Date = DateTime.UtcNow,
+				//Date = DateTime.UtcNow,
 				Name = "CPU Usage",
 				Type = SensorValueType.CPU,
 				SubType = "Average5Min",
