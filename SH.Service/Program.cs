@@ -1,0 +1,40 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.ServiceProcess;
+using System.Text;
+
+namespace Profile.Service
+{
+	static class Program
+	{
+		/// <summary>
+		/// The main entry point for the application.
+		/// </summary>
+		static void Main()
+		{
+			ServiceBase[] ServicesToRun;
+			ServicesToRun = new ServiceBase[] 
+			{ 
+				new MainSrv() 
+			};
+			//ServicesToRun[0].ServiceName = GetServiceName();
+
+			ServiceBase.Run(ServicesToRun);
+		}
+		public static String GetServiceName()
+		{
+			int processId = System.Diagnostics.Process.GetCurrentProcess().Id;
+			String query = "SELECT * FROM Win32_Service where ProcessId = " + processId;
+			System.Management.ManagementObjectSearcher searcher =
+				new System.Management.ManagementObjectSearcher(query);
+
+			foreach (System.Management.ManagementObject queryObj in searcher.Get())
+			{
+				return queryObj["Name"].ToString();
+			}
+
+			throw new Exception("Can not get the ServiceName");
+		}
+	}
+}
