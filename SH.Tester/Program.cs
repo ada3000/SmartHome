@@ -27,18 +27,38 @@ namespace SH.Tester
 	 */
 	class Program
 	{
-		static CPUUsage _cpu = new CPUUsage();
-		static MemUsage _mem = new MemUsage();
-		static MachineInfo _machineInfo = new MachineInfo();
-		static DiskUsage _disk = new DiskUsage();
+		//static CPUUsage _cpu = new CPUUsage();
+		//static MemUsage _mem = new MemUsage();
+		//static MachineInfo _machineInfo = new MachineInfo();
+		//static DiskUsage _disk = new DiskUsage();
 
+		static Func<int> Test()
+		{
+			int i = 1;
+
+			Func<int> res = () => i++;
+
+			i = 2;
+
+			return res;
+		}
 		static void Main(string[] args)
 		{
-			Console.WriteLine(_machineInfo.SystemManufacturer + " " + _machineInfo.SystemModel);
-			Console.WriteLine(_machineInfo.DNSHostName + " " + _machineInfo.Caption);
-			Console.WriteLine(_machineInfo.PrimaryOwnerName);
-			Console.WriteLine(_machineInfo.TotalPhysicalMemory);
-			Console.WriteLine(_machineInfo.CurrentTimeZone);
+			var t= Test();
+			var t2 = Test();
+
+			Func<int> test3 = () => 1 + 2;
+
+			Console.WriteLine(t() + t());
+
+			Console.WriteLine(t2() + t2());
+			Console.WriteLine(t() + t());
+			Console.WriteLine(test3());
+			//Console.WriteLine(_machineInfo.SystemManufacturer + " " + _machineInfo.SystemModel);
+			//Console.WriteLine(_machineInfo.DNSHostName + " " + _machineInfo.Caption);
+			//Console.WriteLine(_machineInfo.PrimaryOwnerName);
+			//Console.WriteLine(_machineInfo.TotalPhysicalMemory);
+			//Console.WriteLine(_machineInfo.CurrentTimeZone);
 
 			//while (true)
 			//{
@@ -53,10 +73,10 @@ namespace SH.Tester
 			//Thread.Sleep(10000);
 
 			//var data = _cpu.Collect().ToArray();
-			var data = _machineInfo.Collect().ToArray();
+			//var data = _machineInfo.Collect().ToArray();
 
 
-			Console.WriteLine(JsonConvert.SerializeObject(data));
+			//Console.WriteLine(JsonConvert.SerializeObject(data));
 
 			Console.ReadKey();		
 		}

@@ -19,6 +19,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SH.TelemetrySource", "SH.Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SH.Utils", "SH.Utils\SH.Utils.csproj", "{ADB4E9DB-9946-4079-87D4-68613432DFCE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8A6EF570-114C-4632-B445-38E4DAE27C53}"
+	ProjectSection(SolutionItems) = preProject
+		Работы.txt = Работы.txt
+		Сделано.txt = Сделано.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

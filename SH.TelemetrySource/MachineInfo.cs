@@ -32,8 +32,8 @@ namespace SH.TelemetrySource
 					TotalPhysicalMemory = long.Parse(process["TotalPhysicalMemory"].ToString());
 					CurrentTimeZone = int.Parse(process["CurrentTimeZone"].ToString());
 
-					foreach (var item in process.Properties)
-						Console.WriteLine(item.Name + " " + item.Value);
+					//foreach (var item in process.Properties)
+					//	Console.WriteLine(item.Name + " " + item.Value);
 
 					break;
 				}
