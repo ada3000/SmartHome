@@ -76,7 +76,7 @@ namespace SH.Biz
         {
             Logger.Debug("ReciveSensorData ... id="+sensor.Id+" url="+sensor.Url);
 
-            string jsContent = HttpDownloader.Load(sensor.Url);
+            string jsContent = HttpDownloader.Get(sensor.Url);
 
             JToken doc = JToken.Parse(jsContent);
             int tempValue = doc["value"].ToString().ToInt();

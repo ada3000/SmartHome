@@ -8,7 +8,11 @@ namespace SH.BO
 {
 	public class TelemetryResult
 	{
+		public string ServerName;
+		public string ClusterName;
+
 		public DateTime Create;
+		
 		public IEnumerable<SensorValue> Values;
 	}
 }

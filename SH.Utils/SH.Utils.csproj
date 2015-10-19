@@ -46,7 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BadRequestException.cs" />
-    <Compile Include="Downloader.cs" />
+    <Compile Include="HttpDownloader.cs" />
     <Compile Include="HttpProcessor.cs" />
     <Compile Include="HttpProcessorEventArgs.cs" />
     <Compile Include="HttpServer.cs" />

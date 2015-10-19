@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <threads>
+    <min worker="" io="" />
+    <max worker="" io="" />
+  </threads>
+  <processes checkRunSecs="10">
+    <process id="TelemetryPushProviderProcess" name="TelemetryPushProviderProcess" assembly="SH.Biz" class="SH.Biz.TelemetryPushProviderProcess">
+      <pushUrl>http://localhost:5490/push</pushUrl>
+      <serverName>iWork</serverName>
+      <clusterName>Main</clusterName>
+      <!-- интервал отправки данных в минутах -->
+      <delayMin>60</delayMin>
+    </process>
+  </processes>
+</configuration>

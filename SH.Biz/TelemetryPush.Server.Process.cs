@@ -19,16 +19,12 @@ using Newtonsoft.Json;
 
 namespace SH.Biz
 {
-	public class TelemetryProviderProcess : ProcessBase<TelemetryProviderConfig>
+	public class TelemetryPushServerProcess : ProcessBase<TelemetryProviderConfig>
     {
 		private HttpServer _webServer = null;
 
-		private TelemetrySource _telSource = new TelemetrySource();
+		public TelemetryPushServerProcess() : base("TelemetryPushServer") { }
 
-		public TelemetryProviderProcess(): base("TelemetryProvider")
-		{
-
-		}
 		protected override void OnConfigChanged()
 		{
 			if (_webServer != null)
@@ -46,7 +42,15 @@ namespace SH.Biz
 
 		void WebServer_OnPostRequest(object sender, HttpProcessorEventArgs e)
 		{
-			throw new NotImplementedException();
+			switch (e.Processor.HttpUrl)
+			{
+				case "/push":
+					Logger.Debug(Cfg.Name + ": push success! ");
+					break;
+				default:
+					e.Processor.WriteFailure("<h1>Not found!</h1>");
+					break;
+			}
 		}
 
 		void WebServer_OnGetRequest(object sender, HttpProcessorEventArgs e)
@@ -54,11 +58,7 @@ namespace SH.Biz
 			switch(e.Processor.HttpUrl)
 			{
 				case "/":
-				case "":
 					e.Processor.WriteSuccess("<h1>It works!</h1>");
-					break;
-				case"/all":
-					e.Processor.WriteSuccess(_telSource.GetJsonStats(), "application/json");					
 					break;
 				default:
 					e.Processor.WriteFailure("<h1>Not found!</h1>");
