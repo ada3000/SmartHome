@@ -39,7 +39,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IResultArchiveData.cs" />
+    <Compile Include="IResultData.cs" />
+    <Compile Include="ISourceData.cs" />
+    <Compile Include="IHostData.cs" />
     <Compile Include="ISensorValueSource.cs" />
+    <Compile Include="ObjHost.cs" />
+    <Compile Include="Result.Archive.cs" />
+    <Compile Include="ObjResult.cs" />
+    <Compile Include="ObjSource.cs" />
     <Compile Include="TelemetryResult.cs" />
     <Compile Include="SensorValueScale.cs" />
     <Compile Include="SensorValue.cs" />

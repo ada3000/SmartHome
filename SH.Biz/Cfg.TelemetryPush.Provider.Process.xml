@@ -5,10 +5,11 @@
     <max worker="" io="" />
   </threads>
   <processes checkRunSecs="10">
-    <process id="TelemetryPushProviderProcess" name="TelemetryPushProviderProcess" assembly="SH.Biz" class="SH.Biz.TelemetryPushProviderProcess">
+    <process id="TelemetryPushProvider" name="TelemetryPushProvider" assembly="SH.Biz" class="SH.Biz.TelemetryPushProviderProcess">
       <pushUrl>http://localhost:5490/push</pushUrl>
       <serverName>iWork</serverName>
       <clusterName>Main</clusterName>
+      <url>Telemetry.Push.Provider</url>
       <!-- интервал отправки данных в минутах -->
       <delayMin>60</delayMin>
     </process>

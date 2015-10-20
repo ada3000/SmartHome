@@ -19,9 +19,9 @@ using Newtonsoft.Json.Linq;
 
 namespace SH.Biz
 {
-    public class ThermMonitorProcess: ServiceProcessBase
+    public class TelemetryMonitorProcess: ServiceProcessBase
     {
-        private ILog Logger = LogManager.GetLogger("ThermMonitor");
+		private ILog Logger = LogManager.GetLogger("TelemetryMonitorProcess");
 
         private ThermStorage _stg = new ThermStorage();
         

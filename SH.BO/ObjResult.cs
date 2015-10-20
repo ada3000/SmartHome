@@ -6,14 +6,11 @@ using System.Threading.Tasks;
 
 namespace SH.BO
 {
-	public class TelemetryResult
+	public class ObjResult
 	{
-		public string ServerName;
-		public string ClusterName;
-		public string Url;
-
+		public long SourceId;
+		public long HostId;
+		public string Content;
 		public DateTime Create;
-		
-		public IEnumerable<SensorValue> Values;
 	}
 }

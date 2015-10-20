@@ -60,7 +60,7 @@
     <Compile Include="TelemetryPush.Provider.Process.cs" />
     <Compile Include="TelemetryProvider.Process.cs" />
     <Compile Include="TelemetrySource.cs" />
-    <Compile Include="ThermMonitor.Process.cs" />
+    <Compile Include="TelemetryMonitor.Process.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SH.BO\SH.BO.csproj">
