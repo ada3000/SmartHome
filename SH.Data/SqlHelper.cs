@@ -22,7 +22,9 @@ namespace SH.Data
 
 		public static IEnumerable<PropContainer> ExecProc(this SqlConnection con, string procName, PropContainer props)
 		{
-			using (SqlCommand cmd = CreateProcCommand(procName, props))
+			List<PropContainer> result = new List<PropContainer>();
+
+			using (SqlCommand cmd = CreateProcCommand(procName, props, con))
 			{
 				if (con.State != ConnectionState.Open)
 				{
@@ -30,21 +32,24 @@ namespace SH.Data
 					con.Open();
 				}
 
-				using(var reader = cmd.ExecuteReader())
-					while(reader.Read())
+				using (var reader = cmd.ExecuteReader())
+					while (reader.Read())
 					{
 						PropContainer row = new PropContainer();
-						for(int i=0;i<reader.FieldCount;i++)
+						for (int i = 0; i < reader.FieldCount; i++)
 							row[reader.GetName(i)] = reader.GetValue(i);
 
-						yield return row;
+						result.Add(row);
+						//yield return row;
 					}
 			}
+
+			return result;
 		}
 
 		public static void ExecProcNonQuery(this SqlConnection con, string procName, PropContainer props)
 		{
-			using (SqlCommand cmd = CreateProcCommand(procName, props))
+			using (SqlCommand cmd = CreateProcCommand(procName, props, con))
 			{
 				if (con.State != ConnectionState.Open)
 				{
@@ -71,16 +76,14 @@ namespace SH.Data
 			throw new ArgumentOutOfRangeException("Type of value=" + curType + " not supported!");
 		}
 
-		private static SqlCommand CreateProcCommand(string procName,  PropContainer props, int timeoutSec = 30)
+		private static SqlCommand CreateProcCommand(string procName, PropContainer props, SqlConnection con, int timeoutSec = 30)
 		{
-			var cmd = new SqlCommand();
+			var cmd = new SqlCommand(procName, con);
 			cmd.CommandType = CommandType.StoredProcedure;
-
-			cmd.CommandText = procName;
 			// Максимальное время ожидания выполнения
 			cmd.CommandTimeout = timeoutSec;
 
-			if (props!=null)
+			if (props != null)
 				foreach (var key in props.Dictionary.Keys)
 				{
 					object value = props.Dictionary[key];

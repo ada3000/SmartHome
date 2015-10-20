@@ -22,6 +22,8 @@ namespace SH.Biz
 		public string ServerName { get; set; }
 		[XmlElement("clusterName")]
 		public string ClusterName { get; set; }
+		[XmlElement("selfUrl")]
+		public string SelfUrl { get; set; }
 		/// <summary>
 		/// интервал отправки данных в минутах
 		/// </summary>

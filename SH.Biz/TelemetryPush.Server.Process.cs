@@ -8,6 +8,7 @@ using System.Threading;
 
 using SH.Data;
 using SH.BO;
+using SH.Data;
 using SH.Utils;
 using SH.TelemetrySource;
 
@@ -20,14 +21,24 @@ using Newtonsoft.Json;
 
 namespace SH.Biz
 {
-	public class TelemetryPushServerProcess : ProcessBase<TelemetryProviderConfig>
+	public class TelemetryPushServerProcess : ProcessBase<TelemetryPushServerConfig>
     {
 		private HttpServer _webServer = null;
+
+		private IHostData _hostData;
+		private ISourceData _sourceData;
+		private IResultData _resultData;
 
 		public TelemetryPushServerProcess() : base("TelemetryPushServer") { }
 
 		protected override void OnConfigChanged()
 		{
+			DataSource ds = new Data.DataSource(ProcessConfig.ConnectionString);
+
+			_hostData = new HostDataStorage(ds);
+			_sourceData = new SourceDataStorage(ds);
+			_resultData = new ResultDataStorage(ds);
+
 			if (_webServer != null)
 				_webServer.Stop();
 
@@ -51,6 +62,10 @@ namespace SH.Biz
 					string postData = e.InputStream.ReadToEnd();
 
 					TelemetryResult result = JsonConvert.DeserializeObject<TelemetryResult>(postData);
+
+					ObjHost host = _hostData.FindOrCreate(result.ServerName, result.ClusterName);
+					ObjSource source = _sourceData.FindOrCreate(host.Id, result.Url, true);
+					_sourceData.Checkin(source.Id, postData);
 
 					Logger.Debug(Cfg.Name + ": push success! "+postData);
 					break;
@@ -76,7 +91,7 @@ namespace SH.Biz
 		
 		void WebServer_OnError(object sender, System.IO.ErrorEventArgs e)
 		{
-			throw new NotImplementedException();
+			Logger.Error(Cfg.Name + ": WebServer_OnError " + e.GetException());
 		}
 
 		protected override void DisposeManaged()

@@ -23,5 +23,7 @@ namespace SH.BO
 
 		public int DelaySec;
 		public int Retry;
+
+		public string Error;
 	}
 }

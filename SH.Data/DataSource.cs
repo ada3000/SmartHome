@@ -17,13 +17,13 @@ namespace SH.Data
 			_conStr = conStr;
 		}
 
-		public IEnumerable<PropContainer> ExecProc(string procName, PropContainer props)
+		public IEnumerable<PropContainer> ExecProc(string procName, PropContainer props = null)
 		{
 			using(SqlConnection con= new SqlConnection(_conStr))
 				return con.ExecProc(procName, props);
 		}
 
-		public void ExecProcNonQuery(string procName, PropContainer props)
+		public void ExecProcNonQuery(string procName, PropContainer props = null)
 		{
 			using (SqlConnection con = new SqlConnection(_conStr))
 				con.ExecProcNonQuery(procName, props);

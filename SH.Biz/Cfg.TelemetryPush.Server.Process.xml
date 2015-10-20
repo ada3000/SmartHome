@@ -7,6 +7,7 @@
   <processes checkRunSecs="10">
     <process id="TelemetryPushServerProcess" name="TelemetryPushServerProcess" assembly="SH.Biz" class="SH.Biz.TelemetryPushServerProcess">
       <webServerPort>5490</webServerPort>
+      <connectionString>Server=music.vpn;Database=SmartHome;User Id=app;Password=app;</connectionString>
     </process>
   </processes>
 </configuration>

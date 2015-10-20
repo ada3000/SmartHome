@@ -12,5 +12,6 @@ namespace SH.BO
 		public long HostId;
 		public string Content;
 		public DateTime Create;
+		public DateTime Update;
 	}
 }

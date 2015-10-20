@@ -9,7 +9,7 @@
       <pushUrl>http://localhost:5490/push</pushUrl>
       <serverName>iWork</serverName>
       <clusterName>Main</clusterName>
-      <url>Telemetry.Push.Provider</url>
+      <selfUrl>Telemetry.Push.Provider</selfUrl>
       <!-- интервал отправки данных в минутах -->
       <delayMin>60</delayMin>
     </process>

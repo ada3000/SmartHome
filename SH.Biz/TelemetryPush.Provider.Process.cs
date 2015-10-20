@@ -29,7 +29,7 @@ namespace SH.Biz
 			SleepMSec = ProcessConfig.DelayMin * 60000;
 			SleepErrorMSec = 60000;
 
-			_telSource = new TelemetrySource(ProcessConfig.ServerName, ProcessConfig.ClusterName);
+			_telSource = new TelemetrySource(ProcessConfig.ServerName, ProcessConfig.ClusterName, ProcessConfig.SelfUrl);
 		}
 
 		protected override void OnAction()

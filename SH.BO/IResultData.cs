@@ -9,7 +9,5 @@ namespace SH.BO
 	public interface IResultData
 	{
 		IEnumerable<ObjResult> All();
-		void CreateOrUpdate(long sourceId, string content);
-		void Remove(long sourceId);
 	}
 }

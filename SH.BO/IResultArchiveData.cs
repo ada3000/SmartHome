@@ -17,14 +17,6 @@ namespace SH.BO
 		/// <returns></returns>
 		IEnumerable<ObjResult> Find(DateTime from, DateTime to, long? hostId);
 		/// <summary>
-		/// Вставка в архив
-		/// </summary>
-		/// <param name="sourceId"></param>
-		/// <param name="content"></param>
-		/// <returns></returns>
-		long Insert(long sourceId, string content);
-		void Remove(long sourceId);
-		/// <summary>
 		/// Очистка архива от записей старше days
 		/// </summary>
 		/// <param name="days"></param>

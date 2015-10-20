@@ -47,7 +47,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataSource.cs" />
-    <Compile Include="HostDataSource.cs" />
+    <Compile Include="ResultDataStorage.cs" />
+    <Compile Include="SourceDataStorage.cs" />
+    <Compile Include="HostDataStorage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlHelper.cs" />
     <Compile Include="ThermStorage.cs" />

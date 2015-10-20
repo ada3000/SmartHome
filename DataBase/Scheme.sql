@@ -8,7 +8,7 @@ create table ObjHost
 go
 create nonclustered index IDX_ObjHost_NameCluster on ObjHost(sName,sCluster)
 go
-drop table ObjSource
+--drop table ObjSource
 go
 create table ObjSource
 (
@@ -20,9 +20,9 @@ create table ObjSource
 	dtRunLast datetime,
 	dtRunNext datetime,
 	dtCheckout datetime,
-	nDelaySec int not null default(0),
+	nDelaySec int not null default(3600),
 	nRetry int not null default(0),
-	sError nvarchar(max) not null
+	sError nvarchar(max)
 )
 
 go
@@ -30,12 +30,14 @@ go
 create nonclustered index IDX_Source_Host on ObjSource(idHost)
 
 go
-
+--drop table ObjResult
+go
 create table ObjResult
 (
 	idSource bigint primary key,
 	sContent nvarchar(max) not null,
-	dtCreate datetime not null default(GetUtcDate())
+	dtCreate datetime not null default(GetUtcDate()),
+	dtUpdate datetime not null
 )
 go
 create table Result$Archive

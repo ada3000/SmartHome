@@ -5,3 +5,4 @@
 - Sync push sender and push receiver
 - Change memory stats
 - Change Process base
+- Integrate MS SQL Storage

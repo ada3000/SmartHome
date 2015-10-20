@@ -5,7 +5,7 @@
     <max worker="" io="" />
   </threads>
   <processes checkRunSecs="10">
-    <process id="ThermMonitor" name="ThermMonitor" assembly="SH.Biz" class="SH.Biz.ThermMonitorProcess">
+    <process id="TelemetryMonitor" name="TelemetryMonitor" assembly="SH.Biz" class="SH.Biz.TelemetryMonitorProcess">
     </process>
   </processes>
 </configuration>

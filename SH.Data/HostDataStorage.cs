@@ -10,14 +10,14 @@ using iTeco.Lib.Base;
 
 namespace SH.Data
 {
-	public class HostDataSource: IHostData
+	public class HostDataStorage: IHostData
 	{
 		private const string FindOrCreateProc = "ObjHost$FindOrCreate";
 		private const string DelProc = "ObjHost$Del";
 
 		private DataSource _source = null;
 
-		public HostDataSource(DataSource source)
+		public HostDataStorage(DataSource source)
 		{
 			_source = source;
 		}
@@ -42,7 +42,7 @@ namespace SH.Data
 
 		public void Remove(long id)
 		{
-			_source.ExecProcNonQuery(FindOrCreateProc, new PropContainer("id", id));
+			_source.ExecProcNonQuery(DelProc, new PropContainer("id", id));
 		}
 	}
 }
