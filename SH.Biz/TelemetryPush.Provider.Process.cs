@@ -21,24 +21,26 @@ namespace SH.Biz
 {
 	public class TelemetryPushProviderProcess : ProcessBase<TelemetryPushProviderConfig>
     {
-		private TelemetrySource _telSource = new TelemetrySource();
+		private TelemetrySource _telSource = null;
 		public TelemetryPushProviderProcess() : base("TelemetryPushProvider") { }
 
 		protected override void OnConfigChanged()
 		{
-			SleepMSec = Config.DelayMin * 60000;
+			SleepMSec = ProcessConfig.DelayMin * 60000;
 			SleepErrorMSec = 60000;
+
+			_telSource = new TelemetrySource(ProcessConfig.ServerName, ProcessConfig.ClusterName);
 		}
 
 		protected override void OnAction()
 		{
-			string info = Cfg.Name + ": send push url=" + Config.PushUrl;
+			string info = Cfg.Name + ": send push url=" + ProcessConfig.PushUrl;
 
 			Logger.Debug(info+" ...");
 
 			string postData = _telSource.GetJsonStats();
 
-			var result = HttpDownloader.Post(Config.PushUrl, postData);
+			var result = HttpDownloader.Post(ProcessConfig.PushUrl, postData);
 
 			Logger.Debug(info + " end");
 		}

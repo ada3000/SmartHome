@@ -18,6 +18,18 @@ namespace SH.Biz
 		static MachineInfo _machineInfo = new MachineInfo();
 		static DiskUsage _disk = new DiskUsage();
 
+		private string _serverName = null;
+		private string _clusterName = null;
+
+		public TelemetrySource()
+		{
+
+		}
+		public TelemetrySource(string serverName, string clusterName)
+		{
+			_serverName = serverName;
+			_clusterName = clusterName;
+		}
 		public string GetJsonStats()
 		{
 			TelemetryResult res = GetStats();
@@ -37,7 +49,9 @@ namespace SH.Biz
 			TelemetryResult res = new TelemetryResult
 			{
 				Create = DateTime.UtcNow,
-				Values = values
+				Values = values,
+				 ClusterName = _clusterName,
+				 ServerName = _serverName
 			};
 
 			values.AddRange(_cpu.Collect());

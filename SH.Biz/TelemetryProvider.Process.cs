@@ -34,7 +34,7 @@ namespace SH.Biz
 			if (_webServer != null)
 				_webServer.Stop();
 
-			_webServer = new HttpServer(Config.WebServerPort);
+			_webServer = new HttpServer(ProcessConfig.WebServerPort);
 
 			_webServer.OnError += WebServer_OnError;
 			_webServer.OnGetRequest += WebServer_OnGetRequest;

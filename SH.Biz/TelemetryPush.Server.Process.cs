@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 using System.Threading;
 
@@ -30,7 +31,7 @@ namespace SH.Biz
 			if (_webServer != null)
 				_webServer.Stop();
 
-			_webServer = new HttpServer(Config.WebServerPort);
+			_webServer = new HttpServer(ProcessConfig.WebServerPort);
 
 			_webServer.OnError += WebServer_OnError;
 			_webServer.OnGetRequest += WebServer_OnGetRequest;
@@ -45,7 +46,13 @@ namespace SH.Biz
 			switch (e.Processor.HttpUrl)
 			{
 				case "/push":
-					Logger.Debug(Cfg.Name + ": push success! ");
+					Logger.Debug(Cfg.Name + ": push ... ");
+
+					string postData = e.InputStream.ReadToEnd();
+
+					TelemetryResult result = JsonConvert.DeserializeObject<TelemetryResult>(postData);
+
+					Logger.Debug(Cfg.Name + ": push success! "+postData);
 					break;
 				default:
 					e.Processor.WriteFailure("<h1>Not found!</h1>");

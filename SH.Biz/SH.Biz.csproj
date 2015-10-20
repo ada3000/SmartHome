@@ -84,7 +84,7 @@
     <Content Include="Cfg.TelemetryPush.Server.Process.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Cfg.TelemetryProvider.Push.Process.xml">
+    <Content Include="Cfg.TelemetryPush.Provider.Process.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Cfg.TelemetryProvider.Process.xml">

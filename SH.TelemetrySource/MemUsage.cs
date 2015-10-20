@@ -27,7 +27,7 @@ namespace SH.TelemetrySource
 				return ci.TotalPhysicalMemory;
 			}
 		}
-		public ulong Avaible
+		public ulong Available
 		{
 			get
 			{
@@ -46,7 +46,7 @@ namespace SH.TelemetrySource
 				Children = new List<SensorValue>(),
 				Name = "Memory Usage %",
 				Type = SensorValueType.Memory,
-				Value = 100 - 100 * Avaible / Total,
+				Value = 100 - 100 * Available / Total,
 				WarningValueMin = 90, //warning when 90% is used,
 				ValueScale = SensorValueScale.Persent,
 				ValueMin = 0,
@@ -56,17 +56,11 @@ namespace SH.TelemetrySource
 			result.Children.Add(new SensorValue
 			{
 				Type = SensorValueType.Memory,
-				SubType = "Avaible",
+				SubType = "Available",
 				ValueScale = SensorValueScale.Byte,
-				Value = Avaible
-			});
-
-			result.Children.Add(new SensorValue
-			{
-				Type = SensorValueType.Memory,
-				SubType = "Total",
-				ValueScale = SensorValueScale.Byte,
-				Value = Total
+				Value = Available,
+				ValueMax = Total,
+				ValueMin = 0
 			});
 
 			return new[] { result };

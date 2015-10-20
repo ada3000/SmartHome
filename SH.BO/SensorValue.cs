@@ -44,5 +44,11 @@ namespace SH.BO
 		public SensorValueScale ValueScale;
 
 		public List<SensorValue> Children;
+
+		public override string ToString()
+		{
+			return string.Format("{0}-{1} {2}, Value={3}{7}, Min={4}, Max={5}, Scale={8}, Warning={6}", 
+				Type, SubType, Name, Value, ValueMin, ValueMax, WarningValueMin, ValueStr,ValueScale);
+		}
 	}
 }

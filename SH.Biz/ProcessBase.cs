@@ -31,7 +31,7 @@ namespace SH.Biz
 	public abstract class ProcessBase<TConfig> : ServiceProcessBase where TConfig: new()
     {
 		protected ILog Logger {get; private set;}
-		protected TConfig Config {get; private set;}
+		protected TConfig ProcessConfig {get; private set;}
 
 		protected int SleepMSec = 1000;
 		protected int SleepErrorMSec = 1000;
@@ -43,7 +43,7 @@ namespace SH.Biz
 
 		private void InitConfig()
 		{
-			Config = Cfg.Xml.ToXmlReader().Deserialize<TConfig>();
+			ProcessConfig = Cfg.Xml.ToXmlReader().Deserialize<TConfig>();
 		}
 
 		protected virtual void OnConfigChanged() { }
