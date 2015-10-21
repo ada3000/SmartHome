@@ -11,7 +11,7 @@
     <_fileReference file="Cfg.TelemetryPush.Provider.Process.xml" nodes_path="/configuration/processes/process"/>
     <_fileReference file="Cfg.TelemetryPush.Server.Process.xml" nodes_path="/configuration/processes/process"/>
     
-    <x_fileReference file="Cfg.Therm.Process.xml" nodes_path="/configuration/processes/process"/>
+    <x_fileReference file="Cfg.TelemetryMonitor.Process.xml" nodes_path="/configuration/processes/process"/>
     
   </processes>
 </configuration>

@@ -36,10 +36,11 @@
 			this.InstallerProcess.Account = System.ServiceProcess.ServiceAccount.LocalSystem;
 			this.InstallerProcess.Password = null;
 			this.InstallerProcess.Username = null;
+			this.InstallerProcess.AfterInstall += new System.Configuration.Install.InstallEventHandler(this.InstallerProcess_AfterInstall);
 			// 
 			// InstallerSrv
 			// 
-			this.InstallerSrv.DisplayName = "System Diagnostic Service";
+			this.InstallerSrv.DisplayName = "Smart Monitoring Service";
 			this.InstallerSrv.ServiceName = "SH.Service";
 			this.InstallerSrv.StartType = System.ServiceProcess.ServiceStartMode.Automatic;
 			// 

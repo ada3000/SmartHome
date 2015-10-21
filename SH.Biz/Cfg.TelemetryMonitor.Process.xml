@@ -6,6 +6,9 @@
   </threads>
   <processes checkRunSecs="10">
     <process id="TelemetryMonitor" name="TelemetryMonitor" assembly="SH.Biz" class="SH.Biz.TelemetryMonitorProcess">
+      <connectionString>Server=music.vpn;Database=SmartHome;User Id=app;Password=app;</connectionString>
+      <!-- интервал проверки данных в минутах -->
+      <delayMin>5</delayMin>
     </process>
   </processes>
 </configuration>

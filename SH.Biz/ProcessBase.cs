@@ -49,9 +49,21 @@ namespace SH.Biz
 		protected virtual void OnConfigChanged() { }
 		protected virtual void OnAction() { }
 		
+		protected void Debug(string msg)
+		{
+			Logger.Debug(Cfg.Name+": "+ msg);
+		}
+		protected void DebugFormat(string msg, params object[] arguments)
+		{
+			Logger.DebugFormat(Cfg.Name + ": " + msg, arguments);
+		}
+		protected void Error(string msg)
+		{
+			Logger.Error(Cfg.Name + ": " + msg);
+		}
         protected override void DoWork(object p)
         {
-			Logger.Debug("Start process: " + Cfg.Name);
+			Debug("Start process");
 			Event.CfgChanged.Set();
 
             while(Event.Stopping.IsReset())
@@ -60,12 +72,16 @@ namespace SH.Biz
                 {
 					if (Event.CfgChanged.IsSet())
 					{
+						Debug("CfgChanged ...");
 						InitConfig();
 						OnConfigChanged();
 						Event.CfgChanged.Reset();
+						Debug("CfgChanged end");
 					}
 
+					Debug("OnAction ...");
 					OnAction();
+					Debug("OnAction end");
 
 					Event.Wait(SleepMSec);
                 }
@@ -76,13 +92,13 @@ namespace SH.Biz
                 }
             }
 
-			Logger.Debug("Stop process: " + Cfg.Name);
+			Debug("Stop process");
         }
 
 		protected override void DoError(Exception err, object p)
 		{
 			base.DoError(err, p);
-			Logger.Error(Cfg.Name + " unexpected exception! " + err);
+			Error(" unexpected exception! " + err);
 		}
     }
 }

@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProcessBase.cs" />
+    <Compile Include="TelemetryMonitor.Config.cs" />
     <Compile Include="TelemetryPush.Server.Config.cs" />
     <Compile Include="TelemetryPush.Server.Process.cs" />
     <Compile Include="TelemetryPush.Provider.Config.cs" />
@@ -91,7 +92,7 @@
     <Content Include="Cfg.TelemetryProvider.Process.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Cfg.Therm.Process.xml">
+    <Content Include="Cfg.TelemetryMonitor.Process.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

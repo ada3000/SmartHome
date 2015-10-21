@@ -30,5 +30,10 @@ namespace Profile.Service
 			//Инициализания названия сервиса
 			InstallerSrv.ServiceName = this.Context.Parameters[F_ServiceName];
 		}
+
+		private void InstallerProcess_AfterInstall(object sender, InstallEventArgs e)
+		{
+
+		}
 	}
 }
