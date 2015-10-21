@@ -67,12 +67,12 @@ namespace SH.Biz
 
 					OnAction();
 
-					Thread.Sleep(SleepMSec);
+					Event.Wait(SleepMSec);
                 }
                 catch(Exception ex)
                 {
 					Logger.Error(Cfg.Name+": " + ex);
-					Thread.Sleep(SleepErrorMSec);
+					Event.Wait(SleepErrorMSec);
                 }
             }
 

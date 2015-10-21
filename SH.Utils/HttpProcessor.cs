@@ -29,6 +29,8 @@ namespace SH.Utils
 		public event EventHandler<HttpProcessorEventArgs> OnPostRequest = (o, ev) => { };
 		public event EventHandler<ErrorEventArgs> OnError = (o, ev) => { };
 
+		private bool _hasWriteResponce = false;
+
 		public HttpProcessor(TcpClient s)
 		{
 			this.Socket = s;
@@ -69,6 +71,9 @@ namespace SH.Utils
 						{
 							HandlePostRequest();
 						}
+
+						if (!_hasWriteResponce)
+							WriteSuccess();
 					}
 					catch (Exception e)
 					{
@@ -184,6 +189,7 @@ namespace SH.Utils
 
 		public void WriteSuccess(string content = null, string contentType = "text/html")
 		{
+			_hasWriteResponce = true;
 			// this is the successful HTTP response line
 			OutputStream.WriteLine("HTTP/1.0 200 OK");
 			// these are the HTTP headers...          
@@ -199,6 +205,7 @@ namespace SH.Utils
 
 		public void WriteFailure(string content=null)
 		{
+			_hasWriteResponce = true;
 			// this is an http 404 failure response
 			OutputStream.WriteLine("HTTP/1.0 404 File not found");
 			// these are the HTTP headers

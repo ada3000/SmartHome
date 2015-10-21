@@ -68,7 +68,7 @@ namespace SH.Biz
                     Logger.Error("Therm update error: " + ex);
                 }
 
-                Thread.Sleep(60*1000);
+				Event.Wait(60 * 1000);
             }
         }
 

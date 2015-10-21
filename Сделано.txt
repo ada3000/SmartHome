@@ -6,3 +6,10 @@
 - Change memory stats
 - Change Process base
 - Integrate MS SQL Storage
+
+==============
+= 21.10.2015 =
+==============
+
+- Fix post error
+- Add flexibility event wait
