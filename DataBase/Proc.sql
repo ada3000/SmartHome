@@ -156,6 +156,9 @@ AS
 begin
 
 	insert into Result$Archive(idSource,sContent) values(@idSource,@sContent)
+
+	-- чистим архив
+	exec Result$Archive$Clear 7
 END
 
 go
