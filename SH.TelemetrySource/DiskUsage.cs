@@ -17,6 +17,9 @@ namespace SH.TelemetrySource
 
 			foreach (System.IO.DriveInfo di in System.IO.DriveInfo.GetDrives())
 			{
+                if (di.DriveType ==  System.IO.DriveType.Removable
+                    || di.DriveType== System.IO.DriveType.CDRom) continue;
+
 					SensorValue drive = new SensorValue
 					{
 						//Date = DateTime.UtcNow,
