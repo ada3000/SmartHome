@@ -15,3 +15,9 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.progressText
+{
+    position:relative;
+    top:2px;
+}

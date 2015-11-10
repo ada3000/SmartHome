@@ -15,3 +15,10 @@
 - Add flexibility event wait
 - Change serevice name
 - Modify TelemetryMonitorProcess to process base
+
+
+==========================================================
+= 10.11.2015 =============================================
+==========================================================
+
+- Add web ui templates
