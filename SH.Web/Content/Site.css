@@ -21,3 +21,13 @@ textarea {
     position:relative;
     top:2px;
 }
+.headerDate
+{
+    display: inline-block;
+    float: right;
+}
+
+.template
+{
+    display:none;
+}

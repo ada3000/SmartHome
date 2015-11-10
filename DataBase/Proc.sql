@@ -211,3 +211,16 @@ begin
 	where id = @id
 	
 END
+
+GO
+create PROCEDURE [dbo].[ObjHost$All]
+AS
+begin
+
+  SELECT [id]
+      ,[sName]
+      ,[sCluster]
+      ,[dtCreate]
+  FROM [dbo].[ObjHost]
+
+end

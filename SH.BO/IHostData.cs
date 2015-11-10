@@ -10,5 +10,6 @@ namespace SH.BO
 	{
 		ObjHost FindOrCreate(string name, string cluster);
 		void Remove(long id);
+		IEnumerable<ObjHost> All();
 	}
 }

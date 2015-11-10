@@ -14,6 +14,7 @@ namespace SH.Data
 	{
 		private const string FindOrCreateProc = "ObjHost$FindOrCreate";
 		private const string DelProc = "ObjHost$Del";
+		private const string AllProc = "ObjHost$All";
 
 		private DataSource _source = null;
 
@@ -43,6 +44,22 @@ namespace SH.Data
 		public void Remove(long id)
 		{
 			_source.ExecProcNonQuery(DelProc, new PropContainer("id", id));
+		}
+
+		public IEnumerable<ObjHost> All()
+		{
+			return _source.ExecProc(AllProc).Select(p=>CreateObjHost(p));
+		}
+
+		private ObjHost CreateObjHost(PropContainer props)
+		{
+			return new ObjHost
+			{
+				Id = props["id"].ToLong(),				 
+				Create = props["dtCreate"].ToDateTime(DateTime.UtcNow),
+				Cluster = props["sCluster"].ToString(),
+				Name = props["sName"].ToString()
+			};
 		}
 	}
 }

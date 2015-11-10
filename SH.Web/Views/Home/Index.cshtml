@@ -1,147 +1,90 @@
-﻿@{
+﻿@using SH.Web.Models
+@using Newtonsoft.Json
+@{
     ViewBag.Title = "Stats";
 }
-<br/>
-<div class="row">
-    <div class="col-md-4">
+@model List<GroupDisplayModel>
+<br />
 
-
-        <div class="panel panel-success">
-            <div class="panel-heading">
-                <h3 class="panel-title">Music</h3>
-            </div>
-            <div class="panel-body">
-
-                <div class="row text-success">
-                    <div class="col-md-4 ">0%</div>
-                    <div class="col-md-4 text-center">CPU 1 min</div>
-                    <div class="col-md-4 text-right">100%</div>
-                </div>
-
-                <div class="progress">
-                    <div class="progress-bar progress-bar-success" role="progressbar" style="width: 80%;">
-                        <span class="progressText">60%</span>
-                    </div>
-                </div>
-
-                <div class="row text-success">
-                    <div class="col-md-8 ">CPU 5 Minutes</div>
-                    <div class="col-md-4 text-right">100%</div>
-                </div>
-
-                <div class="progress">
-                    <div class="progress-bar progress-bar-success" role="progressbar" style="width: 80%;">
-                        <span class="progressText">60%</span>
-                    </div>
-                </div>
-
-                <div class="row text-success">
-                    <div class="col-md-8 ">Memory usage 25%</div>
-                    <div class="col-md-4 text-right">16GB</div>
-                </div>
-
-                <div class="progress">
-                    <div class="progress-bar progress-bar-success" role="progressbar" style="width: 25%;">
-                        <span class="progressText">4GB</span>
-                    </div>
-                </div>
-
-            </div>
+<div class="template js-panel-template">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">{Name}<span class="badge headerDate">{CreateDate}</span></h3>
         </div>
-
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h3 class="panel-title">Music</h3>
-            </div>
-            <div class="panel-body">
-                <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: 80%;">
-                        60%
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="panel panel-success">
-            <div class="panel-heading">
-                <h3 class="panel-title">Music</h3>
-            </div>
-            <div class="panel-body">
-                Content
-            </div>
-        </div>
-
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <h3 class="panel-title">Music</h3>
-            </div>
-            <div class="panel-body">
-                Content
-            </div>
-        </div>
-
-        <div class="panel panel-warning">
-            <div class="panel-heading">
-                <h3 class="panel-title">Music</h3>
-            </div>
-            <div class="panel-body">
-                Content
-            </div>
-        </div>
-
-        <div class="panel panel-danger">
-            <div class="panel-heading">
-                <h3 class="panel-title">Music</h3>
-            </div>
-            <div class="panel-body">
-                Content
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Music HDD</h3>
-            </div>
-            <div class="panel-body">
-
-                <div class="row"><div class="col-md-4">Work (C:)</div><div class="col-md-8 text-right">free 400 GB of 5000 GB</div></div>
-                <div class="progress">
-                    <div class="progress-bar progress-bar-primary" role="progressbar" style="width: 20%;">
-                        <span class="progressText">20%</span>
-                    </div>
-                </div>
-
-                <div class="text _text-primary ">System (C:), free 400 GB of 5000 GB</div>
-                <div class="progress">
-                    <div class="progress-bar progress-bar-primary" role="progressbar" style="width: 20%;">
-                        <span class="progressText">20%</span>
-                    </div>
-                </div>
-
-                <div class="text _text-danger ">No name (D:), free 100 GB of 1000 GB</div>
-
-                <div class="progress">
-                    <div class="progress-bar progress-bar-danger" role="progressbar" style="width: 90%;">
-                        <span class="progressText">90%</span>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Music Info</h3>
-            </div>
-            <div class="panel-body">
-
-                <div class="row"><div class="col-md-4">Manufacturer</div><div class="col-md-8">:&nbsp;Dell</div></div>
-                <div class="row"><div class="col-md-4">Manufacturer</div><div class="col-md-8">:&nbsp;Dell</div></div>
-                <div class="row"><div class="col-md-4">Manufacturer</div><div class="col-md-8">:&nbsp;Dell</div></div>
-                <div class="row"><div class="col-md-4">UpTime</div><div class="col-md-8">:&nbsp;8 Days</div></div>
-            </div>
+        <div class="panel-body">
         </div>
     </div>
 </div>
+
+<div class="template js-progress-item">
+    <div class="row"><div class="col-md-5">{TitleLeft}</div><div class="col-md-7 text-right">{TitleRight}</div></div>
+    <div class="progress">
+        <div class="progress-bar progress-bar-{style}" role="progressbar" style="width: 0%;">
+            <span class="progressText">{TitlePersent}</span>
+        </div>
+    </div>
+</div>
+
+<div class="template js-text-item">
+    <div class="row"><div class="col-md-4">{TitleLeft}</div><div class="col-md-8">:&nbsp;{TitleRight}</div></div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 js-col-1">
+
+    </div>
+    <div class="col-md-4">
+
+    </div>
+    <div class="col-md-4">
+
+    </div>
+</div>
+
+@section scripts {
+<script type="text/javascript">
+
+    var panelsData = @Html.Raw(JsonConvert.SerializeObject(Model));
+
+    function renderTemplate(template, obj)
+    {
+        var result = template;
+        for(var i in obj)
+            result = result.replace("{"+i+"}", obj[i] || "");
+
+        return result;
+    };
+
+    $(document).ready(function()
+    {
+        var container = $(".js-col-1");
+
+        var panelTemplate = $(".js-panel-template").html();
+        var progressTemplate = $(".js-progress-item").html();
+        var textTemplate = $(".js-text-item").html();
+
+        for(var i=0;i<panelsData.length;i++)
+        {
+            var panel = panelsData[i];
+            var createDate = new Date(panel.Create);
+
+            panel.CreateDate = createDate.toLocaleDateString()+" "+createDate.toLocaleTimeString();
+
+            var panelNode = $(renderTemplate(panelTemplate, panel)).appendTo(container);
+            var panelBodyNode = $(".panel-body",panelNode);
+
+            for(var sid=0;sid<panel.Data.length; sid++)
+            {
+                var sensorData = panel.Data[sid];
+                sensorData.style = sensorData.IsError ? "primary":"danger";
+
+                var template = sensorData.Type==10 ? progressTemplate: textTemplate;
+
+                var sensorNode = $(renderTemplate(template, sensorData)).appendTo(panelBodyNode);
+                sensorNode.find(".progress-bar").width(sensorData.PersentValue+"%");
+            }
+        }
+
+    });
+</script>
+}

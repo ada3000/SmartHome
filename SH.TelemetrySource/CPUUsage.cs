@@ -78,45 +78,43 @@ namespace SH.TelemetrySource
 
 		public IEnumerable<SensorValue> Collect()
 		{
-			SensorValue result = new SensorValue
-					{
-						//Date = DateTime.UtcNow,
-						Children = new List<SensorValue>(),
-						Name = "CPU Info",
-						Type = SensorValueType.CPU,
-						SubType = "CpuCores",
-						Value = System.Environment.ProcessorCount,
-						ValueScale = SensorValueScale.Unknown,
-					};
-
-			result.Children.Add(new SensorValue
+			//SensorValue result = new SensorValue
+			//		{
+			//			//Date = DateTime.UtcNow,
+			//			Children = new List<SensorValue>(),
+			//			Name = "CPU Info",
+			//			Type = SensorValueType.CPU,
+			//			SubType = "CpuCores",
+			//			Value = System.Environment.ProcessorCount,
+			//			ValueScale = SensorValueScale.Unknown,
+			//		};
+			yield return new SensorValue
 			{
 				//Date = DateTime.UtcNow,
-				Name = "CPU Usage",
+				Name = "CPU Current",
 				Type = SensorValueType.CPU,
 				SubType = "Current",
 				Value = Current,
 				ValueMin = 0,
 				ValueMax = 100,
 				ValueScale = SensorValueScale.Persent
-			});
+			};
 
-			result.Children.Add(new SensorValue
+			yield return new SensorValue
 			{
 				//Date = DateTime.UtcNow,
-				Name = "CPU Usage",
+				Name = "CPU Ave 1 min",
 				Type = SensorValueType.CPU,
 				SubType = "Average1Min",
 				Value = Average1Min,
 				ValueMin = 0,
 				ValueMax = 100,
 				ValueScale = SensorValueScale.Persent
-			});
+			};
 
-			result.Children.Add(new SensorValue
+			yield return new SensorValue
 			{
-				//Date = DateTime.UtcNow,
-				Name = "CPU Usage",
+				Name = "CPU Ave 5 min",
 				Type = SensorValueType.CPU,
 				SubType = "Average5Min",
 				Value = Average5Min,
@@ -124,9 +122,9 @@ namespace SH.TelemetrySource
 				ValueMax = 100,
 				WarningValueMin = 50,
 				ValueScale = SensorValueScale.Persent
-			});
+			};
 
-			return new[] { result };
+			//return new[] { result };
 		}
 	}
 }
