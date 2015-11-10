@@ -1,4 +1,5 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceProcess;
@@ -8,11 +9,17 @@ namespace Profile.Service
 {
 	static class Program
 	{
+		//start log4net
+		private static ILog _logger = LogManager.GetLogger("1");
+		
 		/// <summary>
 		/// The main entry point for the application.
 		/// </summary>
 		static void Main()
 		{
+			//start log4net
+			_logger.Debug("1");
+			
 			ServiceBase[] ServicesToRun;
 			ServicesToRun = new ServiceBase[] 
 			{ 

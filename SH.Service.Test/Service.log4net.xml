@@ -51,7 +51,7 @@
     <rollingStyle value="Size" />
     <maxSizeRollBackups value="2" />
     <staticLogFileName value="true" />
-    <maximumfilesize value="10MB" />
+    <maximumfilesize value="10MB" />E:\Git\SmartHome\SH.Service.Test\Service.log4net.xml
     <layout type="log4net.Layout.PatternLayout">
       <conversionPattern value="%date [%thread] %-5level %message%newline"/>
     </layout>

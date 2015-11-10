@@ -6,67 +6,11 @@
 	</threads>
 	<processes checkRunSecs="10">
 
+    <_fileReference file="Cfg.TelemetryPush.Provider.Process.xml" nodes_path="/configuration/processes/process"/>
+    <x_fileReference file="Cfg.TelemetryPush.Server.Process.xml" nodes_path="/configuration/processes/process"/>
 
-		<_fileReference file="Cfg.QueueSaverField.Process.xml" nodes_path="/configuration/processes/process"/>
-		<_fileReference file="Cfg.QueueSaver.Process.xml" nodes_path="/configuration/processes/process"/>
-		<_fileReference file="Cfg.Profile.Storage.Process.xml" nodes_path="/configuration/processes/process"/>
-
-		<_fileReference file="Cfg.ParserQueue.Process.xml" nodes_path="/configuration/processes/process"/>
-		<_fileReference file="Cfg.QueueLoader.Process.xml" nodes_path="/configuration/processes/process"/>
-		<_fileReference file="Cfg.ParserManager.Process.xml" nodes_path="/configuration/processes/process"/>
-		<_fileReference file="Cfg.QueueExternal.Process.xml" nodes_path="/configuration/processes/process"/>
-		<_fileReference file="Cfg.Queue.Process.xml" nodes_path="/configuration/processes/process"/>
-
-		<process id="ServiceInfo" name="Service Info Web Server" assembly="Diagnostics.Cls" class="iTeco.Lib.Diagnostics.ServiceProcessInfo">
-			<Port>90</Port>
-			<PageTemplate>
-				<![CDATA[
-				<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-				<html xmlns="http://www.w3.org/1999/xhtml" >
-				<head>
-					<title>%TITLE%</title>
-					<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
-					<style type="text/css">
-						body
-						{
-							font-family:Arial;
-						}
-						.title
-						{
-							border-bottom:solid 1px blue;
-							color:Blue;
-							padding-top:8px;
-							margin-bottom:3px;
-							font-size:16px;
-						}
-						.desc
-						{
-							font-size:12px;
-							padding-left:20px;
-							xheight:200px;
-							xoverflow: auto;
-						}
-					</style>
-				</head>
-				<body>
-				<h2>%TITLE%</h2>
-				%CONTENT%
-				</body>
-				</html>
-				]]>
-			</PageTemplate>
-
-			<ContentMarker>%CONTENT%</ContentMarker>
-			<TitleMarker>%TITLE%</TitleMarker>
-
-			<NameTemplate>
-				<![CDATA[<div class="title">%CONTENT%</div>]]>
-			</NameTemplate>
-			<DescTemplate>
-				<![CDATA[<div class="desc">%CONTENT%</div>]]>
-			</DescTemplate>
-		</process>
-
+    <x_fileReference file="Cfg.TelemetryProvider.Process.xml" nodes_path="/configuration/processes/process"/>
+    <x_fileReference file="Cfg.TelemetryMonitor.Process.xml" nodes_path="/configuration/processes/process"/>
 
 	</processes>
 </configuration>

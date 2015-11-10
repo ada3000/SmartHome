@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Profile.Service")]
+[assembly: AssemblyTitle("SmartHome.Service")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("i-Teco")]
-[assembly: AssemblyProduct("Profile.Service")]
-[assembly: AssemblyCopyright("Copyright © i-Teco 2012")]
+[assembly: AssemblyProduct("SmartHome.Service")]
+[assembly: AssemblyCopyright("Copyright © ADA 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("096ac56f-baca-4ef9-bff3-fe282239e584")]
+[assembly: Guid("096ac56f-baca-4ef9-bff3-fe282239e585")]
 
 // Version information for an assembly consists of the following four values:
 //

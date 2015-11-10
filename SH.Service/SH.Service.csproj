@@ -106,6 +106,24 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SH.Biz\SH.Biz.csproj">
+      <Project>{7b27af6c-8728-4f9d-aca7-83e39015cb95}</Project>
+      <Name>SH.Biz</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SH.BO\SH.BO.csproj">
+      <Project>{671c7329-9a31-48e1-a7fe-fe73534f022b}</Project>
+      <Name>SH.BO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SH.Data\SH.Data.csproj">
+      <Project>{f3ee2fbd-a5d8-45e5-8848-956a81e297c9}</Project>
+      <Name>SH.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SH.Utils\SH.Utils.csproj">
+      <Project>{adb4e9db-9946-4079-87d4-68613432dfce}</Project>
+      <Name>SH.Utils</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
