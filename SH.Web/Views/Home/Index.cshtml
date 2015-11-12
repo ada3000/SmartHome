@@ -33,10 +33,10 @@
     <div class="col-md-4 js-col-1">
 
     </div>
-    <div class="col-md-4">
+    <div class="col-md-4 js-col-1">
 
     </div>
-    <div class="col-md-4">
+    <div class="col-md-4 js-col-1">
 
     </div>
 </div>
@@ -58,6 +58,7 @@
     $(document).ready(function()
     {
         var container = $(".js-col-1");
+        var containerIndex = 0;
 
         var panelTemplate = $(".js-panel-template").html();
         var progressTemplate = $(".js-progress-item").html();
@@ -70,7 +71,7 @@
 
             panel.CreateDate = createDate.toLocaleDateString()+" "+createDate.toLocaleTimeString();
 
-            var panelNode = $(renderTemplate(panelTemplate, panel)).appendTo(container);
+            var panelNode = $(renderTemplate(panelTemplate, panel)).appendTo(container[containerIndex]);
             var panelBodyNode = $(".panel-body",panelNode);
 
             for(var sid=0;sid<panel.Data.length; sid++)
@@ -86,6 +87,10 @@
                 var sensorNode = $(renderTemplate(template, sensorData)).appendTo(panelBodyNode);
                 sensorNode.find(".progress-bar").width(sensorData.PersentValue+"%");
             }
+
+            containerIndex++;
+            if(containerIndex>2)
+                containerIndex = 0;
         }
 
     });
