@@ -43,8 +43,12 @@ namespace SH.Web.Controllers
 			foreach (var kv in groups)
 			{
 				kv.Key.Data = RenderSensors(kv.Value).ToArray();
+				kv.Key.Warnings = kv.Key.Data.Where(d => d.IsError).Count();
+
 				models.Add(kv.Key);
 			}
+
+			models.Sort((a, b) => -a.Warnings.CompareTo(b.Warnings));
 
 			return View(models);
 		}

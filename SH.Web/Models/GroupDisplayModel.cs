@@ -11,6 +11,10 @@ namespace SH.Web.Models
 		public string Name;
 		public string GroupName;
 		public DateTime Create;
+		/// <summary>
+		/// Warnings count
+		/// </summary>
+		public int Warnings;
 
 		public SensorDisplayModel[] Data;
 
