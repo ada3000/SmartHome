@@ -9,7 +9,7 @@
 <div class="template js-panel-template">
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title">{Name}<span class="badge headerDate">{CreateDate}</span></h3>
+            <h3 class="panel-title">{GroupName} - {Name}<span class="badge headerDate">{CreateDate}</span></h3>
         </div>
         <div class="panel-body">
         </div>
@@ -76,7 +76,10 @@
             for(var sid=0;sid<panel.Data.length; sid++)
             {
                 var sensorData = panel.Data[sid];
-                sensorData.style = sensorData.IsError ? "primary":"danger";
+                sensorData.style = sensorData.IsCore ? "success":"primary";
+
+                if(sensorData.IsError)
+                    sensorData.style = "danger";
 
                 var template = sensorData.Type==10 ? progressTemplate: textTemplate;
 

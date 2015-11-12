@@ -58,7 +58,7 @@ namespace SH.Web.Controllers
 				{  
 					Type = SensorDisplayModelType.Progress,
 					TitleLeft = s.Name,
-					IsError = s.WarningValueMin.HasValue && s.Value.HasValue && s.WarningValueMin >= s.Value,
+					IsError = s.WarningValueMin.HasValue && s.Value.HasValue && s.WarningValueMin <= s.Value,
 					PersentValue = s.Value.HasValue ? ((int)s.Value * 10) / 10.0f: 0,
 				};
 
@@ -72,10 +72,12 @@ namespace SH.Web.Controllers
 						break;
 
 					case SensorValueType.CPU:
+						model.IsCore = true;
 						if (_skipCpuSubTypes.Contains(s.SubType)) continue;
 						break;
 
 					case SensorValueType.Memory:
+						model.IsCore = true;
 						model.TitlePersent = RoundBytes((long)s.Children[0].Value);
 						model.TitleRight = RoundBytes((long)s.Children[0].ValueMax);
 						break;
@@ -108,7 +110,7 @@ namespace SH.Web.Controllers
 
 			string result = hours + ":" + minutes + ":" + sec;
 
-			if (days > 0) result = days + " " + result;
+			if (days > 0) result = days + " Days " + result;
 
 			return result;
 		}
@@ -147,7 +149,8 @@ namespace SH.Web.Controllers
 				{
 					Create = tRes.Create,
 					Id = item.HostId.ToString(),
-					Name = tRes.ClusterName + "\\" + tRes.ServerName
+					GroupName = tRes.ClusterName,
+					Name = tRes.ServerName
 				};
 
 				if (!result.ContainsKey(model))

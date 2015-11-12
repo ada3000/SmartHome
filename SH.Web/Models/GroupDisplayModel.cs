@@ -9,6 +9,7 @@ namespace SH.Web.Models
 	{
 		public string Id;
 		public string Name;
+		public string GroupName;
 		public DateTime Create;
 
 		public SensorDisplayModel[] Data;

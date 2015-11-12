@@ -14,6 +14,7 @@ namespace SH.Web.Models
 		public float PersentValue;
 
 		public bool IsError;
+		public bool IsCore;
 
 		public SensorDisplayModelType Type;
 	}
