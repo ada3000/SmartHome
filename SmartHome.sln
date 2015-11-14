@@ -34,6 +34,34 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataBase", "DataBase", "{D2
 		DataBase\SmartHome.bak = DataBase\SmartHome.bak
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{11A3EE79-9EB0-44FE-B7CC-15F3F1CD16CB}"
+	ProjectSection(SolutionItems) = preProject
+		Libs\Base.Cls.dll = Libs\Base.Cls.dll
+		Libs\Base.Cls.pdb = Libs\Base.Cls.pdb
+		Libs\log4net.dll = Libs\log4net.dll
+		Libs\log4net.xml = Libs\log4net.xml
+		Libs\Microsoft.Web.Infrastructure.dll = Libs\Microsoft.Web.Infrastructure.dll
+		Libs\Microsoft.Web.Infrastructure.xml = Libs\Microsoft.Web.Infrastructure.xml
+		Libs\Newtonsoft.Json.dll = Libs\Newtonsoft.Json.dll
+		Libs\Newtonsoft.Json.xml = Libs\Newtonsoft.Json.xml
+		Libs\Srv.Cls.dll = Libs\Srv.Cls.dll
+		Libs\Srv.Cls.pdb = Libs\Srv.Cls.pdb
+		Libs\Srv.Cls.xml = Libs\Srv.Cls.xml
+		Libs\Srv.Config.State.dll = Libs\Srv.Config.State.dll
+		Libs\Srv.Config.State.pdb = Libs\Srv.Config.State.pdb
+		Libs\Srv.Config.State.xml = Libs\Srv.Config.State.xml
+		Libs\Srv.WebService.Cls.dll = Libs\Srv.WebService.Cls.dll
+		Libs\Srv.WebService.Cls.pdb = Libs\Srv.WebService.Cls.pdb
+		Libs\Srv.WebService.Cls.xml = Libs\Srv.WebService.Cls.xml
+		Libs\Stg.Cls.dll = Libs\Stg.Cls.dll
+		Libs\Stg.Cls.pdb = Libs\Stg.Cls.pdb
+		Libs\Stg.Cls.xml = Libs\Stg.Cls.xml
+		Libs\Stg.MongoDB.Cls.XML = Libs\Stg.MongoDB.Cls.XML
+		Libs\Stg.MSSQL.Cls.dll = Libs\Stg.MSSQL.Cls.dll
+		Libs\Stg.MSSQL.Cls.pdb = Libs\Stg.MSSQL.Cls.pdb
+		Libs\Stg.MSSQL.Cls.xml = Libs\Stg.MSSQL.Cls.xml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

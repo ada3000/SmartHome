@@ -11,6 +11,7 @@ namespace SH.TelemetrySource
 {
 	public class DiskUsage: ISensorValueSource
 	{
+		PerformanceCounter diskQui = new PerformanceCounter("Processor", "% Processor Time", "_Total");
 		public IEnumerable<SensorValue> Collect()
 		{
 			List<SensorValue> result = new List<SensorValue>();

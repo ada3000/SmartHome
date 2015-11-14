@@ -27,7 +27,7 @@ namespace SH.Tester
 	 */
 	class Program
 	{
-		//static CPUUsage _cpu = new CPUUsage();
+		static CPUUsage _cpu = new CPUUsage();
 		//static MemUsage _mem = new MemUsage();
 		//static MachineInfo _machineInfo = new MachineInfo();
 		//static DiskUsage _disk = new DiskUsage();
@@ -44,29 +44,19 @@ namespace SH.Tester
 		}
 		static void Main(string[] args)
 		{
-			var t= Test();
-			var t2 = Test();
-
-			Func<int> test3 = () => 1 + 2;
-
-			Console.WriteLine(t() + t());
-
-			Console.WriteLine(t2() + t2());
-			Console.WriteLine(t() + t());
-			Console.WriteLine(test3());
 			//Console.WriteLine(_machineInfo.SystemManufacturer + " " + _machineInfo.SystemModel);
 			//Console.WriteLine(_machineInfo.DNSHostName + " " + _machineInfo.Caption);
 			//Console.WriteLine(_machineInfo.PrimaryOwnerName);
 			//Console.WriteLine(_machineInfo.TotalPhysicalMemory);
 			//Console.WriteLine(_machineInfo.CurrentTimeZone);
 
-			//while (true)
-			//{
+			while (true)
+			{
 			//	//Console.WriteLine(_cpu.Current + "% " + _mem.AvaibleMB + "MB " + (_mem.TotalMB - _mem.AvaibleMB) + "MB " + _mem.TotalMB + "MB");
-			//	//Console.WriteLine(_cpu.Current + "% Ave1Min=" + _cpu.Average1Min + "% Ave5Min=" + _cpu.Average5Min + "% ");
+				Console.WriteLine(_cpu.Current + "% Ave1Min=" + _cpu.Average1Min + "% Ave5Min=" + _cpu.Average5Min + "% ");
 			//	//Console.WriteLine(_cpu.Current + "% " + _mem.AvaibleMB + "MB " + (_mem.TotalMB-_mem.AvaibleMB) + "MB " + _mem.TotalMB + "MB");
-			//	Thread.Sleep(1000);
-			//}
+				Thread.Sleep(1000);
+			}
 
 			//var data = _disk.Collect().ToArray();
 			
@@ -78,7 +68,7 @@ namespace SH.Tester
 
 			//Console.WriteLine(JsonConvert.SerializeObject(data));
 
-			Console.ReadKey();		
+			//Console.ReadKey();		
 		}
 	}
 }
