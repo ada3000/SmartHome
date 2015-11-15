@@ -85,7 +85,7 @@ namespace SH.Web.Controllers
 
 					case SensorValueType.Memory:
 						model.IsCore = true;
-						model.TitlePersent = RoundBytes((long)s.Children[0].Value);
+						model.TitlePersent = RoundBytes((long)(s.Children[0].ValueMax-s.Children[0].Value));
 						model.TitleRight = RoundBytes((long)s.Children[0].ValueMax);
 						break;
 
