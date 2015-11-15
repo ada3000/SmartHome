@@ -28,29 +28,14 @@ namespace SH.TelemetrySource
 						Name = di.VolumeLabel + " (" + di.Name.Replace("\\","") + ")",
 						Description = "Disk persent usage",
 						Type = SensorValueType.Hdd,
-						Value = 100 - 100 * di.AvailableFreeSpace / di.TotalSize,
-						WarningValueMin = 90, //warning when 90% is used,
-						ValueScale = SensorValueScale.Persent,
-						ValueMin = 0,
-						ValueMax = 100
-					};
-
-					drive.Children.Add(new SensorValue
-						{
-							Type = SensorValueType.Hdd,
-							SubType = "AvailableFreeSpace",							
-							ValueScale = SensorValueScale.Byte,
-							Value = di.AvailableFreeSpace
-						});
-					drive.Children.Add(new SensorValue
-					{
-						Type = SensorValueType.Hdd,
-						SubType = "TotalSize",						
+						Value = di.TotalSize - di.AvailableFreeSpace,
+						WarningValueMin = 0.9* di.TotalSize, //warning when 90% is used,
 						ValueScale = SensorValueScale.Byte,
-						Value = di.TotalSize
-					});
+						ValueMin = 0,
+						ValueMax = di.TotalSize
+                    };
 
-					result.Add(drive);
+                    result.Add(drive);
 			}
 
 			return result;

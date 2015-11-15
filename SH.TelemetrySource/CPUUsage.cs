@@ -111,7 +111,7 @@ namespace SH.TelemetrySource
 			yield return new SensorValue
 			{
 				//Date = DateTime.UtcNow,
-				Name = "CPU Ave 1 min",
+				Name = "CPU Avg 1 min",
 				Type = SensorValueType.CPU,
 				SubType = "Average1Min",
 				Value = Average1Min,
@@ -122,7 +122,7 @@ namespace SH.TelemetrySource
 
 			yield return new SensorValue
 			{
-				Name = "CPU Ave 5 min",
+				Name = "CPU Avg 5 min",
 				Type = SensorValueType.CPU,
 				SubType = "Average5Min",
 				Value = Average5Min,
@@ -134,7 +134,7 @@ namespace SH.TelemetrySource
 
             yield return new SensorValue
             {
-                Name = "CPU Ave hour",
+                Name = "CPU Avg hour",
                 Type = SensorValueType.CPU,
                 SubType = "AverageHour",
                 Value = AverageHour,

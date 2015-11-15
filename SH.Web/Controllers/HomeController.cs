@@ -11,189 +11,213 @@ using Newtonsoft.Json;
 
 namespace SH.Web.Controllers
 {
-	public class HomeController : Controller
-	{
-		private static DataSource _dataSource = new DataSource(Config.DBConStr);
+    public class HomeController : Controller
+    {
+        private static DataSource _dataSource = new DataSource(Config.DBConStr);
 
-		private HostDataStorage _hostsStg;
-		private ResultDataStorage _resultsStg;
+        private HostDataStorage _hostsStg;
+        private ResultDataStorage _resultsStg;
 
-		private string[] _skipCpuSubTypes = new [] {"Average1Min", "Current" };
-		
-		private const string HddInfo = "free {0} of {1}";
+        private string[] _skipCpuSubTypes = new[] { "Average1Min", "Current" };
 
-		/// <summary>
-		/// TODO: use DI IoC
-		/// </summary>
-		public HomeController()
-		{
-			_hostsStg = new HostDataStorage(_dataSource);
-			_resultsStg = new ResultDataStorage(_dataSource);
-		}
+        private const string HddInfo = "free {0} of {1}";
 
-		public ActionResult Index()
-		{
-			List<GroupDisplayModel> models = new List<GroupDisplayModel>();
+        /// <summary>
+        /// TODO: use DI IoC
+        /// </summary>
+        public HomeController()
+        {
+            _hostsStg = new HostDataStorage(_dataSource);
+            _resultsStg = new ResultDataStorage(_dataSource);
+        }
 
-			var hosts = _hostsStg.All();
-			var results = _resultsStg.All();
+        public ActionResult Index()
+        {
+            List<GroupDisplayModel> models = new List<GroupDisplayModel>();
 
-			var groups = GroupByHost(results);
+            var hosts = _hostsStg.All();
+            var results = _resultsStg.All();
 
-			foreach (var kv in groups)
-			{
-				kv.Key.Data = RenderSensors(kv.Value).ToArray();
-				kv.Key.Warnings = kv.Key.Data.Where(d => d.IsError).Count();
+            var groups = GroupByHost(results);
 
-				models.Add(kv.Key);
-			}
+            foreach (var kv in groups)
+            {
+                kv.Key.Data = RenderSensors(kv.Value).ToArray();
+                kv.Key.Warnings = kv.Key.Data.Where(d => d.IsError).Count();
 
-			models.Sort((a, b) => -a.Warnings.CompareTo(b.Warnings));
+                models.Add(kv.Key);
+            }
 
-			return View(models);
-		}
-		private IEnumerable<SensorDisplayModel> RenderSensors(IEnumerable<SensorInfo> sensors)
-		{
-			List<SensorDisplayModel> result = new List<SensorDisplayModel>();
+            models.Sort((a, b) => -a.Warnings.CompareTo(b.Warnings));
 
-			foreach(var sInfo in sensors)
-			{
+            return View(models);
+        }
+        private IEnumerable<SensorDisplayModel> RenderSensors(IEnumerable<SensorInfo> sensors)
+        {
+            List<SensorDisplayModel> result = new List<SensorDisplayModel>();
+
+            foreach (var sInfo in sensors)
+            {
                 SensorValue s = sInfo.Value;
 
-				SensorDisplayModel model = new SensorDisplayModel 
-				{  
+                SensorDisplayModel model = new SensorDisplayModel
+                {
                     SourceId = sInfo.SourceId,
-					Type = SensorDisplayModelType.Progress,
-					TitleLeft = s.Name,
-					IsError = s.WarningValueMin.HasValue && s.Value.HasValue && s.WarningValueMin <= s.Value,
-					PersentValue = s.Value.HasValue ? ((int)s.Value * 10) / 10.0f: 0,
-				};
+                    Type = SensorDisplayModelType.Progress,
+                    TitleLeft = s.Name,
+                    IsError = s.WarningValueMin.HasValue && s.Value.HasValue && s.WarningValueMin <= s.Value,
+                    PersentValue = s.Value.HasValue ? ((int)s.Value * 10) / 10.0f : 0,
+                };
 
-				model.TitlePersent = model.PersentValue + "%";
+                model.TitlePersent = model.PersentValue + "%";
 
-				switch(s.Type)
-				{
-					case SensorValueType.Info:
-						model.Type = SensorDisplayModelType.Text;						
-						model.TitleRight = RenderSeconds((long)s.Value);
-						break;
+                switch (s.Type)
+                {
+                    case SensorValueType.Info:
+                        model.Type = SensorDisplayModelType.Text;
+                        model.TitleRight = RenderSeconds((long)s.Value);
+                        break;
 
-					case SensorValueType.CPU:
-						model.IsCore = true;
-						if (_skipCpuSubTypes.Contains(s.SubType)) continue;
-						break;
+                    case SensorValueType.CPU:
+                        model.IsCore = true;
+                        if (_skipCpuSubTypes.Contains(s.SubType)) continue;
+                        break;
 
-					case SensorValueType.Memory:
-						model.IsCore = true;
-						model.TitlePersent = RoundBytes((long)(s.Children[0].ValueMax-s.Children[0].Value));
-						model.TitleRight = RoundBytes((long)s.Children[0].ValueMax);
-						break;
+                    case SensorValueType.Memory:
+                        model.IsCore = true;
 
-					case SensorValueType.Hdd:
-						model.TitleRight = string.Format(HddInfo, 
-							RoundBytes((long)s.Children.Where(c=>c.SubType=="AvailableFreeSpace").First().Value),
-							RoundBytes((long)s.Children.Where(c => c.SubType == "TotalSize").First().Value));
-						break;
-				}
+                        if (s.Children != null && s.Children.Count > 0) //old format support
+                        {
+                            model.TitlePersent = RoundBytes((long)(s.Children[0].ValueMax - s.Children[0].Value));
+                            model.TitleRight = RoundBytes((long)s.Children[0].ValueMax);
+                        }
+                        else
+                        {
+                            model.PersentValue = ((int)(1.0f * s.Value / s.ValueMax * 1000)) / 10;
 
-				result.Add(model);
-			}
+                            model.TitlePersent = RoundBytes((long)s.Value);
+                            model.TitleRight = RoundBytes((long)s.ValueMax);
+                        }
 
-			return result;
-		}
+                        break;
 
-		private string RenderSeconds(long sec)
-		{
-			int secPerDay = 86400;
+                    case SensorValueType.Hdd:
+                        if (s.Children != null && s.Children.Count > 0) //old format support
+                        {
+                            model.TitleRight = string.Format(HddInfo,
+                                RoundBytes((long)s.Children.Where(c => c.SubType == "AvailableFreeSpace").First().Value),
+                                RoundBytes((long)s.Children.Where(c => c.SubType == "TotalSize").First().Value));
+                        }
+                        else
+                        {
+                            model.PersentValue = ((int)(1.0f * s.Value / s.ValueMax * 1000)) / 10;
+                            model.TitlePersent = model.PersentValue + "%";
 
-			int days = (int)(sec / secPerDay);
-			sec -= days * secPerDay;
+                            model.TitleRight = string.Format(HddInfo,
+                                RoundBytes((long)(s.ValueMax - s.Value)),
+                                RoundBytes((long)s.ValueMax));
+                        }
+                        break;
+                }
 
-			int hours = (int)sec / 3600;
-			sec -= hours * 3600;
+                result.Add(model);
+            }
 
-			int minutes = (int)sec / 60;
-			sec -= minutes * 60;
+            return result;
+        }
 
-			string result = hours + ":" + minutes + ":" + sec;
+        private string RenderSeconds(long sec)
+        {
+            int secPerDay = 86400;
 
-			if (days > 0) result = days + " Days " + result;
+            int days = (int)(sec / secPerDay);
+            sec -= days * secPerDay;
 
-			return result;
-		}
+            int hours = (int)sec / 3600;
+            sec -= hours * 3600;
 
-		private string RoundBytes(long value)
-		{
-			string[] formats = new[] {"B", "K", "M", "G", "T", "P" };
-			int mult = 1024;
-			int index = 0;
+            int minutes = (int)sec / 60;
+            sec -= minutes * 60;
 
-			float result = value;
-			while(result > mult && index < formats.Length-1)
-			{
-				result /= mult;
-				index++;
-			}
+            string result = hours + ":" + minutes + ":" + sec;
 
-			result = ((int)(result * 10)) / 10.0f;
+            if (days > 0) result = days + " Days " + result;
 
-			string ret = result.ToString() +" "+ formats[index];
+            return result;
+        }
 
-			if (index > 0) ret += "B";
+        private string RoundBytes(long value)
+        {
+            string[] formats = new[] { "B", "K", "M", "G", "T", "P" };
+            int mult = 1024;
+            int index = 0;
 
-			return ret;
-		}
+            float result = value;
+            while (result > mult && index < formats.Length - 1)
+            {
+                result /= mult;
+                index++;
+            }
 
-		private Dictionary<GroupDisplayModel, List<SensorInfo>> GroupByHost(IEnumerable<ObjResult> data)
-		{
-			Dictionary<GroupDisplayModel, List<SensorInfo>> result = new Dictionary<GroupDisplayModel, List<SensorInfo>>();
+            result = ((int)(result * 10)) / 10.0f;
 
-			foreach (var item in data)
-			{	
-				TelemetryResult tRes = JsonConvert.DeserializeObject<TelemetryResult>(item.Content);
+            string ret = result.ToString() + " " + formats[index];
 
-				GroupDisplayModel model = new GroupDisplayModel
-				{
-					Create = tRes.Create,
-					Id = item.HostId.ToString(),
-					GroupName = tRes.ClusterName,
-					Name = tRes.ServerName
-				};
+            if (index > 0) ret += "B";
 
-				if (!result.ContainsKey(model))
-					result.Add(model, new List<SensorInfo>());
+            return ret;
+        }
 
-				var curKey = result.Keys.Where(k => k.GetHashCode() == model.GetHashCode()).First();
+        private Dictionary<GroupDisplayModel, List<SensorInfo>> GroupByHost(IEnumerable<ObjResult> data)
+        {
+            Dictionary<GroupDisplayModel, List<SensorInfo>> result = new Dictionary<GroupDisplayModel, List<SensorInfo>>();
 
-				//set oldest date
-				if (curKey.Create > model.Create)
-					curKey.Create = model.Create;
+            foreach (var item in data)
+            {
+                TelemetryResult tRes = JsonConvert.DeserializeObject<TelemetryResult>(item.Content);
 
-				result[model].AddRange(tRes.Values.Where(s => s.Type != SensorValueType.Info || s.SubType == "UpTime")
-                    .Select(v=> new SensorInfo { Value = v, SourceId = item.SourceId }));
-			}
+                GroupDisplayModel model = new GroupDisplayModel
+                {
+                    Create = tRes.Create,
+                    Id = item.HostId.ToString(),
+                    GroupName = tRes.ClusterName,
+                    Name = tRes.ServerName
+                };
 
-			return result;
-		}
+                if (!result.ContainsKey(model))
+                    result.Add(model, new List<SensorInfo>());
 
-		public ActionResult About()
-		{
-			ViewBag.Message = "Your application description page.";
+                var curKey = result.Keys.Where(k => k.GetHashCode() == model.GetHashCode()).First();
 
-			return View();
-		}
+                //set oldest date
+                if (curKey.Create > model.Create)
+                    curKey.Create = model.Create;
 
-		public ActionResult Templates()
-		{
-			ViewBag.Message = "Your contact page.";
+                result[model].AddRange(tRes.Values.Where(s => s.Type != SensorValueType.Info || s.SubType == "UpTime")
+                    .Select(v => new SensorInfo { Value = v, SourceId = item.SourceId }));
+            }
 
-			return View();
-		}
+            return result;
+        }
+
+        public ActionResult About()
+        {
+            ViewBag.Message = "Your application description page.";
+
+            return View();
+        }
+
+        public ActionResult Templates()
+        {
+            ViewBag.Message = "Your contact page.";
+
+            return View();
+        }
 
         public class SensorInfo
         {
             public SensorValue Value;
             public long SourceId;
         }
-	}
+    }
 }

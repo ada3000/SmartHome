@@ -11,14 +11,6 @@ namespace SH.TelemetrySource
 {
 	public class MemUsage: ISensorValueSource
 	{
-		private PerformanceCounter _avaibleCounter;
-		private PerformanceCounter _usedCounter;
-
-		public MemUsage()
-		{
-			_avaibleCounter = new PerformanceCounter("Memory", "Available MBytes");
-			_usedCounter = new PerformanceCounter("Memory", "Available MBytes");
-		}
 		public ulong Total
 		{
 			get
@@ -44,24 +36,14 @@ namespace SH.TelemetrySource
 			{
 				//Date = DateTime.UtcNow,
 				Children = new List<SensorValue>(),
-				Name = "Memory Usage %",
+				Name = "Memory Usage",
 				Type = SensorValueType.Memory,
-				Value = 100 - 100 * Available / Total,
-				WarningValueMin = 90, //warning when 90% is used,
-				ValueScale = SensorValueScale.Persent,
-				ValueMin = 0,
-				ValueMax = 100
-			};
-
-			result.Children.Add(new SensorValue
-			{
-				Type = SensorValueType.Memory,
-				SubType = "Available",
+				Value = Total - Available,
+				WarningValueMin = 0.9*Total, //warning when 90% is used,
 				ValueScale = SensorValueScale.Byte,
-				Value = Available,
-				ValueMax = Total,
-				ValueMin = 0
-			});
+				ValueMin = 0,
+				ValueMax = Total
+            };
 
 			return new[] { result };
 		}

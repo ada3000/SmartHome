@@ -38,3 +38,6 @@
 - Add hour CPU stats
 - Change service process to .net 4.5
 - Change sensor display algorythm
+- Change CPU ace to CPU avg
+- Refactor hdd info model
+- Refactor Mem info model
