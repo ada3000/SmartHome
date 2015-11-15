@@ -30,3 +30,11 @@
 
 - Add order by warning level
 - Add web ui column display mode
+
+==========================================================
+= 15.11.2015 =============================================
+==========================================================
+
+- Add hour CPU stats
+- Change service process to .net 4.5
+- Change sensor display algorythm

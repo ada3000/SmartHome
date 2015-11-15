@@ -48,12 +48,12 @@ namespace SH.Tester
 			//Console.WriteLine(_machineInfo.DNSHostName + " " + _machineInfo.Caption);
 			//Console.WriteLine(_machineInfo.PrimaryOwnerName);
 			//Console.WriteLine(_machineInfo.TotalPhysicalMemory);
-			//Console.WriteLine(_machineInfo.CurrentTimeZone);
+			//Console.WriteLine(_machineInfo.CurrentTimeZone);`
 
 			while (true)
 			{
 			//	//Console.WriteLine(_cpu.Current + "% " + _mem.AvaibleMB + "MB " + (_mem.TotalMB - _mem.AvaibleMB) + "MB " + _mem.TotalMB + "MB");
-				Console.WriteLine(_cpu.Current + "% Ave1Min=" + _cpu.Average1Min + "% Ave5Min=" + _cpu.Average5Min + "% ");
+				Console.WriteLine(_cpu.Current + "% Ave1Min=" + _cpu.Average1Min + "% Ave5Min=" + _cpu.Average5Min + "% AveHour=" + _cpu.AverageHour + "% ");
 			//	//Console.WriteLine(_cpu.Current + "% " + _mem.AvaibleMB + "MB " + (_mem.TotalMB-_mem.AvaibleMB) + "MB " + _mem.TotalMB + "MB");
 				Thread.Sleep(1000);
 			}

@@ -18,7 +18,7 @@ namespace SH.Web.Controllers
 		private HostDataStorage _hostsStg;
 		private ResultDataStorage _resultsStg;
 
-		private string[] _skipCpuSubTypes = new [] { "Average1Min", "Current" };
+		private string[] _skipCpuSubTypes = new [] {"Average1Min", "Current" };
 		
 		private const string HddInfo = "free {0} of {1}";
 
@@ -52,14 +52,17 @@ namespace SH.Web.Controllers
 
 			return View(models);
 		}
-		private IEnumerable<SensorDisplayModel> RenderSensors(IEnumerable<SensorValue> sensors)
+		private IEnumerable<SensorDisplayModel> RenderSensors(IEnumerable<SensorInfo> sensors)
 		{
 			List<SensorDisplayModel> result = new List<SensorDisplayModel>();
 
-			foreach(var s in sensors)
+			foreach(var sInfo in sensors)
 			{
+                SensorValue s = sInfo.Value;
+
 				SensorDisplayModel model = new SensorDisplayModel 
 				{  
+                    SourceId = sInfo.SourceId,
 					Type = SensorDisplayModelType.Progress,
 					TitleLeft = s.Name,
 					IsError = s.WarningValueMin.HasValue && s.Value.HasValue && s.WarningValueMin <= s.Value,
@@ -141,9 +144,9 @@ namespace SH.Web.Controllers
 			return ret;
 		}
 
-		private Dictionary<GroupDisplayModel, List<SensorValue>> GroupByHost(IEnumerable<ObjResult> data)
+		private Dictionary<GroupDisplayModel, List<SensorInfo>> GroupByHost(IEnumerable<ObjResult> data)
 		{
-			Dictionary<GroupDisplayModel, List<SensorValue>> result = new Dictionary<GroupDisplayModel, List<SensorValue>>();
+			Dictionary<GroupDisplayModel, List<SensorInfo>> result = new Dictionary<GroupDisplayModel, List<SensorInfo>>();
 
 			foreach (var item in data)
 			{	
@@ -158,7 +161,7 @@ namespace SH.Web.Controllers
 				};
 
 				if (!result.ContainsKey(model))
-					result.Add(model, new List<SensorValue>());
+					result.Add(model, new List<SensorInfo>());
 
 				var curKey = result.Keys.Where(k => k.GetHashCode() == model.GetHashCode()).First();
 
@@ -166,7 +169,8 @@ namespace SH.Web.Controllers
 				if (curKey.Create > model.Create)
 					curKey.Create = model.Create;
 
-				result[model].AddRange(tRes.Values.Where(s => s.Type != SensorValueType.Info || s.SubType == "UpTime"));
+				result[model].AddRange(tRes.Values.Where(s => s.Type != SensorValueType.Info || s.SubType == "UpTime")
+                    .Select(v=> new SensorInfo { Value = v, SourceId = item.SourceId }));
 			}
 
 			return result;
@@ -185,5 +189,11 @@ namespace SH.Web.Controllers
 
 			return View();
 		}
+
+        public class SensorInfo
+        {
+            public SensorValue Value;
+            public long SourceId;
+        }
 	}
 }

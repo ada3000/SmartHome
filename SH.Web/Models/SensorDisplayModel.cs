@@ -17,5 +17,8 @@ namespace SH.Web.Models
 		public bool IsCore;
 
 		public SensorDisplayModelType Type;
+
+        public long SourceId;
+
 	}
 }

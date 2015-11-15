@@ -14,7 +14,7 @@ namespace SH.TelemetrySource
 	{
 		private PerformanceCounter cpuCounter = null;
 
-		private const int MaxValues = 300;
+		private const int MaxValues = 3600;
 		private List<float> _lastValues = new List<float>(MaxValues);
 
 		private Thread _worker = null;
@@ -76,7 +76,15 @@ namespace SH.TelemetrySource
 			}
 		}
 
-		public IEnumerable<SensorValue> Collect()
+        public float AverageHour
+        {
+            get
+            {
+                return CalcMiddle(3600);
+            }
+        }
+
+        public IEnumerable<SensorValue> Collect()
 		{
 			//SensorValue result = new SensorValue
 			//		{
@@ -124,7 +132,19 @@ namespace SH.TelemetrySource
 				ValueScale = SensorValueScale.Persent
 			};
 
-			//return new[] { result };
-		}
+            yield return new SensorValue
+            {
+                Name = "CPU Ave hour",
+                Type = SensorValueType.CPU,
+                SubType = "AverageHour",
+                Value = AverageHour,
+                ValueMin = 0,
+                ValueMax = 100,
+                WarningValueMin = 50,
+                ValueScale = SensorValueScale.Persent
+            };
+
+            //return new[] { result };
+        }
 	}
 }
