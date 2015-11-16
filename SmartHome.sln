@@ -36,8 +36,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataBase", "DataBase", "{D2
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{11A3EE79-9EB0-44FE-B7CC-15F3F1CD16CB}"
 	ProjectSection(SolutionItems) = preProject
+		Libs\AutoUpdater.Api.dll = Libs\AutoUpdater.Api.dll
 		Libs\Base.Cls.dll = Libs\Base.Cls.dll
 		Libs\Base.Cls.pdb = Libs\Base.Cls.pdb
+		Libs\Cfg.AutoUpdater.Process.xml = Libs\Cfg.AutoUpdater.Process.xml
 		Libs\log4net.dll = Libs\log4net.dll
 		Libs\log4net.xml = Libs\log4net.xml
 		Libs\Microsoft.Web.Infrastructure.dll = Libs\Microsoft.Web.Infrastructure.dll
@@ -60,6 +62,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{11A3EE79-9
 		Libs\Stg.MSSQL.Cls.dll = Libs\Stg.MSSQL.Cls.dll
 		Libs\Stg.MSSQL.Cls.pdb = Libs\Stg.MSSQL.Cls.pdb
 		Libs\Stg.MSSQL.Cls.xml = Libs\Stg.MSSQL.Cls.xml
+		Libs\Updater.exe = Libs\Updater.exe
 	EndProjectSection
 EndProject
 Global

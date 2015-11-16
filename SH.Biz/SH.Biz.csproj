@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoUpdater.Api">
+      <HintPath>..\Libs\AutoUpdater.Api.dll</HintPath>
+    </Reference>
     <Reference Include="Base.Cls">
       <HintPath>..\Libs\Base.Cls.dll</HintPath>
     </Reference>
@@ -50,6 +53,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Updater">
+      <HintPath>..\Libs\Updater.exe</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -83,6 +89,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\Libs\Cfg.AutoUpdater.Process.xml">
+      <Link>Cfg.AutoUpdater.Process.xml</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Cfg.TelemetryPush.Server.Process.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

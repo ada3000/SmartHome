@@ -41,6 +41,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoUpdater.Api">
+      <HintPath>..\Libs\AutoUpdater.Api.dll</HintPath>
+    </Reference>
     <Reference Include="Base.Cls">
       <HintPath>..\Libs\Base.Cls.dll</HintPath>
     </Reference>
@@ -61,6 +64,9 @@
     <Reference Include="System.Data" />
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml" />
+    <Reference Include="Updater">
+      <HintPath>..\Libs\Updater.exe</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cls.Config.cs" />

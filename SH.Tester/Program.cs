@@ -50,6 +50,9 @@ namespace SH.Tester
 			//Console.WriteLine(_machineInfo.TotalPhysicalMemory);
 			//Console.WriteLine(_machineInfo.CurrentTimeZone);`
 
+			
+
+
 			while (true)
 			{
 			//	//Console.WriteLine(_cpu.Current + "% " + _mem.AvaibleMB + "MB " + (_mem.TotalMB - _mem.AvaibleMB) + "MB " + _mem.TotalMB + "MB");
