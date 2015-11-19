@@ -11,7 +11,7 @@ using Newtonsoft.Json;
 
 namespace SH.Web.Controllers
 {
-    public class HomeController : Controller
+    public class ClusterController : Controller
     {
         private static DataSource _dataSource = new DataSource(Config.DBConStr);
 
@@ -25,34 +25,45 @@ namespace SH.Web.Controllers
         /// <summary>
         /// TODO: use DI IoC
         /// </summary>
-        public HomeController()
+		public ClusterController()
         {
             _hostsStg = new HostDataStorage(_dataSource);
             _resultsStg = new ResultDataStorage(_dataSource);
         }
 
         public ActionResult Index()
-        {
-            List<GroupDisplayModel> models = new List<GroupDisplayModel>();
-
-            var hosts = _hostsStg.All();
-            var results = _resultsStg.All();
-
-            var groups = GroupByHost(results);
-
-            foreach (var kv in groups)
-            {
-                kv.Key.Data = RenderSensors(kv.Value).ToArray();
-                kv.Key.Warnings = kv.Key.Data.Where(d => d.IsError).Count();
-
-                models.Add(kv.Key);
-            }
-
-            models.Sort((a, b) => -a.Warnings.CompareTo(b.Warnings));
-
-            return View(models);
+        {            
+            return View();
         }
-        private IEnumerable<SensorDisplayModel> RenderSensors(IEnumerable<SensorInfo> sensors)
+
+		public ActionResult GetData(string type)
+		{
+			switch(type)
+			{
+				case "table":
+				case "tile":
+					List<GroupDisplayModel> models = new List<GroupDisplayModel>();
+
+					var hosts = _hostsStg.All();
+					var results = _resultsStg.All();
+
+					var groups = GroupByHost(results);
+
+					foreach (var kv in groups)
+					{
+						kv.Key.Data = RenderSensors(kv.Value, type).ToArray();
+						kv.Key.Warnings = kv.Key.Data.Where(d => d.IsError).Count();
+
+						models.Add(kv.Key);
+					}
+
+					models.Sort((a, b) => -a.Warnings.CompareTo(b.Warnings));
+
+					return Json(models);
+			}
+			throw new NotImplementedException();
+		}
+        private IEnumerable<SensorDisplayModel> RenderSensors(IEnumerable<SensorInfo> sensors, string type)
         {
             List<SensorDisplayModel> result = new List<SensorDisplayModel>();
 
@@ -67,6 +78,8 @@ namespace SH.Web.Controllers
                     TitleLeft = s.Name,
                     IsError = s.WarningValueMin.HasValue && s.Value.HasValue && s.WarningValueMin <= s.Value,
                     PersentValue = s.Value.HasValue ? ((int)s.Value * 10) / 10.0f : 0,
+					SensorType = s.Type.ToString(),
+					SensorSubType = s.SubType
                 };
 
                 model.TitlePersent = model.PersentValue + "%";
@@ -99,6 +112,11 @@ namespace SH.Web.Controllers
                             model.TitleRight = RoundBytes((long)s.ValueMax);
                         }
 
+						//if(type=="table")
+						//{
+						//	model.TitlePersent = BytesToGb((long)s.Value)+" / "+BytesToGb((long)s.ValueMax);
+						//}
+
                         break;
 
                     case SensorValueType.Hdd:
@@ -117,6 +135,12 @@ namespace SH.Web.Controllers
                                 RoundBytes((long)(s.ValueMax - s.Value)),
                                 RoundBytes((long)s.ValueMax));
                         }
+
+						//if (type == "table")
+						//{
+						//	model.TitlePersent = BytesToGb((long)s.Value) + " / " + BytesToGb((long)s.ValueMax);
+						//}
+
                         break;
                 }
 
@@ -146,6 +170,19 @@ namespace SH.Web.Controllers
             return result;
         }
 
+		private string BytesToGb(long value)
+		{
+			float result = value;
+			result /= 1024;
+			result /= 1024;
+			result /= 1024;
+
+			result = ((int)(result * 10)) / 10.0f;
+
+			string ret = result.ToString();
+
+			return ret;
+		}
         private string RoundBytes(long value)
         {
             string[] formats = new[] { "B", "K", "M", "G", "T", "P" };

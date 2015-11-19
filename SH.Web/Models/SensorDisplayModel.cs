@@ -20,5 +20,8 @@ namespace SH.Web.Models
 
         public long SourceId;
 
+		public string SensorType;
+		public string SensorSubType;
+
 	}
 }

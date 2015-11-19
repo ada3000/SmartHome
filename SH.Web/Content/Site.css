@@ -31,3 +31,20 @@ textarea {
 {
     display:none;
 }
+.table-view .progress
+{
+    margin-bottom:1px;
+    background-color:#8F8F8F;
+}
+.table-view .progress.hdd
+{
+    width: 80px;
+    float: left;
+    margin-right: 5px;
+}
+.table-view .progress .progressText
+{
+    text-shadow:1px 1px 1px black;
+    white-space: nowrap;
+    padding-left: 6px;
+}

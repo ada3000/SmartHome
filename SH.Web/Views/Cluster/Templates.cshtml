@@ -1,0 +1,320 @@
+﻿@{
+    ViewBag.Title = "Stats";
+}
+<br />
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">View</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="active js-view-button" data-mode="tile"><a href="#">Tiles</a></li>
+                <li class="js-view-button" data-mode="table"><a href="#">Table</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Cluster <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Main</a></li>
+                        <li><a href="#">Work</a></li>
+                        <li><a href="#">Something else</a></li>
+                    </ul>
+                </li>
+                
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">Auto refresh:</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">None <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">None</a></li>
+                        <li><a href="#">15 min</a></li>
+                        <li><a href="#">30 min</a></li>
+                        <li><a href="#">60 min</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<div class="row table-view js-table-view">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">Cluster name</div>
+            <!-- Table -->
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Update Date</th>
+                        <th>Name</th>
+                        <th title="CPU Usage average 5 minutes">CPU Avg 5M</th>
+                        <th title="CPU Usage average 1 hour">CPU Avg 1H</th>
+                        <th title="Memory usage">MEM, GB</th>
+                        <th title="Hdd Usage: Used space/Total space">HDD, GB</th>
+                        <th>Info</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><i>19.10.2014 18:45:22</i></td>
+                        <td>Music</td>
+                        <td><span class="text-danger">65%</span></td>
+                        <td><span class="text-success">65%</span></td>
+                        <td><span class="text-success">5.4/16</span></td>
+                        <td>
+                            <span class="text-primary">C: 5.4/16</span>
+                            ,&nbsp;
+                            <span class="text-danger">D: 98/102</span>
+                        </td>
+                        <td>Uptime: 16Days 18:12:22, Version: 1.0.0.2</td>
+                    </tr>
+
+                    <tr>
+                        <td><i>19.10.2014 18:45:22</i></td>
+                        <td>Music</td>
+                        <td><span class="text-danger">65%</span></td>
+                        <td><span class="text-success">65%</span></td>
+                        <td><span class="text-success">5.4/16</span></td>
+                        <td>
+                            <span class="text-primary">C: 5.4/16</span>
+                            ,&nbsp;
+                            <span class="text-danger">D: 98/102</span>
+                        </td>
+                        <td>Uptime: 16Days 18:12:22, Version: 1.0.0.2</td>
+                    </tr>
+
+                    <tr>
+                        <td><i>19.10.2014 18:45:22</i></td>
+                        <td>Music</td>
+                        <td>
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-danger" role="progressbar" style="width: 60%;">
+                                    <span class="progressText">60%</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-success" role="progressbar" style="width: 20%;">
+                                    <span class="progressText">20%</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-success" role="progressbar" style="width: 20%;">
+                                    <span class="progressText">5.4/16</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="progress hdd">
+                                <div class="progress-bar progress-bar-primary" role="progressbar" style="width: 20%;">
+                                    <span class="progressText">C:&nbsp;5.4/16</span>
+                                </div>
+                            </div>
+                            <div class="progress hdd">
+                                <div class="progress-bar progress-bar-danger" role="progressbar" style="width: 95%;">
+                                    <span class="progressText">D: 98/102</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>Uptime: 16Days 18:12:22, Version: 1.0.0.2</td>
+                    </tr>
+                    <tr>
+                        <td><i>19.10.2014 18:45:22</i></td>
+                        <td>Music</td>
+                        <td>
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-danger" role="progressbar" style="width: 60%;">
+                                    <span class="progressText">60%</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-success" role="progressbar" style="width: 20%;">
+                                    <span class="progressText">20%</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-success" role="progressbar" style="width: 20%;">
+                                    <span class="progressText">5.4/16</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="progress hdd">
+                                <div class="progress-bar progress-bar-primary" role="progressbar" style="width: 20%;">
+                                    <span class="progressText">C:&nbsp;5.4/16</span>
+                                </div>
+                            </div>
+                            <div class="progress hdd">
+                                <div class="progress-bar progress-bar-danger" role="progressbar" style="width: 95%;">
+                                    <span class="progressText">D: 98/102</span>
+                                </div>
+                            </div>
+
+                            <div class="progress hdd">
+                                <div class="progress-bar progress-bar-primary" role="progressbar" style="width: 95%;">
+                                    <span class="progressText">D: 98/102</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>Uptime: 16Days 18:12:22, Version: 1.0.0.2</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+
+
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3 class="panel-title">Music</h3>
+            </div>
+            <div class="panel-body">
+
+                <div class="row text-success">
+                    <div class="col-md-4 ">0%</div>
+                    <div class="col-md-4 text-center">CPU 1 min</div>
+                    <div class="col-md-4 text-right">100%</div>
+                </div>
+
+                <div class="progress">
+                    <div class="progress-bar progress-bar-success" role="progressbar" style="width: 80%;">
+                        <span class="progressText">60%</span>
+                    </div>
+                </div>
+
+                <div class="row text-success">
+                    <div class="col-md-8 ">CPU 5 Minutes</div>
+                    <div class="col-md-4 text-right">100%</div>
+                </div>
+
+                <div class="progress">
+                    <div class="progress-bar progress-bar-success" role="progressbar" style="width: 80%;">
+                        <span class="progressText">60%</span>
+                    </div>
+                </div>
+
+                <div class="row text-success">
+                    <div class="col-md-8 ">Memory usage 25%</div>
+                    <div class="col-md-4 text-right">16GB</div>
+                </div>
+
+                <div class="progress">
+                    <div class="progress-bar progress-bar-success" role="progressbar" style="width: 25%;">
+                        <span class="progressText">4GB</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Music</h3>
+            </div>
+            <div class="panel-body">
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width: 80%;">
+                        60%
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3 class="panel-title">Music</h3>
+            </div>
+            <div class="panel-body">
+                Content
+            </div>
+        </div>
+
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">Music</h3>
+            </div>
+            <div class="panel-body">
+                Content
+            </div>
+        </div>
+
+        <div class="panel panel-warning">
+            <div class="panel-heading">
+                <h3 class="panel-title">Music</h3>
+            </div>
+            <div class="panel-body">
+                Content
+            </div>
+        </div>
+
+        <div class="panel panel-danger">
+            <div class="panel-heading">
+                <h3 class="panel-title">Music</h3>
+            </div>
+            <div class="panel-body">
+                Content
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Music HDD<span class="badge headerDate">10.10.2015 19:43:22</span></h3>
+            </div>
+            <div class="panel-body">
+
+                <div class="row"><div class="col-md-4">System (C:)</div><div class="col-md-8 text-right">free 400 GB of 500 GB</div></div>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-primary" role="progressbar" style="width: 20%;">
+                        <span class="progressText">20%</span>
+                    </div>
+                </div>
+
+                <div class="row"><div class="col-md-4">No name (C:)</div><div class="col-md-8 text-right"> free 100 GB of 1000 GB</div></div>
+
+                <div class="progress">
+                    <div class="progress-bar progress-bar-danger" role="progressbar" style="width: 90%;">
+                        <span class="progressText">90%</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Music Info</h3>
+            </div>
+            <div class="panel-body">
+
+                <div class="row"><div class="col-md-4">Manufacturer</div><div class="col-md-8">:&nbsp;Dell</div></div>
+                <div class="row"><div class="col-md-4">Manufacturer</div><div class="col-md-8">:&nbsp;Dell</div></div>
+                <div class="row"><div class="col-md-4">Manufacturer</div><div class="col-md-8">:&nbsp;Dell</div></div>
+                <div class="row text-danger"><div class="col-md-4">UpTime</div><div class="col-md-8">:&nbsp;8 Days</div></div>
+            </div>
+        </div>
+    </div>
+</div>
