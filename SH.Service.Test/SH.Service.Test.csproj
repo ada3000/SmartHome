@@ -104,6 +104,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SH.Web\Properties\Version.cs">
+      <Link>Properties\Version.cs</Link>
+    </Compile>
     <Compile Include="Cls.ServiceConfigFile.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>

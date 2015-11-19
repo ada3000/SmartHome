@@ -31,7 +31,11 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; ADA @DateTime.Now.Year</p>
+            <p style="float: left">&copy; ADA @DateTime.Now.Year</p>
+            <p style="float: right">
+                v
+                @Html.Raw(SH.Web.Config.Version)
+            </p>
         </footer>
     </div>
 
