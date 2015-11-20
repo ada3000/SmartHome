@@ -1,0 +1,351 @@
+﻿@using SH.Web.Models
+@using Newtonsoft.Json
+@{
+    ViewBag.Title = "Stats";
+}
+
+<br />
+
+<div class="template js-panel-template">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">{GroupName} - {Name}<span class="badge headerDate">{CreateDate}</span></h3>
+        </div>
+        <div class="panel-body">
+        </div>
+    </div>
+</div>
+
+<div class="template js-progress-item">
+    <div class="row"><div class="col-md-5">{TitleLeft}</div><div class="col-md-7 text-right">{TitleRight}</div></div>
+    <div class="progress">
+        <div class="progress-bar progress-bar-{style}" role="progressbar" style="width: 0%;">
+            <span class="progressText">{TitlePersent}</span>
+        </div>
+    </div>
+</div>
+
+<div class="template js-table-progress-item">
+    <div class="progress" title="{TitleLeft} {TitleRight}">
+        <div class="progress-bar progress-bar-{style}" role="progressbar" style="width: 0%;">
+            <span class="progressText">{TitlePersent}</span>
+        </div>
+    </div>
+</div>
+
+<table class="template">
+    <tbody class="js-table-row-template">
+        <tr>
+            <td><i>{CreateDate}</i></td>
+            <td>{GroupName} - {Name}</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="template js-text-item">
+    <div class="row"><div class="col-md-4">{TitleLeft}</div><div class="col-md-8">:&nbsp;{TitleRight}</div></div>
+</div>
+
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">View</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="active js-view-button" data-mode="tile"><a href="#">Tiles</a></li>
+                <li class="js-view-button" data-mode="table"><a href="#">Table</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Cluster <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Main</a></li>
+                        <li><a href="#">Work</a></li>
+                        <li><a href="#">Something else</a></li>
+                    </ul>
+                </li>
+
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">Auto refresh:</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">None <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">None</a></li>
+                        <li><a href="#">15 min</a></li>
+                        <li><a href="#">30 min</a></li>
+                        <li><a href="#">60 min</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<div class="row table-view js-table-view">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">Clusters</div>
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr class="js-header">
+                        <th>Update Date</th>
+                        <th>Name</th>
+                    </tr>
+                </thead>
+                <tbody class="js-rows">
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="row js-tile-view">
+    <div class="col-md-4 js-col-1">
+
+    </div>
+    <div class="col-md-4 js-col-1">
+
+    </div>
+    <div class="col-md-4 js-col-1">
+
+    </div>
+</div>
+
+@section scripts {
+<script type="text/javascript">
+
+    var dataUrl = "/Cluster/GetData";
+    var viewMode = "tile";
+
+    function renderTemplate(template, obj)
+    {
+        var result = template;
+        for(var i in obj)
+            result = result.replace("{"+i+"}", obj[i] || "");
+
+        return result;
+    };
+
+    $(document).ready(function()
+    {
+        setMode("table");
+        loadData();
+
+        $(".js-view-button").click(viewModeClick);
+    });
+
+    function setMode(newMode)
+    {
+        viewMode = newMode;
+        
+        $(".js-view-button").each(function ()
+        {
+            var button = $(this);
+            var mode = button.data("mode");
+
+            button[mode == viewMode ? "addClass" : "removeClass"]("active");
+        });
+
+        switch (viewMode)
+        {
+            case "tile":
+                $(".js-tile-view").show();
+                $(".js-table-view").hide();
+                break;
+            case "table":
+                $(".js-tile-view").hide();
+                $(".js-table-view").show();
+                break;
+        }
+    };
+
+    function clearData()
+    {
+        $(".js-col-1").empty();
+        $(".js-rows",".js-table-view").empty();
+
+        var items = $(".js-header th", ".js-table-view");
+
+        for (var i = 2; i < items.length; i++)
+            $(items[i]).remove();
+    };
+
+    function loadData()
+    {
+        clearData();
+
+        var x = $.post(dataUrl, { type: viewMode });
+        if (viewMode == "tile")
+            x.done(renderTileData);
+        else
+            x.done(renderTableData);
+
+        x.error(function () { alert("Ошибка загрузки данных!") });
+    };
+
+    function viewModeClick(ev)
+    {
+        var curNode = $(ev.currentTarget);
+        var viewMode = curNode.data("mode");
+        console.debug("viewModeClick mode=" + viewMode);        
+
+        if (curNode.hasClass("active")) return;
+        
+        setMode(viewMode);
+
+        loadData();
+    };
+
+    function renderDate(rawDate)
+    {
+        var createDate = new Date(parseInt(rawDate.substring(6, 19)));
+        var curDate = new Date();
+
+        var date = "";
+        if (createDate.getDate() != curDate.getDate()
+            || createDate.getMonth() != curDate.getMonth()
+            || createDate.getYear() != curDate.getYear())
+            date = createDate.toLocaleDateString() + " ";
+
+        return date + createDate.toLocaleTimeString();
+    };
+
+    function renderTileData(panelsData)
+    {
+        clearData();
+
+        var container = $(".js-col-1");
+        var containerIndex = 0;
+
+        var panelTemplate = $(".js-panel-template").html();
+        var progressTemplate = $(".js-progress-item").html();
+        var textTemplate = $(".js-text-item").html();
+
+        for (var i = 0; i < panelsData.length; i++)
+        {
+            var panel = panelsData[i];
+            
+            panel.CreateDate = renderDate(panel.Create);
+
+            var panelNode = $(renderTemplate(panelTemplate, panel)).appendTo(container[containerIndex]);
+            var panelBodyNode = $(".panel-body", panelNode);
+
+            for (var sid = 0; sid < panel.Data.length; sid++)
+            {
+                var sensorData = panel.Data[sid];
+                sensorData.style = sensorData.IsCore ? "success" : "primary";
+
+                if (sensorData.IsError)
+                    sensorData.style = "danger";
+
+                var template = sensorData.Type == 10 ? progressTemplate : textTemplate;
+
+                var sensorNode = $(renderTemplate(template, sensorData)).appendTo(panelBodyNode);
+                sensorNode.find(".progress-bar").width(sensorData.PersentValue + "%");
+            }
+
+            containerIndex++;
+            if (containerIndex > 2)
+                containerIndex = 0;
+        }
+    };
+
+    function renderTableData(panelsData)
+    {
+        clearData();
+
+        var memTitle = "MEM, GB";
+        var hddTitle = "HDD, GB";
+        var infoTitle = "Info";
+
+        var containerHeaders = $(".js-header", ".js-table-view");
+        var container = $(".js-rows", ".js-table-view");
+
+        var rowTemplate = $(".js-table-row-template").html();
+        var progressTemplate = $(".js-table-progress-item").html();
+        var textTemplate = "<span>{TitleLeft}: {TitleRight},</span>";
+
+        var lastIndex = 1;
+        var nodeMap = {};
+
+        var fnGetColIndex = function(colName)
+        {
+            if (nodeMap[colName] == null)
+            {
+                var th = $("<th/>").text(colName);
+                lastIndex++;
+                nodeMap[colName] = lastIndex;
+                containerHeaders.append(th);
+            }
+
+            return nodeMap[colName];
+        };
+
+        for (var i = 0; i < panelsData.length; i++)
+        {
+            var panel = panelsData[i];
+            panel.CreateDate = renderDate(panel.Create);
+
+            var rowNode = $(renderTemplate(rowTemplate, panel)).appendTo(container);
+            
+            var renderData = [];
+            //Group items by type
+            for (var sid = 0; sid < panel.Data.length; sid++)
+            {
+                var sensorData = panel.Data[sid];
+                
+                var idx = 0;
+                switch (sensorData.SensorType)
+                {
+                    case "CPU": //CPU
+                        idx = fnGetColIndex(sensorData.TitleLeft);
+                        break;
+                    case "Memory": //mem                        
+                        idx = fnGetColIndex(memTitle);
+                        break;
+                    case "Hdd": //hdd
+                        idx = fnGetColIndex(hddTitle);
+                        break;
+                    case "Info": //info
+                        idx = fnGetColIndex(infoTitle);
+                        break;
+                }
+
+                renderData[idx] = renderData[idx] || [];
+                renderData[idx].push(sensorData);                
+            }
+
+
+            for (var col = 2; col <= lastIndex; col++)
+            {
+                var sensors = renderData[col];
+                var tr = $("<td/>").appendTo(rowNode);
+                for (var senId = 0; senId < sensors.length; senId++)
+                {
+                    var sensorData = sensors[senId];
+                    sensorData.style = sensorData.IsCore ? "success" : "primary";
+
+                    if (sensorData.IsError)
+                        sensorData.style = "danger";
+
+                    var template = sensorData.Type == 10 ? progressTemplate : textTemplate;
+
+                    var sensorNode = $(renderTemplate(template, sensorData)).appendTo(tr);
+                    sensorNode.find(".progress-bar").width(sensorData.PersentValue + "%");
+                }
+            }
+        }
+    };
+</script>
+}

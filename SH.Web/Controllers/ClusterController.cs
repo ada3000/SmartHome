@@ -38,32 +38,26 @@ namespace SH.Web.Controllers
 
 		public ActionResult GetData(string type)
 		{
-			switch(type)
+			List<GroupDisplayModel> models = new List<GroupDisplayModel>();
+
+			var hosts = _hostsStg.All();
+			var results = _resultsStg.All();
+
+			var groups = GroupByHost(results);
+
+			foreach (var kv in groups)
 			{
-				case "table":
-				case "tile":
-					List<GroupDisplayModel> models = new List<GroupDisplayModel>();
+				kv.Key.Data = RenderSensors(kv.Value).ToArray();
+				kv.Key.Warnings = kv.Key.Data.Where(d => d.IsError).Count();
 
-					var hosts = _hostsStg.All();
-					var results = _resultsStg.All();
-
-					var groups = GroupByHost(results);
-
-					foreach (var kv in groups)
-					{
-						kv.Key.Data = RenderSensors(kv.Value, type).ToArray();
-						kv.Key.Warnings = kv.Key.Data.Where(d => d.IsError).Count();
-
-						models.Add(kv.Key);
-					}
-
-					models.Sort((a, b) => -a.Warnings.CompareTo(b.Warnings));
-
-					return Json(models);
+				models.Add(kv.Key);
 			}
-			throw new NotImplementedException();
+
+			models.Sort((a, b) => -a.Warnings.CompareTo(b.Warnings));
+
+			return Json(models);
 		}
-        private IEnumerable<SensorDisplayModel> RenderSensors(IEnumerable<SensorInfo> sensors, string type)
+        private IEnumerable<SensorDisplayModel> RenderSensors(IEnumerable<SensorInfo> sensors)
         {
             List<SensorDisplayModel> result = new List<SensorDisplayModel>();
 
@@ -108,14 +102,10 @@ namespace SH.Web.Controllers
                         {
                             model.PersentValue = ((int)(1.0f * s.Value / s.ValueMax * 1000)) / 10;
 
-                            model.TitlePersent = RoundBytes((long)s.Value);
-                            model.TitleRight = RoundBytes((long)s.ValueMax);
+                            //model.TitlePersent = model.PersentValue + "%";
+							model.TitlePersent = RoundBytes((long)s.Value);
+                            model.TitleRight = RoundBytes((long)s.Value)+" / "+ RoundBytes((long)s.ValueMax);
                         }
-
-						//if(type=="table")
-						//{
-						//	model.TitlePersent = BytesToGb((long)s.Value)+" / "+BytesToGb((long)s.ValueMax);
-						//}
 
                         break;
 
@@ -135,11 +125,6 @@ namespace SH.Web.Controllers
                                 RoundBytes((long)(s.ValueMax - s.Value)),
                                 RoundBytes((long)s.ValueMax));
                         }
-
-						//if (type == "table")
-						//{
-						//	model.TitlePersent = BytesToGb((long)s.Value) + " / " + BytesToGb((long)s.ValueMax);
-						//}
 
                         break;
                 }
