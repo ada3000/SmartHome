@@ -55,3 +55,10 @@
 - add union version
 - add async data load
 - add table view
+
+==========================================================
+= 20.11.2015 =============================================
+==========================================================
+
+- refactor sensor data renderer
+- add serviceVersion in info messages

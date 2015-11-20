@@ -38,7 +38,11 @@ namespace SH.TelemetrySource
 					break;
 				}
 			}
-		}
+
+            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
+            ServiceVersion = fvi.FileVersion;
+        }
 		/// <summary>
 		/// Time zone in minutes
 		/// </summary>
@@ -49,7 +53,9 @@ namespace SH.TelemetrySource
 		public string Caption { get; private set; }
 		public string SystemManufacturer { get; private set; }
 		public string SystemModel { get; private set; }
-		public long UpTimeSec
+        public string ServiceVersion { get; private set; }
+
+        public long UpTimeSec
 		{
 			get
 			{
@@ -139,7 +145,17 @@ namespace SH.TelemetrySource
 				Value = UpTimeSec
 			});
 
-			return result;
+            result.Add(new SensorValue
+            {
+                //Date = DateTime.UtcNow,
+                Type = SensorValueType.Info,
+                Name = "ServiceVersion",
+                SubType = "ServiceVersion",
+                ValueScale = SensorValueScale.Second,
+                ValueStr = ServiceVersion
+            });
+
+            return result;
 		}
 	}
 }

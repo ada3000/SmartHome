@@ -21,6 +21,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -126,8 +127,16 @@
     <Compile Include="Models\GroupDisplayModel.cs" />
     <Compile Include="Models\SensorDisplayModelType.cs" />
     <Compile Include="Models\SensorDisplayModel.cs" />
+    <Compile Include="Models\SensorInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Version.cs" />
+    <Compile Include="Utils\SensorRenderer.cs" />
+    <Compile Include="Utils\SensorTypeRendererHdd.cs" />
+    <Compile Include="Utils\SensorTypeRendererInfo.cs" />
+    <Compile Include="Utils\SensorTypeRendererMem.cs" />
+    <Compile Include="Utils\SensorTypeRendererCPU.cs" />
+    <Compile Include="Utils\SensorTypeRendererBase.cs" />
+    <Compile Include="Utils\ValueRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
