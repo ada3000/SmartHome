@@ -31,10 +31,14 @@ textarea {
 {
     display:none;
 }
+
+.progress
+{
+    background-color:#8F8F8F;
+}
 .table-view .progress
 {
     margin-bottom:1px;
-    background-color:#8F8F8F;
 }
 .table-view .progress.hdd
 {
@@ -47,4 +51,9 @@ textarea {
     text-shadow:1px 1px 1px black;
     white-space: nowrap;
     padding-left: 6px;
+}
+
+.panel-heading
+{
+    cursor:pointer;
 }

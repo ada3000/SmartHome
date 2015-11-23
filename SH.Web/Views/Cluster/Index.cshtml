@@ -36,8 +36,8 @@
 <table class="template">
     <tbody class="js-table-row-template">
         <tr>
-            <td><i>{CreateDate}</i></td>
-            <td>{GroupName} - {Name}</td>
+            <td><span class="badge">{CreateDate}</span></td>
+            <td>{Name}</td>
         </tr>
     </tbody>
 </table>
@@ -46,8 +46,31 @@
     <div class="row"><div class="col-md-4">{TitleLeft}</div><div class="col-md-8">:&nbsp;{TitleRight}</div></div>
 </div>
 
+<div class="template js-table-cluster">
+    <div class="row table-view">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading js-group-header">{GroupName}</div>
+                <table class="table table-striped table-hover js-content">
+                    <thead>
+                        <tr class="js-header">
+                            <th>Update Date</th>
+                            <th>Name</th>
+                        </tr>
+                    </thead>
+                    <tbody class="js-rows"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
-<nav class="navbar navbar-default">
+</div>
+
+<div class="template js-table-text">
+    <span>{TitleLeft}: {TitleRight},</span>
+</div>
+
+<nav class="navbar navbar-primary">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -57,7 +80,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">View</a>
+            <a class="navbar-brand" href="#">View:</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -77,7 +100,7 @@
 
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Auto refresh:</a></li>
+                <li><a href="#" class="js-reload">Auto refresh:</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">None <span class="caret"></span></a>
                     <ul class="dropdown-menu">
@@ -92,22 +115,8 @@
     </div><!-- /.container-fluid -->
 </nav>
 
-<div class="row table-view js-table-view">
-    <div class="col-md-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">Clusters</div>
-            <table class="table table-striped table-hover">
-                <thead>
-                    <tr class="js-header">
-                        <th>Update Date</th>
-                        <th>Name</th>
-                    </tr>
-                </thead>
-                <tbody class="js-rows">
-                </tbody>
-            </table>
-        </div>
-    </div>
+<div class="js-table-view">
+
 </div>
 
 <div class="row js-tile-view">
@@ -123,217 +132,141 @@
 </div>
 
 @section scripts {
-<script type="text/javascript">
+    <script type="text/javascript">
 
-    var dataUrl = "/Cluster/GetData";
-    var viewMode = "tile";
+        var dataUrl = "/Cluster/GetData";
+        var viewMode = "tile";
+        var oldData = null;
 
-    function renderTemplate(template, obj)
-    {
-        var result = template;
-        for(var i in obj)
-            result = result.replace("{"+i+"}", obj[i] || "");
-
-        return result;
-    };
-
-    $(document).ready(function()
-    {
-        setMode("table");
-        loadData();
-
-        $(".js-view-button").click(viewModeClick);
-    });
-
-    function setMode(newMode)
-    {
-        viewMode = newMode;
-        
-        $(".js-view-button").each(function ()
+        function renderTemplate(template, obj)
         {
-            var button = $(this);
-            var mode = button.data("mode");
+            var result = template;
+            for (var i in obj)
+                result = result.replace("{" + i + "}", obj[i] || "");
 
-            button[mode == viewMode ? "addClass" : "removeClass"]("active");
-        });
-
-        switch (viewMode)
-        {
-            case "tile":
-                $(".js-tile-view").show();
-                $(".js-table-view").hide();
-                break;
-            case "table":
-                $(".js-tile-view").hide();
-                $(".js-table-view").show();
-                break;
-        }
-    };
-
-    function clearData()
-    {
-        $(".js-col-1").empty();
-        $(".js-rows",".js-table-view").empty();
-
-        var items = $(".js-header th", ".js-table-view");
-
-        for (var i = 2; i < items.length; i++)
-            $(items[i]).remove();
-    };
-
-    function loadData()
-    {
-        clearData();
-
-        var x = $.post(dataUrl, { type: viewMode });
-        if (viewMode == "tile")
-            x.done(renderTileData);
-        else
-            x.done(renderTableData);
-
-        x.error(function () { alert("Ошибка загрузки данных!") });
-    };
-
-    function viewModeClick(ev)
-    {
-        var curNode = $(ev.currentTarget);
-        var viewMode = curNode.data("mode");
-        console.debug("viewModeClick mode=" + viewMode);        
-
-        if (curNode.hasClass("active")) return;
-        
-        setMode(viewMode);
-
-        loadData();
-    };
-
-    function renderDate(rawDate)
-    {
-        var createDate = new Date(parseInt(rawDate.substring(6, 19)));
-        var curDate = new Date();
-
-        var date = "";
-        if (createDate.getDate() != curDate.getDate()
-            || createDate.getMonth() != curDate.getMonth()
-            || createDate.getYear() != curDate.getYear())
-            date = createDate.toLocaleDateString() + " ";
-
-        return date + createDate.toLocaleTimeString();
-    };
-
-    function renderTileData(panelsData)
-    {
-        clearData();
-
-        var container = $(".js-col-1");
-        var containerIndex = 0;
-
-        var panelTemplate = $(".js-panel-template").html();
-        var progressTemplate = $(".js-progress-item").html();
-        var textTemplate = $(".js-text-item").html();
-
-        for (var i = 0; i < panelsData.length; i++)
-        {
-            var panel = panelsData[i];
-            
-            panel.CreateDate = renderDate(panel.Create);
-
-            var panelNode = $(renderTemplate(panelTemplate, panel)).appendTo(container[containerIndex]);
-            var panelBodyNode = $(".panel-body", panelNode);
-
-            for (var sid = 0; sid < panel.Data.length; sid++)
-            {
-                var sensorData = panel.Data[sid];
-                sensorData.style = sensorData.IsCore ? "success" : "primary";
-
-                if (sensorData.IsError)
-                    sensorData.style = "danger";
-
-                var template = sensorData.Type == 10 ? progressTemplate : textTemplate;
-
-                var sensorNode = $(renderTemplate(template, sensorData)).appendTo(panelBodyNode);
-                sensorNode.find(".progress-bar").width(sensorData.PersentValue + "%");
-            }
-
-            containerIndex++;
-            if (containerIndex > 2)
-                containerIndex = 0;
-        }
-    };
-
-    function renderTableData(panelsData)
-    {
-        clearData();
-
-        var memTitle = "MEM, GB";
-        var hddTitle = "HDD, GB";
-        var infoTitle = "Info";
-
-        var containerHeaders = $(".js-header", ".js-table-view");
-        var container = $(".js-rows", ".js-table-view");
-
-        var rowTemplate = $(".js-table-row-template").html();
-        var progressTemplate = $(".js-table-progress-item").html();
-        var textTemplate = "<span>{TitleLeft}: {TitleRight}, &nbsp;</span>";
-
-        var lastIndex = 1;
-        var nodeMap = {};
-
-        var fnGetColIndex = function(colName)
-        {
-            if (nodeMap[colName] == null)
-            {
-                var th = $("<th/>").text(colName);
-                lastIndex++;
-                nodeMap[colName] = lastIndex;
-                containerHeaders.append(th);
-            }
-
-            return nodeMap[colName];
+            return result;
         };
 
-        for (var i = 0; i < panelsData.length; i++)
+        $(document).ready(function ()
         {
-            var panel = panelsData[i];
-            panel.CreateDate = renderDate(panel.Create);
-
-            var rowNode = $(renderTemplate(rowTemplate, panel)).appendTo(container);
+            setMode("table");
+            loadData();
             
-            var renderData = [];
-            //Group items by type
-            for (var sid = 0; sid < panel.Data.length; sid++)
-            {
-                var sensorData = panel.Data[sid];
-                
-                var idx = 0;
-                switch (sensorData.SensorType)
-                {
-                    case "CPU": //CPU
-                        idx = fnGetColIndex(sensorData.TitleLeft);
-                        break;
-                    case "Memory": //mem                        
-                        idx = fnGetColIndex(memTitle);
-                        break;
-                    case "Hdd": //hdd
-                        idx = fnGetColIndex(hddTitle);
-                        break;
-                    case "Info": //info
-                        idx = fnGetColIndex(infoTitle);
-                        break;
-                }
+            $(".js-reload").click(loadData);
+            $(".js-view-button").click(viewModeClick);
+        });
 
-                renderData[idx] = renderData[idx] || [];
-                renderData[idx].push(sensorData);                
+        function setMode(newMode)
+        {
+            viewMode = newMode;
+
+            $(".js-view-button").each(function ()
+            {
+                var button = $(this);
+                var mode = button.data("mode");
+
+                button[mode == viewMode ? "addClass" : "removeClass"]("active");
+            });
+
+            switch (viewMode)
+            {
+                case "tile":
+                    $(".js-tile-view").show();
+                    $(".js-table-view").hide();
+                    break;
+                case "table":
+                    $(".js-tile-view").hide();
+                    $(".js-table-view").show();
+                    break;
             }
+        };
 
+        function clearData()
+        {
+            $(".js-col-1").empty();
+            $(".js-table-view").empty();
 
-            for (var col = 2; col <= lastIndex; col++)
+            var items = $(".js-header th", ".js-table-view");
+
+            for (var i = 2; i < items.length; i++)
+                $(items[i]).remove();
+        };
+
+        function loadData()
+        {
+            clearData();
+
+            var x = $.post(dataUrl, { type: viewMode });
+
+            x.done(loadDataSuccess);
+            x.error(function () { alert("Ошибка загрузки данных!") });
+        };
+
+        function loadDataSuccess(data)
+        {
+            oldData = data;
+            renderData();
+        };
+
+        function renderData()
+        {
+            if (viewMode == "tile")
+                renderTileData(oldData);
+            else
+                renderTableData(oldData);
+        };
+
+        function viewModeClick(ev)
+        {
+            var curNode = $(ev.currentTarget);
+            var viewMode = curNode.data("mode");
+            console.debug("viewModeClick mode=" + viewMode);
+
+            if (curNode.hasClass("active")) return;
+
+            setMode(viewMode);
+
+            //loadData();
+            renderData();
+        };
+
+        function renderDate(rawDate)
+        {
+            var createDate = new Date(parseInt(rawDate.substring(6, 19)));
+            var curDate = new Date();
+
+            var date = "";
+            if (createDate.getDate() != curDate.getDate()
+                || createDate.getMonth() != curDate.getMonth()
+                || createDate.getYear() != curDate.getYear())
+                date = createDate.toLocaleDateString() + " ";
+
+            return date + createDate.toLocaleTimeString();
+        };
+
+        function renderTileData(panelsData)
+        {
+            clearData();
+
+            var container = $(".js-col-1");
+            var containerIndex = 0;
+
+            var panelTemplate = $(".js-panel-template").html();
+            var progressTemplate = $(".js-progress-item").html();
+            var textTemplate = $(".js-text-item").html();
+
+            for (var i = 0; i < panelsData.length; i++)
             {
-                var sensors = renderData[col];
-                var tr = $("<td/>").appendTo(rowNode);
-                for (var senId = 0; senId < sensors.length; senId++)
+                var panel = panelsData[i];
+
+                panel.CreateDate = renderDate(panel.Create);
+
+                var panelNode = $(renderTemplate(panelTemplate, panel)).appendTo(container[containerIndex]);
+                var panelBodyNode = $(".panel-body", panelNode);
+
+                for (var sid = 0; sid < panel.Data.length; sid++)
                 {
-                    var sensorData = sensors[senId];
+                    var sensorData = panel.Data[sid];
                     sensorData.style = sensorData.IsCore ? "success" : "primary";
 
                     if (sensorData.IsError)
@@ -341,11 +274,140 @@
 
                     var template = sensorData.Type == 10 ? progressTemplate : textTemplate;
 
-                    var sensorNode = $(renderTemplate(template, sensorData)).appendTo(tr);
+                    var sensorNode = $(renderTemplate(template, sensorData)).appendTo(panelBodyNode);
                     sensorNode.find(".progress-bar").width(sensorData.PersentValue + "%");
                 }
+
+                containerIndex++;
+                if (containerIndex > 2)
+                    containerIndex = 0;
             }
-        }
-    };
-</script>
+        };
+
+        function groupHeaderClick(ev)
+        {
+            var header = $(ev.currentTarget);
+            var content = header.parent().find(".js-content");
+
+            if (content.css("display") == "none")
+                content.slideDown("fast");
+            else
+                content.slideUp("fast");
+        };
+
+        function renderTableData(panelsData)
+        {
+            clearData();
+
+            var container = $(".js-table-view");
+
+            var groups = {};
+
+            for (var i = 0; i < panelsData.length; i++)
+            {
+                var panel = panelsData[i];
+                if (groups[panel.GroupName] == null)
+                    groups[panel.GroupName] = [];
+
+                groups[panel.GroupName].push(panel);
+            }
+
+            var clusterTemplate = $(".js-table-cluster").html();
+
+            for (var name in groups)
+            {
+                node = $(renderTemplate(clusterTemplate, { GroupName: name })).appendTo(container);
+                node.find(".js-group-header").click(groupHeaderClick);
+
+                renderTableGroup(groups[name], node);
+            }
+        };
+
+
+        function renderTableGroup(panelsData, node)
+        {
+            var memTitle = "MEM, GB";
+            var hddTitle = "HDD, GB";
+            var infoTitle = "Info";
+
+
+            var containerHeaders = $(".js-header", node);
+            var container = $(".js-rows", node);
+
+            var rowTemplate = $(".js-table-row-template").html();
+            var progressTemplate = $(".js-table-progress-item").html();
+            var textTemplate = $(".js-table-text").html();
+
+            var lastIndex = 1;
+            var nodeMap = {};
+
+            var fnGetColIndex = function (colName)
+            {
+                if (nodeMap[colName] == null)
+                {
+                    var th = $("<th/>").text(colName);
+                    lastIndex++;
+                    nodeMap[colName] = lastIndex;
+                    containerHeaders.append(th);
+                }
+
+                return nodeMap[colName];
+            };
+
+            for (var i = 0; i < panelsData.length; i++)
+            {
+                var panel = panelsData[i];
+                panel.CreateDate = renderDate(panel.Create);
+
+                var rowNode = $(renderTemplate(rowTemplate, panel)).appendTo(container);
+
+                var renderData = [];
+                //Group items by type
+                for (var sid = 0; sid < panel.Data.length; sid++)
+                {
+                    var sensorData = panel.Data[sid];
+
+                    var idx = 0;
+                    switch (sensorData.SensorType)
+                    {
+                        case "CPU": //CPU
+                            idx = fnGetColIndex(sensorData.TitleLeft);
+                            break;
+                        case "Memory": //mem
+                            idx = fnGetColIndex(memTitle);
+                            break;
+                        case "Hdd": //hdd
+                            idx = fnGetColIndex(hddTitle);
+                            break;
+                        case "Info": //info
+                            idx = fnGetColIndex(infoTitle);
+                            break;
+                    }
+
+                    renderData[idx] = renderData[idx] || [];
+                    renderData[idx].push(sensorData);
+                }
+
+
+                for (var col = 2; col <= lastIndex; col++)
+                {
+                    var sensors = renderData[col];
+                    var tr = $("<td/>").appendTo(rowNode);
+                    for (var senId = 0; senId < sensors.length; senId++)
+                    {
+                        var sensorData = sensors[senId];
+                        sensorData.style = sensorData.IsCore ? "success" : "primary";
+
+                        if (sensorData.IsError)
+                            sensorData.style = "danger";
+
+                        var template = sensorData.Type == 10 ? progressTemplate : textTemplate;
+
+                        var sensorNode = $(renderTemplate(template, sensorData)).appendTo(tr);
+                        sensorNode.find(".progress-bar").width(sensorData.PersentValue + "%");
+                    }
+                }
+            }
+        };
+    </script>
 }
