@@ -12,5 +12,5 @@
 	- git fetch origin
 	- git diff origin/master
 	- git merge origin/master
-
+	 
 - Развертывание: автоматизация развертывания дистрибутива сервиса
