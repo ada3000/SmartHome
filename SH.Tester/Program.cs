@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using SH.TelemetrySource;
 using Newtonsoft.Json;
 using SH.BO;
+using System.Diagnostics;
 
 namespace SH.Tester
 {
@@ -27,7 +28,7 @@ namespace SH.Tester
 	 */
 	class Program
 	{
-		static CPUUsage _cpu = new CPUUsage();
+		static CPUUsage _cpu = null;
 		//static MemUsage _mem = new MemUsage();
 		//static MachineInfo _machineInfo = new MachineInfo();
 		//static DiskUsage _disk = new DiskUsage();
@@ -51,6 +52,7 @@ namespace SH.Tester
 			//Console.WriteLine(_machineInfo.CurrentTimeZone);`
 
 			
+			_cpu = new CPUUsage();
 
 
 			while (true)
@@ -72,6 +74,44 @@ namespace SH.Tester
 			//Console.WriteLine(JsonConvert.SerializeObject(data));
 
 			//Console.ReadKey();		
+		}
+
+		private static string GetProcessInstanceName(int pid)
+		{
+			PerformanceCounterCategory cat = new PerformanceCounterCategory("Process");
+
+			string[] instances = cat.GetInstanceNames();
+			
+			foreach (string instance in instances)
+			{
+				var counters = cat.GetCounters(instance);
+
+				//% Processor Time
+				//Working Set - Private"
+				using (PerformanceCounter cnt = new PerformanceCounter("Process","ID Process", instance, true))
+				{
+					int val = (int)cnt.RawValue;
+					Process proc = Process.GetProcessById(val);
+					//proc.ProcessName;
+					var ws = proc.WorkingSet64;
+
+					if (val == pid)
+					{
+						using (PerformanceCounter cnt2 = new PerformanceCounter("Process", "% Processor Time", instance, true))
+						{
+							var cpu = cnt2.NextValue();
+						}
+
+						using (PerformanceCounter cnt2 = new PerformanceCounter("Process", "Working Set - Private", instance, true))
+						{
+							long mem = (long)cnt2.NextValue();
+						}
+					}
+				}
+				
+			}
+			throw new Exception("Could not find performance counter " +
+				"instance name for current process. This is truly strange ...");
 		}
 	}
 }

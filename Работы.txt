@@ -7,11 +7,4 @@
 - Интерфейс: фильтр по кластерам
 - Интерфейс: фильтр по предупреждениям
 
-- Развертывание: автоматизация развертывания Web.UI
-	http://stackoverflow.com/questions/2514270/how-to-check-for-changes-on-remote-origin-git-repository
-	- git fetch origin
-	- git diff origin/master
-	- git merge origin/master
-
-	 
-- Развертывание: автоматизация развертывания дистрибутива сервиса
+- Сервис мониторинга загрузки ЦП: выводить в дочерних элементах среднюю загрузку про процессам

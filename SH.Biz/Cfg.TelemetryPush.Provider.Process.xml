@@ -12,6 +12,11 @@
       <selfUrl>Telemetry.Push.Provider</selfUrl>
       <!-- интервал отправки данных в минутах -->
       <delayMin>60</delayMin>
+      <!-- Источники данных -->
+      <sensorDataSource assembly="SH.TelemetrySource" type="SH.TelemetrySource.CPUUsage" />
+      <sensorDataSource assembly="SH.TelemetrySource" type="SH.TelemetrySource.MemUsage" />
+      <sensorDataSource assembly="SH.TelemetrySource" type="SH.TelemetrySource.DiskUsage" />
+      <sensorDataSource assembly="SH.TelemetrySource" type="SH.TelemetrySource.MachineInfo" />      
     </process>
   </processes>
 </configuration>

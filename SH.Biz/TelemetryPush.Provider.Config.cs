@@ -29,5 +29,10 @@ namespace SH.Biz
 		/// </summary>
 		[XmlElement("delayMin")]
 		public int DelayMin { get; set; }
+		/// <summary>
+		/// Параметры сенсоров
+		/// </summary>
+		[XmlElement("sensorDataSource")]
+		public TypeParams[] SensorDataSource { get; set; }
 	}
 }

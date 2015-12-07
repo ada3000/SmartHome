@@ -13,11 +13,7 @@ namespace SH.Biz
 {
 	class TelemetrySource
 	{
-		static CPUUsage _cpu = new CPUUsage();
-		static MemUsage _mem = new MemUsage();
-		static MachineInfo _machineInfo = new MachineInfo();
-		static DiskUsage _disk = new DiskUsage();
-
+		private IEnumerable<ISensorValueSource> _sources = null;
 		private string _serverName = null;
 		private string _serverUrl = null;
 		private string _clusterName = null;
@@ -26,11 +22,12 @@ namespace SH.Biz
 		{
 
 		}
-		public TelemetrySource(string serverName, string clusterName, string serverUrl)
+		public TelemetrySource(string serverName, string clusterName, string serverUrl, IEnumerable<ISensorValueSource> sources)
 		{
 			_serverName = serverName;
 			_clusterName = clusterName;
 			_serverUrl = serverUrl;
+			_sources = sources;
 		}
 		public string GetJsonStats()
 		{
@@ -57,10 +54,8 @@ namespace SH.Biz
 				 Url = _serverUrl
 			};
 
-			values.AddRange(_cpu.Collect());
-			values.AddRange(_mem.Collect());
-			values.AddRange(_disk.Collect());
-			values.AddRange(_machineInfo.Collect());
+			foreach (var source in _sources)
+				values.AddRange(source.Collect());
 
 			return res;	
 		}

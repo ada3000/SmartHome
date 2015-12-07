@@ -10,7 +10,10 @@ using SH.BO;
 
 namespace SH.TelemetrySource
 {
-	public class CPUUsage : ISensorValueSource
+	/// <summary>
+	/// Использование ЦП процессами
+	/// </summary>
+	public class ProcessCPUUsage : ISensorValueSource
 	{
 		private PerformanceCounter cpuCounter = null;
 
@@ -21,7 +24,7 @@ namespace SH.TelemetrySource
 
 		private Thread _worker = null;
 
-		public CPUUsage(string processName = "_Total")
+		public ProcessCPUUsage(string processName = "_Total")
 		{
 			cpuCounter = new PerformanceCounter("Processor", "% Processor Time", processName);
 
@@ -148,5 +151,23 @@ namespace SH.TelemetrySource
 
             //return new[] { result };
         }
+
+		private class ProcessInfo
+		{
+			public int PID { get; private set; }
+			public string Name { get; private set; }
+			public int MaxItems { get; private set; }
+
+			private PerformanceCounter[] _counters;
+			private List<float>[] _data;
+
+			public ProcessInfo(int pid, string name, PerformanceCounter[] Counters, int maxItems)
+			{
+				_counters = Counters;
+				PID = pid;
+				Name = name;
+				MaxItems = maxItems;
+			}
+		}
 	}
 }

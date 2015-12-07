@@ -29,7 +29,24 @@ namespace SH.Biz
 			SleepMSec = ProcessConfig.DelayMin * 60000;
 			SleepErrorMSec = 60000;
 
-			_telSource = new TelemetrySource(ProcessConfig.ServerName, ProcessConfig.ClusterName, ProcessConfig.SelfUrl);
+			List<ISensorValueSource> sources = new List<ISensorValueSource>();
+
+			foreach (var type in ProcessConfig.SensorDataSource)
+			{
+				ISensorValueSource source = AssemblyHelper.CreateInstance(type.AssemblyName, type.TypeName) as ISensorValueSource;
+				if (source == null)
+					throw new ArgumentException("Type " + type + " does not implement interface ISensorValueSource");
+
+				sources.Add(source);
+			}
+
+			if (sources.Count == 0)
+				throw new ArgumentException("Telemetry sources not set! param 'sensorDataSource'");
+
+			_telSource = new TelemetrySource(ProcessConfig.ServerName, 
+				ProcessConfig.ClusterName, 
+				ProcessConfig.SelfUrl,
+				sources);
 		}
 
 		protected override void OnAction()

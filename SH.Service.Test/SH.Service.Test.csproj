@@ -182,6 +182,10 @@
       <Project>{f3ee2fbd-a5d8-45e5-8848-956a81e297c9}</Project>
       <Name>SH.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SH.TelemetrySource\SH.TelemetrySource.csproj">
+      <Project>{29239637-7d57-40ca-aae1-3254aeaadd66}</Project>
+      <Name>SH.TelemetrySource</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
