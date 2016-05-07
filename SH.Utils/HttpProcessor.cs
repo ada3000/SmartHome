@@ -52,8 +52,8 @@ namespace SH.Utils
 		}
 		public void process()
 		{
-			// we can't use a StreamReader for input, because it buffers up extra data on us inside it's
-			// "processed" view of the world, and we want the data raw after the headers
+            try
+            { 
 			using (_inputStream = new BufferedStream(Socket.GetStream()))
 			{
 				using (OutputStream = new StreamWriter(new BufferedStream(Socket.GetStream())))
@@ -87,7 +87,13 @@ namespace SH.Utils
 					Socket.Close();
 				}
 			}
-		}
+            }
+            catch(Exception ex)
+            {
+                OnError(this,new ErrorEventArgs(new Exception("Unexpected error", ex)));
+            }
+
+        }
 
 		public void ParseRequest()
 		{

@@ -69,7 +69,7 @@ namespace SH.Biz
 		
 		void WebServer_OnError(object sender, System.IO.ErrorEventArgs e)
 		{
-			throw new NotImplementedException();
+			//throw new NotImplementedException();
 		}
 
 		protected override void DisposeManaged()
